@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charges SASU 2026 : IS, charges président, flat tax dividendes</title>
+<meta name="description" content="Détail de l'impôt sur les sociétés, des charges du président assimilé salarié et de la flat tax sur dividendes en SASU.">
+
+<link rel="canonical" href="https://calculateur-statuts-juridiques.fr/charges/sasu/">
+<meta property="og:title" content="Charges SASU 2026 : IS, charges président, flat tax dividendes">
+<meta property="og:description" content="Détail de l'impôt sur les sociétés, des charges du président assimilé salarié et de la flat tax sur dividendes en SASU.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://calculateur-statuts-juridiques.fr/charges/sasu/">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebApplication",
+   "name": "Charges SASU 2026 : le détail",
+   "url": "https://calculateur-statuts-juridiques.fr/charges/sasu/",
+   "applicationCategory": "FinanceApplication",
+   "operatingSystem": "Any",
+   "inLanguage": "fr",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Pourquoi les charges du président de SASU sont-elles élevées ?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Le statut assimilé salarié donne une meilleure protection sociale (régime général) qu'un TNS, ce qui se traduit par des charges patronales et salariales plus élevées, de l'ordre de 65% du net."
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --brand:#1a4d7a; --brand-dark:#0d3352; --brand-light:#e8f0f7; --accent:#1a7a5c; --text:#1a2027; --muted:#5c6b7a; --border:#dde5ec; --bg:#f7f9fb; --radius:12px; }
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color:var(--text); background:var(--bg); font-size:16px; line-height:1.65; }
+header { background:linear-gradient(135deg,var(--brand-dark) 0%,var(--brand) 100%); color:#fff; padding:52px 20px 88px; text-align:center; }
+header h1 { font-size:clamp(1.4rem,4vw,2.1rem); font-weight:800; margin-bottom:12px; }
+header p { color:rgba(255,255,255,.92); font-size:1rem; max-width:600px; margin:0 auto; }
+.container { max-width:840px; margin:0 auto; padding:0 20px; }
+.tool-wrapper { margin:-56px auto 48px; }
+.tool-card { background:#fff; border-radius:var(--radius); box-shadow:0 8px 40px rgba(13,51,82,.14); border:1px solid var(--border); padding:32px 28px; }
+@media (max-width:580px){ .tool-card{ padding:22px 16px; } }
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media (max-width:580px){ .form-grid{ grid-template-columns:1fr; } }
+.form-group { display:flex; flex-direction:column; gap:6px; }
+.form-group.full { grid-column:1 / -1; }
+label { font-size:.79rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; }
+select, input[type=number] { border:2px solid var(--border); border-radius:8px; padding:12px 14px; font-size:1rem; color:var(--text); background:#fff; width:100%; }
+select:focus, input[type=number]:focus { outline:none; border-color:var(--brand); }
+.calc-btn { width:100%; margin-top:22px; padding:17px; background:var(--brand); color:#fff; border:none; border-radius:10px; font-size:1.08rem; font-weight:700; cursor:pointer; }
+.calc-btn:hover { background:var(--brand-dark); }
+.result { display:none; margin-top:26px; }
+.result-hero { background:linear-gradient(135deg,var(--brand-dark),var(--brand)); border-radius:10px; padding:26px; color:#fff; text-align:center; margin-bottom:14px; }
+.result-hero .rl { font-size:.76rem; font-weight:700; text-transform:uppercase; letter-spacing:.5px; opacity:.85; margin-bottom:4px; }
+.result-hero .ra { font-size:2.3rem; font-weight:900; line-height:1.1; }
+.result-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px; }
+@media (max-width:480px){ .result-grid{ grid-template-columns:1fr 1fr; } }
+.r-stat { background:var(--brand-light); border-radius:8px; padding:14px; text-align:center; }
+.r-stat .sv { font-size:1.1rem; font-weight:800; color:var(--brand-dark); }
+.r-stat .sl { font-size:.72rem; color:var(--muted); margin-top:2px; }
+.content { padding-bottom:64px; }
+h2.st { font-size:1.3rem; font-weight:800; margin:48px 0 16px; }
+p { color:#2c3844; margin-bottom:14px; line-height:1.75; }
+.data-table { width:100%; border-collapse:collapse; margin:18px 0; font-size:.88rem; }
+.data-table th { background:var(--brand); color:#fff; padding:10px 14px; text-align:left; font-weight:600; }
+.data-table td { padding:10px 14px; border-bottom:1px solid var(--border); }
+.data-table tr:nth-child(even) td { background:#f2f6f9; }
+.hl { font-weight:700; color:var(--brand-dark); }
+.link-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:10px; margin:18px 0; }
+.link-card { display:block; background:#fff; border:1px solid var(--border); border-radius:8px; padding:12px 14px; text-decoration:none; color:var(--text); font-size:.88rem; font-weight:600; }
+.link-card:hover { border-color:var(--brand); color:var(--brand-dark); }
+.faq-item { border-bottom:1px solid var(--border); }
+.faq-q { width:100%; background:none; border:none; text-align:left; padding:17px 0; font-size:.92rem; font-weight:600; cursor:pointer; display:flex; justify-content:space-between; align-items:center; color:var(--text); }
+.faq-q::after { content:'+'; font-size:1.3rem; color:var(--brand); flex-shrink:0; margin-left:12px; }
+.faq-q.open::after { content:'−'; }
+.faq-a { display:none; padding:0 0 16px; font-size:.88rem; color:#3d4a56; line-height:1.75; }
+.faq-a.open { display:block; }
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--brand-dark); text-decoration:none; font-weight:600; font-size:.88rem; margin-bottom:28px; }
+footer { background:#0d3352; color:#c3d3e0; text-align:center; padding:30px 20px; font-size:.8rem; }
+footer p { color:#c3d3e0; }
+footer a { color:#dbe8f2; }
+.disc { background:#123f66; border-radius:8px; padding:13px 18px; margin-bottom:16px; font-size:.78rem; color:#c3d3e0; line-height:1.6; }
+</style>
+</head>
+<body>
+
+<header><div class="container">
+  <h1>Charges SASU 2026 : le détail</h1>
+  <p>Détail de l'impôt sur les sociétés, des charges du président assimilé salarié et de la flat tax sur dividendes en SASU.</p>
+</div></header>
+<div class="container tool-wrapper">
+  
+  <div class="tool-card">
+    <div class="form-grid">
+      <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca" min="0" step="1000" value="80000"></div>
+      <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi">
+        <option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option>
+      </select></div>
+      
+    </div>
+    <button class="calc-btn" onclick="calculate()">Calculer mon revenu net →</button>
+    <div class="result" id="result">
+      <div class="result-hero">
+        <div class="rl">Revenu net annuel estimé</div>
+        <div class="ra" id="r-net"></div>
+      </div>
+      <div class="result-grid">
+        <div class="r-stat"><div class="sv" id="r-cotis"></div><div class="sl">Cotisations sociales</div></div>
+        <div class="r-stat"><div class="sv" id="r-impot"></div><div class="sl">Impôt sur le revenu</div></div>
+        <div class="r-stat"><div class="sv" id="r-taux"></div><div class="sl">Taux de prélèvement global</div></div>
+      </div>
+    </div>
+  </div>
+  <script>
+  const PAGE = {"statutId":"sasu","ca_defaut":80000,"type_activite_defaut":null,"isMicro":false,"isIndividuel":false};
+  /*
+ * Moteur de calcul pur — aucune ref DOM, aucun accès fichier.
+ * Utilisé (a) côté build par generate-pages.js via require(), (b) inliné
+ * côté client dans les pages générées (même pattern que meat-cooking-time-calculator).
+ *
+ * Approximations MVP à valider contre le simulateur officiel URSSAF avant publication
+ * (voir plan de build, étape 2): calcul de l'IR simplifié via TMI marginal plutôt que
+ * barème progressif complet par tranche; cotisations société traitées en taux moyen
+ * plutôt qu'en barème réel (PASS, tranches TNS, etc.).
+ */
+
+function appliquerTmi(revenuImposable, tmi) {
+  return Math.max(0, revenuImposable) * tmi;
+}
+
+function calculIS(benefice, constantes) {
+  const b = Math.max(0, benefice);
+  const { seuil_benefice, taux } = constantes.is_taux_reduit;
+  const tauxNormal = constantes.is_taux_normal;
+  if (b <= seuil_benefice) return b * taux;
+  return seuil_benefice * taux + (b - seuil_benefice) * tauxNormal;
+}
+
+function calculerIndividuel(statut, params) {
+  const { ca, type_activite, charges_reelles = 0, option_vlf = false, tmi = 0.30 } = params;
+
+  if (statut.regime_fiscal === "micro-fiscal") {
+    const tauxCotis = statut.taux_cotisations_sociales[type_activite];
+    const abattement = statut.abattement_forfaitaire[type_activite];
+    const seuil = statut.seuils_ca[type_activite];
+
+    const cotisations_sociales = ca * tauxCotis;
+    const revenu_imposable = ca * (1 - abattement);
+
+    let impot_revenu;
+    if (option_vlf) {
+      impot_revenu = ca * statut.versement_liberatoire_taux[type_activite];
+    } else {
+      impot_revenu = appliquerTmi(revenu_imposable, tmi);
+    }
+
+    const revenu_net_apres_impot = ca - cotisations_sociales - impot_revenu;
+
+    return {
+      revenu_imposable,
+      cotisations_sociales,
+      impot_revenu,
+      revenu_net_apres_impot,
+      taux_prelevement_global: ca > 0 ? (cotisations_sociales + impot_revenu) / ca : 0,
+      alerte_depassement_seuil: seuil != null && ca > seuil
+    };
+  }
+
+  // EI régime réel (BIC/BNC)
+  const benefice = ca - charges_reelles;
+  const cotisations_sociales = Math.max(0, benefice) * (statut.taux_cotisations_sociales_estime || 0.30);
+  const revenu_imposable = benefice - cotisations_sociales;
+  const impot_revenu = appliquerTmi(revenu_imposable, tmi);
+  const revenu_net_apres_impot = benefice - cotisations_sociales - impot_revenu;
+
+  return {
+    revenu_imposable,
+    cotisations_sociales,
+    impot_revenu,
+    revenu_net_apres_impot,
+    taux_prelevement_global: ca > 0 ? (cotisations_sociales + impot_revenu) / ca : 0,
+    alerte_depassement_seuil: false
+  };
+}
+
+function calculerSociete(statut, params, constantes) {
+  const {
+    ca,
+    charges_exploitation = 0,
+    remuneration_gerant = 0,
+    tmi = 0.30,
+    dividendes_verses = 0
+  } = params;
+
+  const estAssimileSalarie = statut.regime_social_president === "assimile_salarie"
+    || statut.regime_social_gerant_minoritaire === "assimile_salarie" && params.gerant_minoritaire;
+
+  const tauxChargesSalarie = statut.taux_charges_president_salaire
+    || statut.taux_charges_gerant_minoritaire_salaire
+    || 0.65;
+  const tauxChargesTns = statut.taux_cotisations_tns_estime || 0.45;
+
+  const cotisations_sociales_gerant = estAssimileSalarie
+    ? remuneration_gerant * tauxChargesSalarie
+    : remuneration_gerant * tauxChargesTns;
+
+  const remuneration_nette_sociale = remuneration_gerant - cotisations_sociales_gerant;
+
+  const benefice_avant_is = ca - charges_exploitation - remuneration_gerant - cotisations_sociales_gerant;
+  const is_du = calculIS(benefice_avant_is, constantes);
+  const benefice_apres_is = Math.max(0, benefice_avant_is) - is_du;
+
+  const dividendes = Math.min(dividendes_verses, Math.max(0, benefice_apres_is));
+  const dividendes_nets_apres_flat_tax = dividendes * (1 - constantes.flat_tax_dividendes);
+
+  const impot_revenu_remuneration = appliquerTmi(remuneration_nette_sociale, tmi);
+  const revenu_net_total_foyer = remuneration_nette_sociale - impot_revenu_remuneration + dividendes_nets_apres_flat_tax;
+
+  return {
+    benefice_avant_is,
+    is_du,
+    remuneration_nette_sociale,
+    cotisations_sociales_gerant,
+    dividendes_nets_apres_flat_tax,
+    revenu_net_total_foyer,
+    taux_prelevement_global: ca > 0 ? 1 - (revenu_net_total_foyer / ca) : 0
+  };
+}
+
+function calculerStatut(statutId, params, statutsData) {
+  const statut = statutsData.statuts[statutId];
+  if (!statut) throw new Error(`Statut inconnu: ${statutId}`);
+  const resultat = statut.categorie === "individuel"
+    ? calculerIndividuel(statut, params)
+    : calculerSociete(statut, params, statutsData.constantes_communes);
+  return { ...resultat, revenu_net_apres_impot: resultat.revenu_net_apres_impot ?? resultat.revenu_net_total_foyer };
+}
+
+function comparerStatuts(idA, idB, params, statutsData) {
+  const resA = calculerStatut(idA, params, statutsData);
+  const resB = calculerStatut(idB, params, statutsData);
+  return {
+    resA,
+    resB,
+    delta_revenu_net: resB.revenu_net_apres_impot - resA.revenu_net_apres_impot,
+    seuil_bascule_ca: findSeuilBascule(idA, idB, params, statutsData)
+  };
+}
+
+function deltaAt(idA, idB, ca, baseParams, statutsData) {
+  const params = { ...baseParams, ca };
+  const resA = calculerStatut(idA, params, statutsData);
+  const resB = calculerStatut(idB, params, statutsData);
+  return resB.revenu_net_apres_impot - resA.revenu_net_apres_impot;
+}
+
+function findSeuilBascule(idA, idB, baseParams, statutsData, opts = {}) {
+  const { min = 0, max = 300000, tol = 100 } = opts;
+  let lo = min, hi = max;
+  const deltaLo = deltaAt(idA, idB, lo, baseParams, statutsData);
+  const deltaHi = deltaAt(idA, idB, hi, baseParams, statutsData);
+
+  if (Math.sign(deltaLo) === Math.sign(deltaHi)) {
+    // Pas de croisement détecté dans l'intervalle — dominance monotone (ou absence de test fin,
+    // voir testMonotonicite() pour vérifier avant de généraliser sur une nouvelle paire).
+    return null;
+  }
+
+  while (hi - lo > tol) {
+    const mid = (lo + hi) / 2;
+    const deltaMid = deltaAt(idA, idB, mid, baseParams, statutsData);
+    if (Math.sign(deltaMid) === Math.sign(deltaLo)) {
+      lo = mid;
+    } else {
+      hi = mid;
+    }
+  }
+  return Math.round((lo + hi) / 2);
+}
+
+function testMonotonicite(idA, idB, baseParams, statutsData, opts = {}) {
+  const { min = 0, max = 300000, pas = 1000 } = opts;
+  let changementsDeSigne = 0;
+  let signePrecedent = null;
+  for (let ca = min; ca <= max; ca += pas) {
+    const delta = deltaAt(idA, idB, ca, baseParams, statutsData);
+    const signe = Math.sign(delta);
+    if (signePrecedent !== null && signe !== 0 && signe !== signePrecedent) {
+      changementsDeSigne++;
+    }
+    if (signe !== 0) signePrecedent = signe;
+  }
+  return { changementsDeSigne, monotone: changementsDeSigne <= 1 };
+}
+
+function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opts = {}) {
+  const { pas = 5000 } = opts;
+  const statut = statutsData.statuts[statutId];
+  const budgetDistribuable = params.ca - (params.charges_exploitation || 0);
+
+  let meilleur = null;
+  const points = [];
+  for (let remuneration = 0; remuneration <= budgetDistribuable; remuneration += pas) {
+    const resultat = calculerSociete(statut, { ...params, remuneration_gerant: remuneration, dividendes_verses: budgetDistribuable }, statutsData.constantes_communes);
+    points.push({ remuneration, revenu_net_total_foyer: resultat.revenu_net_total_foyer });
+    if (!meilleur || resultat.revenu_net_total_foyer > meilleur.revenu_net_total_foyer) {
+      meilleur = { remuneration, revenu_net_total_foyer: resultat.revenu_net_total_foyer };
+    }
+  }
+  return { meilleur, points };
+}
+
+
+  const STATUTS_DATA = {"version":"2026-01","verifie_expert_comptable":false,"avertissement":"Taux et seuils à faire valider par un expert-comptable avant publication. Voir plan de build — étape 1.","constantes_communes":{"flat_tax_dividendes":0.3,"flat_tax_dividendes_detail":{"prelevements_sociaux":0.172,"ir_forfaitaire":0.128},"is_taux_normal":0.25,"is_taux_reduit":{"taux":0.15,"seuil_benefice":42500,"conditions":"CA < 10M€, capital entièrement libéré, détenu à 75% min par personnes physiques"},"tmi_bareme_indicatif":[0,0.11,0.3,0.41,0.45]},"statuts":{"auto-entrepreneur":{"nom":"Auto-entrepreneur (micro-entreprise)","nom_court":"Auto-entrepreneur","categorie":"individuel","regime_fiscal":"micro-fiscal","regime_social":"micro-social","seuils_ca":{"vente_marchandises":188700,"prestations_services_bic":77700,"prestations_services_bnc":77700},"taux_cotisations_sociales":{"vente_marchandises":0.123,"prestations_services_bic":0.212,"prestations_services_bnc":0.212},"abattement_forfaitaire":{"vente_marchandises":0.71,"prestations_services_bic":0.5,"prestations_services_bnc":0.34},"versement_liberatoire_taux":{"vente_marchandises":0.01,"prestations_services_bic":0.017,"prestations_services_bnc":0.022},"versement_liberatoire_possible":true,"versement_liberatoire_condition_rfr":"revenu fiscal de référence N-2 sous seuil par part","tva_franchise_base":true,"tva_franchise_seuils":{"services":37500,"tolerance_services":41250,"biens":85000,"tolerance_biens":93500},"responsabilite":"patrimoine_personnel_protege_par_defaut","responsabilite_exceptions":["fraude_fiscale_ou_sociale","manquement_grave_aux_obligations","renonciation_explicite_a_la_demande_d_un_creancier","dettes_nees_avant_15_05_2022"],"responsabilite_note_contenu_visible":"À mentionner explicitement dans le texte visible (pas seulement dans les données): les banques exigent quasi-systématiquement la renonciation à cette protection pour accorder un crédit professionnel — cas d'usage le plus fréquent en pratique.","protection_sociale":"SSI (aligné régime général depuis 2020)","cout_creation_moyen":0,"comptabilite_obligatoire":"simplifiee"},"entreprise-individuelle":{"nom":"Entreprise individuelle (régime réel)","nom_court":"EI","categorie":"individuel","regime_fiscal":"IR (BIC/BNC réel), option IS possible depuis 2022","regime_social":"TNS","seuils_ca":null,"taux_cotisations_sociales_estime":0.3,"responsabilite":"patrimoine_personnel_protege_par_defaut","responsabilite_exceptions":["fraude_fiscale_ou_sociale","manquement_grave_aux_obligations","renonciation_explicite_a_la_demande_d_un_creancier","dettes_nees_avant_15_05_2022"],"responsabilite_note_contenu_visible":"Même nuance que auto-entrepreneur: renonciation quasi-systématique exigée par les banques pour un prêt pro.","protection_sociale":"SSI","cout_creation_moyen":0,"comptabilite_obligatoire":"reelle"},"eurl":{"nom":"Entreprise Unipersonnelle à Responsabilité Limitée","nom_court":"EURL","categorie":"societe","regime_fiscal_defaut":"IR","regime_fiscal_options":["IR","IS"],"regime_social_gerant":"TNS","taux_cotisations_tns_estime":0.45,"responsabilite":"limitee_aux_apports","protection_sociale":"SSI","cout_creation_moyen":250,"comptabilite_obligatoire":"reelle_complete","capital_social_minimum":1},"sasu":{"nom":"Société par Actions Simplifiée Unipersonnelle","nom_court":"SASU","categorie":"societe","regime_fiscal_defaut":"IS","regime_fiscal_options":["IS","IR (5 ans max, conditions)"],"regime_social_president":"assimile_salarie","taux_charges_president_salaire":0.65,"responsabilite":"limitee_aux_apports","protection_sociale":"Régime général (hors assurance chômage)","cout_creation_moyen":250,"comptabilite_obligatoire":"reelle_complete","capital_social_minimum":1},"sarl":{"nom":"Société à Responsabilité Limitée","nom_court":"SARL","categorie":"societe","associes_min":2,"regime_fiscal_defaut":"IS","regime_fiscal_options":["IS","IR (5 ans max, conditions)"],"regime_social_gerant_majoritaire":"TNS","regime_social_gerant_minoritaire":"assimile_salarie","taux_cotisations_tns_estime":0.45,"taux_charges_gerant_minoritaire_salaire":0.65,"responsabilite":"limitee_aux_apports","cout_creation_moyen":250,"comptabilite_obligatoire":"reelle_complete","capital_social_minimum":1}}};
+  function eur(n){ return Math.round(n).toLocaleString('fr-FR')+' €'; }
+  function pct(n){ return (n*100).toFixed(1).replace('.',',')+' %'; }
+  function calculate(){
+    const ca = parseFloat(document.getElementById('ca').value)||0;
+    const tmi = parseFloat(document.getElementById('tmi').value);
+    const typeActiviteEl = document.getElementById('typeActivite');
+    const params = { ca, tmi, type_activite: typeActiviteEl ? typeActiviteEl.value : undefined };
+    const res = calculerStatut(PAGE.statutId, params, STATUTS_DATA);
+    document.getElementById('r-net').textContent = eur(res.revenu_net_apres_impot);
+    document.getElementById('r-cotis').textContent = eur(res.cotisations_sociales);
+    document.getElementById('r-impot').textContent = eur(res.impot_revenu);
+    document.getElementById('r-taux').textContent = pct(res.taux_prelevement_global);
+    document.getElementById('result').style.display='block';
+    document.getElementById('result').scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+  function toggleFaq(b){ b.classList.toggle('open'); b.nextElementSibling.classList.toggle('open'); }
+  </script>
+</div>
+<div class="container content">
+  <a class="back-link" href="/">← Tous les statuts</a>
+  
+  <h2 class="st">Chiffres clés — Société par Actions Simplifiée Unipersonnelle</h2>
+  <table class="data-table"><thead><tr><th>Donnée</th><th>Valeur</th></tr></thead><tbody>
+    <tr><td>Catégorie</td><td class="hl">Société</td></tr><tr><td>Régime fiscal par défaut</td><td class="hl">IS</td></tr><tr><td>Responsabilité</td><td class="hl">Responsabilité limitée aux apports</td></tr><tr><td>Coût de création moyen</td><td class="hl">250 €</td></tr>
+  </tbody></table>
+  <p style="font-size:.78rem;color:var(--muted);">Données 2026-01 — à titre indicatif, vérifiées par un professionnel avant toute décision. Source structurée : <code>data/statuts.json</code>.</p>
+  
+  <h2 class="st">Questions fréquentes</h2>
+  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Pourquoi les charges du président de SASU sont-elles élevées ?</button><div class="faq-a">Le statut assimilé salarié donne une meilleure protection sociale (régime général) qu'un TNS, ce qui se traduit par des charges patronales et salariales plus élevées, de l'ordre de 65% du net.</div></div>
+  <div class="link-grid">
+    <a class="link-card" href="/simulateur/sasu/">sasu</a><a class="link-card" href="/comparateur/eurl-vs-sasu/">eurl vs sasu</a>
+  </div>
+</div>
+<footer><div class="container">
+  <div class="disc">Simulateur à titre indicatif, basé sur des taux 2026-01 — ne remplace pas l'avis d'un expert-comptable ou d'un avocat. Taux et seuils à faire valider par un expert-comptable avant publication. Voir plan de build — étape 1.</div>
+  <p><a href="/">Comparateur de statuts juridiques</a></p>
+</div></footer>
+</body>
+</html>

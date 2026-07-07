@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Passer d'auto-entrepreneur à SASU : guide et simulation 2026</title>
+<meta name="description" content="Étapes pour transformer une activité d'auto-entrepreneur en SASU, avec simulation de l'impact sur le revenu net.">
+
+<link rel="canonical" href="https://calculateur-statuts-juridiques.fr/migration/auto-entrepreneur-vers-sasu/">
+<meta property="og:title" content="Passer d'auto-entrepreneur à SASU : guide et simulation 2026">
+<meta property="og:description" content="Étapes pour transformer une activité d'auto-entrepreneur en SASU, avec simulation de l'impact sur le revenu net.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://calculateur-statuts-juridiques.fr/migration/auto-entrepreneur-vers-sasu/">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebApplication",
+   "name": "Comment passer d'auto-entrepreneur à SASU ?",
+   "url": "https://calculateur-statuts-juridiques.fr/migration/auto-entrepreneur-vers-sasu/",
+   "applicationCategory": "FinanceApplication",
+   "operatingSystem": "Any",
+   "inLanguage": "fr",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Puis-je garder mes clients existants en passant à la SASU ?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Oui, mais les contrats en cours doivent généralement être re-signés ou faire l'objet d'un avenant au nom de la nouvelle personne morale."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Dois-je clôturer mon auto-entreprise avant de créer la SASU ?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Non obligatoirement dans cet ordre, mais il faut éviter la double immatriculation d'une même activité — dans la pratique, beaucoup cessent l'auto-entreprise une fois la SASU opérationnelle."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "HowTo",
+   "name": "Comment passer d'auto-entrepreneur à SASU ?",
+   "step": [
+    {
+     "@type": "HowToStep",
+     "position": 1,
+     "text": "Cesser l'activité d'auto-entrepreneur (déclaration de cessation auprès du guichet unique)"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 2,
+     "text": "Rédiger les statuts de la SASU et constituer le capital social (1€ minimum)"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 3,
+     "text": "Déposer le capital social sur un compte bloqué et publier une annonce légale"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 4,
+     "text": "Immatriculer la SASU au guichet unique (RCS)"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 5,
+     "text": "Transférer ou re-signer les contrats clients au nom de la nouvelle société"
+    },
+    {
+     "@type": "HowToStep",
+     "position": 6,
+     "text": "Ouvrir un compte bancaire professionnel dédié à la SASU"
+    }
+   ]
+  }
+ ]
+}
+</script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --brand:#1a4d7a; --brand-dark:#0d3352; --brand-light:#e8f0f7; --accent:#1a7a5c; --text:#1a2027; --muted:#5c6b7a; --border:#dde5ec; --bg:#f7f9fb; --radius:12px; }
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color:var(--text); background:var(--bg); font-size:16px; line-height:1.65; }
+header { background:linear-gradient(135deg,var(--brand-dark) 0%,var(--brand) 100%); color:#fff; padding:52px 20px 88px; text-align:center; }
+header h1 { font-size:clamp(1.4rem,4vw,2.1rem); font-weight:800; margin-bottom:12px; }
+header p { color:rgba(255,255,255,.92); font-size:1rem; max-width:600px; margin:0 auto; }
+.container { max-width:840px; margin:0 auto; padding:0 20px; }
+.tool-wrapper { margin:-56px auto 48px; }
+.tool-card { background:#fff; border-radius:var(--radius); box-shadow:0 8px 40px rgba(13,51,82,.14); border:1px solid var(--border); padding:32px 28px; }
+@media (max-width:580px){ .tool-card{ padding:22px 16px; } }
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media (max-width:580px){ .form-grid{ grid-template-columns:1fr; } }
+.form-group { display:flex; flex-direction:column; gap:6px; }
+.form-group.full { grid-column:1 / -1; }
+label { font-size:.79rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; }
+select, input[type=number] { border:2px solid var(--border); border-radius:8px; padding:12px 14px; font-size:1rem; color:var(--text); background:#fff; width:100%; }
+select:focus, input[type=number]:focus { outline:none; border-color:var(--brand); }
+.calc-btn { width:100%; margin-top:22px; padding:17px; background:var(--brand); color:#fff; border:none; border-radius:10px; font-size:1.08rem; font-weight:700; cursor:pointer; }
+.calc-btn:hover { background:var(--brand-dark); }
+.result { display:none; margin-top:26px; }
+.result-hero { background:linear-gradient(135deg,var(--brand-dark),var(--brand)); border-radius:10px; padding:26px; color:#fff; text-align:center; margin-bottom:14px; }
+.result-hero .rl { font-size:.76rem; font-weight:700; text-transform:uppercase; letter-spacing:.5px; opacity:.85; margin-bottom:4px; }
+.result-hero .ra { font-size:2.3rem; font-weight:900; line-height:1.1; }
+.result-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px; }
+@media (max-width:480px){ .result-grid{ grid-template-columns:1fr 1fr; } }
+.r-stat { background:var(--brand-light); border-radius:8px; padding:14px; text-align:center; }
+.r-stat .sv { font-size:1.1rem; font-weight:800; color:var(--brand-dark); }
+.r-stat .sl { font-size:.72rem; color:var(--muted); margin-top:2px; }
+.content { padding-bottom:64px; }
+h2.st { font-size:1.3rem; font-weight:800; margin:48px 0 16px; }
+p { color:#2c3844; margin-bottom:14px; line-height:1.75; }
+.data-table { width:100%; border-collapse:collapse; margin:18px 0; font-size:.88rem; }
+.data-table th { background:var(--brand); color:#fff; padding:10px 14px; text-align:left; font-weight:600; }
+.data-table td { padding:10px 14px; border-bottom:1px solid var(--border); }
+.data-table tr:nth-child(even) td { background:#f2f6f9; }
+.hl { font-weight:700; color:var(--brand-dark); }
+.link-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:10px; margin:18px 0; }
+.link-card { display:block; background:#fff; border:1px solid var(--border); border-radius:8px; padding:12px 14px; text-decoration:none; color:var(--text); font-size:.88rem; font-weight:600; }
+.link-card:hover { border-color:var(--brand); color:var(--brand-dark); }
+.faq-item { border-bottom:1px solid var(--border); }
+.faq-q { width:100%; background:none; border:none; text-align:left; padding:17px 0; font-size:.92rem; font-weight:600; cursor:pointer; display:flex; justify-content:space-between; align-items:center; color:var(--text); }
+.faq-q::after { content:'+'; font-size:1.3rem; color:var(--brand); flex-shrink:0; margin-left:12px; }
+.faq-q.open::after { content:'−'; }
+.faq-a { display:none; padding:0 0 16px; font-size:.88rem; color:#3d4a56; line-height:1.75; }
+.faq-a.open { display:block; }
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--brand-dark); text-decoration:none; font-weight:600; font-size:.88rem; margin-bottom:28px; }
+footer { background:#0d3352; color:#c3d3e0; text-align:center; padding:30px 20px; font-size:.8rem; }
+footer p { color:#c3d3e0; }
+footer a { color:#dbe8f2; }
+.disc { background:#123f66; border-radius:8px; padding:13px 18px; margin-bottom:16px; font-size:.78rem; color:#c3d3e0; line-height:1.6; }
+</style>
+</head>
+<body>
+
+<header><div class="container">
+  <h1>Comment passer d'auto-entrepreneur à SASU ?</h1>
+  <p>Étapes pour transformer une activité d'auto-entrepreneur en SASU, avec simulation de l'impact sur le revenu net.</p>
+</div></header>
+<div class="container content">
+  <a class="back-link" href="/">← Tous les statuts</a>
+  <h2 class="st">Les étapes</h2>
+  <table class="data-table"><thead><tr><th>#</th><th>Étape</th></tr></thead><tbody>
+    <tr><td class="hl">1</td><td>Cesser l'activité d'auto-entrepreneur (déclaration de cessation auprès du guichet unique)</td></tr><tr><td class="hl">2</td><td>Rédiger les statuts de la SASU et constituer le capital social (1€ minimum)</td></tr><tr><td class="hl">3</td><td>Déposer le capital social sur un compte bloqué et publier une annonce légale</td></tr><tr><td class="hl">4</td><td>Immatriculer la SASU au guichet unique (RCS)</td></tr><tr><td class="hl">5</td><td>Transférer ou re-signer les contrats clients au nom de la nouvelle société</td></tr><tr><td class="hl">6</td><td>Ouvrir un compte bancaire professionnel dédié à la SASU</td></tr>
+  </tbody></table>
+  <h2 class="st">Impact estimé sur le revenu net (exemple à 60 000 € de CA)</h2>
+  <table class="data-table"><thead><tr><th>Statut</th><th>Revenu net estimé</th></tr></thead><tbody>
+    <tr><td>Auto-entrepreneur (avant)</td><td class="hl">35 400 €</td></tr>
+    <tr><td>SASU (après)</td><td class="hl">12 521 €</td></tr>
+  </tbody></table>
+  <p style="font-size:.78rem;color:var(--muted);">Estimation à titre d'exemple, hypothèses de rémunération/dividendes fixées ci-dessus — utilisez le <a href="/comparateur/auto-entrepreneur-vs-sasu/">comparateur Auto-entrepreneur vs SASU</a> pour ajuster à votre situation.</p>
+  
+  <h2 class="st">Questions fréquentes</h2>
+  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Puis-je garder mes clients existants en passant à la SASU ?</button><div class="faq-a">Oui, mais les contrats en cours doivent généralement être re-signés ou faire l'objet d'un avenant au nom de la nouvelle personne morale.</div></div>
+  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Dois-je clôturer mon auto-entreprise avant de créer la SASU ?</button><div class="faq-a">Non obligatoirement dans cet ordre, mais il faut éviter la double immatriculation d'une même activité — dans la pratique, beaucoup cessent l'auto-entreprise une fois la SASU opérationnelle.</div></div>
+  <div class="link-grid">
+    <a class="link-card" href="/comparateur/auto-entrepreneur-vs-sasu/">auto entrepreneur vs sasu</a><a class="link-card" href="/charges/sasu/">sasu</a>
+  </div>
+</div>
+<footer><div class="container">
+  <div class="disc">Simulateur à titre indicatif, basé sur des taux 2026-01 — ne remplace pas l'avis d'un expert-comptable ou d'un avocat. Taux et seuils à faire valider par un expert-comptable avant publication. Voir plan de build — étape 1.</div>
+  <p><a href="/">Comparateur de statuts juridiques</a></p>
+</div></footer>
+</body>
+</html>
