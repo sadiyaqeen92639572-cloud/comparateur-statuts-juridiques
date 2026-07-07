@@ -366,6 +366,87 @@ function formatStatutFacts(statut) {
   <p style="font-size:.78rem;color:var(--muted);">Données ${STATUTS_DATA.version} — à titre indicatif, vérifiées par un professionnel avant toute décision. Source structurée : <code>data/statuts.json</code>.</p>`;
 }
 
+// Formule(s) de calcul par statut + liens sources officiels associés — génère depuis
+// statut.categorie/regime_*, pas retapé à la main par page (même principe que formatStatutFacts:
+// une seule source, pas de 3e copie manuelle comme dans pension-alimentaire-belgique).
+function formuleLinesFor(statut) {
+  const lignes = [];
+  if (statut.regime_fiscal === 'micro-fiscal') {
+    lignes.push('cotisations_sociales = CA × taux_cotisations (selon activité)');
+    lignes.push('revenu_imposable = CA × (1 − abattement_forfaitaire)');
+    lignes.push('impôt = revenu_imposable × TMI  (ou CA × taux_versement_libératoire si option VLF)');
+    lignes.push('revenu_net = CA − cotisations_sociales − impôt');
+  } else if (statut.categorie === 'individuel') {
+    lignes.push('bénéfice = CA − charges_réelles');
+    lignes.push('cotisations_sociales = bénéfice × taux_TNS_estimé');
+    lignes.push('revenu_imposable = bénéfice − cotisations_sociales');
+    lignes.push('impôt = revenu_imposable × TMI');
+    lignes.push('revenu_net = bénéfice − cotisations_sociales − impôt');
+  } else {
+    lignes.push('bénéfice_avant_IS = CA − charges_exploitation − rémunération_dirigeant − cotisations_sociales_dirigeant');
+    lignes.push('IS = bénéfice×15% (jusqu\'à 42 500€) + (bénéfice−42 500€)×25% au-delà');
+    lignes.push('rémunération_nette = rémunération_dirigeant − cotisations_sociales_dirigeant');
+    lignes.push('dividendes_nets = dividendes_versés × (1 − 31,4%)  (flat tax / PFU)');
+    lignes.push('revenu_net_foyer = rémunération_nette − impôt(TMI) + dividendes_nets');
+  }
+  return lignes;
+}
+
+function sourcesForStatuts(statutIds) {
+  const S = STATUTS_DATA.sources;
+  const cles = new Set(['bareme_ir']);
+  statutIds.forEach(id => {
+    const s = STATUTS_DATA.statuts[id];
+    if (s.regime_fiscal === 'micro-fiscal') {
+      ['urssaf_taux_micro', 'plafonds_ca_micro', 'abattement_forfaitaire', 'versement_liberatoire', 'franchise_tva'].forEach(k => cles.add(k));
+    }
+    if (s.categorie === 'individuel') {
+      cles.add('loi_patrimoine_ei'); cles.add('loi_patrimoine_ei_explication');
+    }
+    if (s.categorie === 'societe') {
+      cles.add('is_taux'); cles.add('is_taux_reduit_conditions'); cles.add('flat_tax_dividendes');
+    }
+    if (s.regime_social_gerant_majoritaire || s.regime_social_gerant) cles.add('gerant_sarl');
+    if (s.regime_social_president === 'assimile_salarie') cles.add('president_sasu');
+  });
+  const labels = {
+    bareme_ir: 'Barème progressif de l\'impôt sur le revenu — service-public.fr',
+    urssaf_taux_micro: 'Taux de cotisations micro-entrepreneur — URSSAF',
+    plafonds_ca_micro: 'Plafonds de chiffre d\'affaires micro-entrepreneur — impots.gouv.fr',
+    abattement_forfaitaire: 'Abattement forfaitaire micro-fiscal — service-public.fr',
+    versement_liberatoire: 'Versement libératoire de l\'impôt sur le revenu — impots.gouv.fr',
+    franchise_tva: 'Franchise en base de TVA — service-public.fr',
+    loi_patrimoine_ei: 'Loi n° 2022-172 du 14 février 2022 — Légifrance',
+    loi_patrimoine_ei_explication: 'Protection du patrimoine personnel de l\'entrepreneur individuel — service-public.fr',
+    is_taux: 'Taux de l\'impôt sur les sociétés — BOFiP',
+    is_taux_reduit_conditions: 'Conditions du taux réduit d\'IS (15%) — BOFiP',
+    flat_tax_dividendes: 'Prélèvement forfaitaire unique (PFU) sur dividendes — impots.gouv.fr',
+    gerant_sarl: 'Régime social du gérant de SARL — service-public.fr',
+    president_sasu: 'Régime social du président de SASU — service-public.fr'
+  };
+  return [...cles].filter(k => S[k]).map(k => ({ label: labels[k] || k, url: S[k] }));
+}
+
+function formulesEtSourcesBlock(statutIds) {
+  const blocs = statutIds.map(id => {
+    const statut = STATUTS_DATA.statuts[id];
+    const lignes = formuleLinesFor(statut);
+    return `<h3 class="sub">${esc(statut.nom_court || statut.nom)}</h3>
+    <div class="code">${lignes.map(esc).join('<br>')}</div>`;
+  }).join('');
+  const sources = sourcesForStatuts(statutIds);
+  return `
+  <h2 class="st">Formules de calcul &amp; sources officielles</h2>
+  <div class="method">
+    ${blocs}
+    <p style="font-size:.78rem;color:var(--muted);margin:14px 0 6px;">Formules appliquées de façon déterministe à partir de <code>data/statuts.json</code> (${STATUTS_DATA.version}) — approximations pédagogiques, pas un calcul officiel URSSAF/impots.gouv.fr au barème exact par tranche.</p>
+    <h3 class="sub">Sources officielles</h3>
+    <ul style="padding-left:18px;font-size:.88rem;">
+      ${sources.map(s => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener nofollow">${esc(s.label)}</a></li>`).join('')}
+    </ul>
+  </div>`;
+}
+
 const CSS = `
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root { --brand:#1a4d7a; --brand-dark:#0d3352; --brand-light:#e8f0f7; --accent:#1a7a5c; --text:#1a2027; --muted:#5c6b7a; --border:#dde5ec; --bg:#f7f9fb; --radius:12px; }
@@ -397,7 +478,11 @@ select:focus, input[type=number]:focus { outline:none; border-color:var(--brand)
 .r-stat .sl { font-size:.72rem; color:var(--muted); margin-top:2px; }
 .content { padding-bottom:64px; }
 h2.st { font-size:1.3rem; font-weight:800; margin:48px 0 16px; }
+h3.sub { font-size:1rem; font-weight:700; margin:24px 0 10px; color:var(--brand-dark); }
 p { color:#2c3844; margin-bottom:14px; line-height:1.75; }
+.method { background:#fff; border:1px solid var(--border); border-radius:12px; padding:26px 26px 18px; margin:0 0 36px; font-size:.9rem; }
+.method .code { background:#0d1b28; color:#dbe8f2; border-radius:8px; padding:16px 18px; font-family:'Courier New',monospace; font-size:.82rem; line-height:1.9; margin:10px 0; overflow-x:auto; }
+.method a { color:var(--brand); }
 .data-table { width:100%; border-collapse:collapse; margin:18px 0; font-size:.88rem; }
 .data-table th { background:var(--brand); color:#fff; padding:10px 14px; text-align:left; font-weight:600; }
 .data-table td { padding:10px 14px; border-bottom:1px solid var(--border); }
@@ -527,6 +612,7 @@ function renderSimulateur(cfg) {
 <div class="container content">
   <a class="back-link" href="/">← Tous les statuts</a>
   ${formatStatutFacts(statut)}
+  ${formulesEtSourcesBlock([cfg.statut])}
   ${faqBlock(cfg.faq)}
   <div class="link-grid">
     ${cfg.liens_internes.map(l => `<a class="link-card" href="${l}/">${l.split('/').filter(Boolean).pop().replace(/-/g, ' ')}</a>`).join('')}
@@ -628,6 +714,7 @@ function renderComparateur(cfg) {
   ${seuilCopy}
   ${formatStatutFacts(statutA)}
   ${formatStatutFacts(statutB)}
+  ${formulesEtSourcesBlock([idA, idB])}
   ${faqBlock(cfg.faq)}
   <div class="link-grid">
     ${cfg.liens_internes.map(l => `<a class="link-card" href="${l}/">${l.split('/').filter(Boolean).pop().replace(/-/g, ' ')}</a>`).join('')}
@@ -653,6 +740,7 @@ function renderCharges(cfg) {
 <div class="container content">
   <a class="back-link" href="/">← Tous les statuts</a>
   ${formatStatutFacts(statut)}
+  ${formulesEtSourcesBlock([cfg.statut])}
   ${faqBlock(cfg.faq)}
   <div class="link-grid">
     ${cfg.liens_internes.map(l => `<a class="link-card" href="${l}/">${l.split('/').filter(Boolean).pop().replace(/-/g, ' ')}</a>`).join('')}
@@ -688,6 +776,7 @@ function renderMigration(cfg) {
     <tr><td>${esc(nomTo)} (après)</td><td class="hl">${eur(cmp.resB.revenu_net_apres_impot)}</td></tr>
   </tbody></table>
   <p style="font-size:.78rem;color:var(--muted);">Estimation à titre d'exemple, hypothèses de rémunération/dividendes fixées ci-dessus — utilisez le <a href="/comparateur/${cfg.from}-vs-${cfg.to}/">comparateur ${esc(nomFrom)} vs ${esc(nomTo)}</a> pour ajuster à votre situation.</p>
+  ${formulesEtSourcesBlock([cfg.from, cfg.to])}
   ${faqBlock(cfg.faq)}
   <div class="link-grid">
     ${cfg.liens_internes.map(l => `<a class="link-card" href="${l}/">${l.split('/').filter(Boolean).pop().replace(/-/g, ' ')}</a>`).join('')}
@@ -724,6 +813,7 @@ function renderComparateurMetier(cfg) {
   <p>Simulation pré-remplie pour un profil <strong>${esc(metier.nom)}</strong> (CA type ${eur(caDefaut)}). Ajustez librement les paramètres ci-dessus.</p>
   ${formatStatutFacts(statutA)}
   ${formatStatutFacts(statutB)}
+  ${formulesEtSourcesBlock([idA, idB])}
   ${faqBlock(cfg.faq)}
   <div class="link-grid">
     ${cfg.liens_internes.map(l => `<a class="link-card" href="${l}/">${l.split('/').filter(Boolean).pop().replace(/-/g, ' ')}</a>`).join('')}

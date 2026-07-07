@@ -119,7 +119,11 @@ select:focus, input[type=number]:focus { outline:none; border-color:var(--brand)
 .r-stat .sl { font-size:.72rem; color:var(--muted); margin-top:2px; }
 .content { padding-bottom:64px; }
 h2.st { font-size:1.3rem; font-weight:800; margin:48px 0 16px; }
+h3.sub { font-size:1rem; font-weight:700; margin:24px 0 10px; color:var(--brand-dark); }
 p { color:#2c3844; margin-bottom:14px; line-height:1.75; }
+.method { background:#fff; border:1px solid var(--border); border-radius:12px; padding:26px 26px 18px; margin:0 0 36px; font-size:.9rem; }
+.method .code { background:#0d1b28; color:#dbe8f2; border-radius:8px; padding:16px 18px; font-family:'Courier New',monospace; font-size:.82rem; line-height:1.9; margin:10px 0; overflow-x:auto; }
+.method a { color:var(--brand); }
 .data-table { width:100%; border-collapse:collapse; margin:18px 0; font-size:.88rem; }
 .data-table th { background:var(--brand); color:#fff; padding:10px 14px; text-align:left; font-weight:600; }
 .data-table td { padding:10px 14px; border-bottom:1px solid var(--border); }
@@ -155,10 +159,22 @@ footer a { color:#dbe8f2; }
   </tbody></table>
   <h2 class="st">Impact estimé sur le revenu net (exemple à 60 000 € de CA)</h2>
   <table class="data-table"><thead><tr><th>Statut</th><th>Revenu net estimé</th></tr></thead><tbody>
-    <tr><td>Auto-entrepreneur (avant)</td><td class="hl">35 400 €</td></tr>
-    <tr><td>SASU (après)</td><td class="hl">12 521 €</td></tr>
+    <tr><td>Auto-entrepreneur (avant)</td><td class="hl">32 760 €</td></tr>
+    <tr><td>SASU (après)</td><td class="hl">12 393 €</td></tr>
   </tbody></table>
   <p style="font-size:.78rem;color:var(--muted);">Estimation à titre d'exemple, hypothèses de rémunération/dividendes fixées ci-dessus — utilisez le <a href="/comparateur/auto-entrepreneur-vs-sasu/">comparateur Auto-entrepreneur vs SASU</a> pour ajuster à votre situation.</p>
+  
+  <h2 class="st">Formules de calcul &amp; sources officielles</h2>
+  <div class="method">
+    <h3 class="sub">Auto-entrepreneur</h3>
+    <div class="code">cotisations_sociales = CA × taux_cotisations (selon activité)<br>revenu_imposable = CA × (1 − abattement_forfaitaire)<br>impôt = revenu_imposable × TMI  (ou CA × taux_versement_libératoire si option VLF)<br>revenu_net = CA − cotisations_sociales − impôt</div><h3 class="sub">SASU</h3>
+    <div class="code">bénéfice_avant_IS = CA − charges_exploitation − rémunération_dirigeant − cotisations_sociales_dirigeant<br>IS = bénéfice×15% (jusqu'à 42 500€) + (bénéfice−42 500€)×25% au-delà<br>rémunération_nette = rémunération_dirigeant − cotisations_sociales_dirigeant<br>dividendes_nets = dividendes_versés × (1 − 31,4%)  (flat tax / PFU)<br>revenu_net_foyer = rémunération_nette − impôt(TMI) + dividendes_nets</div>
+    <p style="font-size:.78rem;color:var(--muted);margin:14px 0 6px;">Formules appliquées de façon déterministe à partir de <code>data/statuts.json</code> (2026-01) — approximations pédagogiques, pas un calcul officiel URSSAF/impots.gouv.fr au barème exact par tranche.</p>
+    <h3 class="sub">Sources officielles</h3>
+    <ul style="padding-left:18px;font-size:.88rem;">
+      <li><a href="https://www.service-public.gouv.fr/particuliers/vosdroits/F1419" target="_blank" rel="noopener nofollow">Barème progressif de l'impôt sur le revenu — service-public.fr</a></li><li><a href="https://www.urssaf.fr/accueil/actualites/taux-cotisations-autoentrepeneur.html" target="_blank" rel="noopener nofollow">Taux de cotisations micro-entrepreneur — URSSAF</a></li><li><a href="https://www.impots.gouv.fr/professionnel/questions/pour-rester-micro-entrepreneur-quel-montant-de-chiffre-daffaires-ou-de" target="_blank" rel="noopener nofollow">Plafonds de chiffre d'affaires micro-entrepreneur — impots.gouv.fr</a></li><li><a href="https://entreprendre.service-public.gouv.fr/vosdroits/F23267" target="_blank" rel="noopener nofollow">Abattement forfaitaire micro-fiscal — service-public.fr</a></li><li><a href="https://www.impots.gouv.fr/professionnel/questions/en-tant-que-micro-entrepreneur-sous-quelles-conditions-puis-je-opter-pour-l" target="_blank" rel="noopener nofollow">Versement libératoire de l'impôt sur le revenu — impots.gouv.fr</a></li><li><a href="https://entreprendre.service-public.gouv.fr/vosdroits/F21746" target="_blank" rel="noopener nofollow">Franchise en base de TVA — service-public.fr</a></li><li><a href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000045167536" target="_blank" rel="noopener nofollow">Loi n° 2022-172 du 14 février 2022 — Légifrance</a></li><li><a href="https://entreprendre.service-public.gouv.fr/vosdroits/F36354" target="_blank" rel="noopener nofollow">Protection du patrimoine personnel de l'entrepreneur individuel — service-public.fr</a></li><li><a href="https://bofip.impots.gouv.fr/bofip/2065-PGP.html/identifiant=BOI-IS-LIQ-20-20-20230621" target="_blank" rel="noopener nofollow">Taux de l'impôt sur les sociétés — BOFiP</a></li><li><a href="https://bofip.impots.gouv.fr/bofip/2062-PGP.html/identifiant=BOI-IS-LIQ-20-10-20230621" target="_blank" rel="noopener nofollow">Conditions du taux réduit d'IS (15%) — BOFiP</a></li><li><a href="https://www.impots.gouv.fr/international-particulier/mes-dividendes" target="_blank" rel="noopener nofollow">Prélèvement forfaitaire unique (PFU) sur dividendes — impots.gouv.fr</a></li><li><a href="https://entreprendre.service-public.gouv.fr/vosdroits/F36240" target="_blank" rel="noopener nofollow">Régime social du président de SASU — service-public.fr</a></li>
+    </ul>
+  </div>
   
   <h2 class="st">Questions fréquentes</h2>
   <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Puis-je garder mes clients existants en passant à la SASU ?</button><div class="faq-a">Oui, mais les contrats en cours doivent généralement être re-signés ou faire l'objet d'un avenant au nom de la nouvelle personne morale.</div></div>
