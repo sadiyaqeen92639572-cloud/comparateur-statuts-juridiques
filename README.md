@@ -8,6 +8,15 @@ Toutes les autres pages (`simulateur/`, `comparateur/`, `charges/`, `migration/`
 générées par `generate-pages.js` à partir de la routing table `PAGES[]` et de la donnée
 réglementaire `data/statuts.json`.
 
+## Free Companion Tools
+
+### [Calculateur Flat Tax Dividendes 2026 — PFU 31,4%](https://sadiyaqeen92639572-cloud.github.io/flat-tax-dividendes-calculateur/)
+
+Calculateur autonome : dividendes bruts → net après PFU (31,4%) ou option barème progressif +
+abattement 40%, avec comparaison automatique des deux options selon votre TMI.
+
+Powered by [calculateur-statuts-juridiques.fr](https://calculateur-statuts-juridiques.fr/)
+
 ## Structure
 
 - `data/statuts.json` — source de vérité réglementaire (taux, seuils, régime fiscal/social par
