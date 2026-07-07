@@ -37,7 +37,7 @@ const PAGES = [
     type_activite_defaut: 'prestations_services_bnc',
     ca_defaut: 40000,
     faq: [
-      ["Quel est le plafond de chiffre d'affaires en auto-entrepreneur ?", "188 700 € pour la vente de marchandises, 77 700 € pour les prestations de services (BIC ou BNC)."],
+      ["Quel est le plafond de chiffre d'affaires en auto-entrepreneur ?", "203 100 € pour la vente de marchandises, 83 600 € pour les prestations de services (BIC ou BNC) — seuils 2026, révisés à la hausse depuis les 188 700 €/77 700 € en vigueur jusqu'en 2025."],
       ["Le versement libératoire est-il toujours intéressant ?", "Non — il dépend de votre taux marginal d'imposition et de votre revenu fiscal de référence. Il est surtout avantageux si votre TMI est supérieur au taux du versement libératoire."],
       ["Mon patrimoine personnel est-il protégé ?", "Oui, par défaut depuis le 15 mai 2022 votre patrimoine personnel est insaisissable par les créanciers professionnels — sauf en cas de fraude, manquement grave, ou renonciation explicite à la demande d'un créancier (les banques l'exigent quasi-systématiquement pour un prêt professionnel)."]
     ],
@@ -81,7 +81,7 @@ const PAGES = [
     ca_defaut: 80000,
     faq: [
       ["Le président de SASU cotise-t-il au chômage ?", "Non — le statut assimilé salarié donne accès au régime général de sécurité sociale mais pas à l'assurance chômage, sauf cumul avec un contrat de travail distinct dans certaines conditions."],
-      ["Salaire ou dividendes en SASU, que choisir ?", "Les dividendes évitent les charges sociales (soumis à la flat tax de 30%) mais ne créent aucun droit à la retraite ni de protection sociale — un équilibre est généralement préférable à un choix extrême. Voir le comparateur EURL vs SASU pour le détail du calcul."]
+      ["Salaire ou dividendes en SASU, que choisir ?", "Les dividendes évitent les charges sociales (soumis à la flat tax de 31,4% depuis le 1er janvier 2026) mais ne créent aucun droit à la retraite ni de protection sociale — un équilibre est généralement préférable à un choix extrême. Voir le comparateur EURL vs SASU pour le détail du calcul."]
     ],
     liens_internes: ['/simulateur/eurl', '/comparateur/eurl-vs-sasu', '/charges/sasu']
   },
@@ -110,7 +110,7 @@ const PAGES = [
     params_defaut: { type_activite: 'prestations_services_bnc', charges_exploitation: 8000, remuneration_gerant: 25000, dividendes_verses: 15000, tmi: 0.30 },
     faq: [
       ["À partir de quel CA la SASU devient-elle plus intéressante que l'auto-entrepreneur ?", "Cela dépend du split rémunération/dividendes retenu et dépasse rarement une réponse unique — voir le seuil de bascule calculé ci-dessus pour les hypothèses de cette page, et ajustez les paramètres pour votre situation."],
-      ["L'auto-entrepreneur est-il toujours plus simple ?", "Oui administrativement (comptabilité simplifiée, pas de statuts à rédiger), mais il est plafonné en chiffre d'affaires (77 700 € en prestations de services) contrairement à la SASU."]
+      ["L'auto-entrepreneur est-il toujours plus simple ?", "Oui administrativement (comptabilité simplifiée, pas de statuts à rédiger), mais il est plafonné en chiffre d'affaires (83 600 € en prestations de services, seuil 2026) contrairement à la SASU."]
     ],
     liens_internes: ['/migration/auto-entrepreneur-vers-sasu', '/charges/auto-entrepreneur', '/charges/sasu']
   },
@@ -139,7 +139,7 @@ const PAGES = [
     params_defaut: { charges_exploitation: 10000, remuneration_gerant: 30000, dividendes_verses: 20000, tmi: 0.30 },
     faq: [
       ["EURL ou SASU pour les cotisations sociales du dirigeant ?", "Le gérant d'EURL relève du régime TNS (cotisations généralement moins élevées mais couverture sociale moindre); le président de SASU est assimilé salarié (cotisations plus élevées, meilleure couverture sociale hors chômage)."],
-      ["Salaire ou dividendes, que choisir dans l'un ou l'autre statut ?", "Les dividendes évitent les cotisations sociales dans les deux statuts mais sont soumis à la flat tax de 30% et ne créent pas de droits sociaux. Voir le comparateur détaillé rémunération pour une analyse approfondie."]
+      ["Salaire ou dividendes, que choisir dans l'un ou l'autre statut ?", "Les dividendes évitent les cotisations sociales dans les deux statuts mais sont soumis à la flat tax de 31,4% (depuis le 1er janvier 2026) et ne créent pas de droits sociaux. Voir le comparateur détaillé rémunération pour une analyse approfondie."]
     ],
     liens_internes: ['/charges/eurl', '/charges/sasu', '/simulateur/eurl', '/simulateur/sasu']
   },
@@ -309,7 +309,7 @@ const PAGES = [
     desc: "Comparaison auto-entrepreneur vs EURL pré-remplie avec un CA type de développeur freelance.",
     params_defaut: { type_activite: 'prestations_services_bnc', charges_exploitation: 5000, remuneration_gerant: 35000, dividendes_verses: 15000, tmi: 0.30 },
     faq: [
-      ["Quel statut pour un développeur freelance à haut CA ?", "Au-delà du plafond auto-entrepreneur (77 700 €) ou pour déduire du matériel/formation en charges réelles, l'EURL ou la SASU deviennent pertinentes selon la préférence de régime social."]
+      ["Quel statut pour un développeur freelance à haut CA ?", "Au-delà du plafond auto-entrepreneur (83 600 €, seuil 2026) ou pour déduire du matériel/formation en charges réelles, l'EURL ou la SASU deviennent pertinentes selon la préférence de régime social."]
     ],
     liens_internes: ['/comparateur/auto-entrepreneur-vs-eurl', '/simulateur/eurl']
   }
