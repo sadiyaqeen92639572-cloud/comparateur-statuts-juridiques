@@ -107,6 +107,132 @@ footer { background:#0d3352; color:#c3d3e0; text-align:center; padding:30px 20px
 footer p { color:#c3d3e0; }
 footer a { color:#dbe8f2; }
 .disc { background:#123f66; border-radius:8px; padding:13px 18px; margin-bottom:16px; font-size:.88rem; color:#c3d3e0; line-height:1.6; }
+
+/* E-E-A-T Section styles */
+.eeat-section {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  margin-top: 32px;
+  box-shadow: 0 4px 20px rgba(13,51,82,.02);
+}
+.eeat-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--brand-dark);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 2px solid var(--brand-light);
+  padding-bottom: 12px;
+}
+.eeat-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 32px;
+}
+@media (max-width: 768px) {
+  .eeat-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+.eeat-author-card {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.eeat-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(26, 77, 122, 0.15);
+}
+.eeat-author-info h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--brand-dark);
+  margin-bottom: 2px;
+}
+.eeat-author-subtitle {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--brand);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+.eeat-author-info p {
+  font-size: 0.92rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.eeat-compliance {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.eeat-badge-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.eeat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--brand-light);
+  color: var(--brand-dark);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(26, 77, 122, 0.1);
+}
+.eeat-badge.verified {
+  background: #e6f6f0;
+  color: #1a7a5c;
+  border-color: rgba(26, 122, 92, 0.15);
+}
+.eeat-compliance-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.eeat-compliance-icon {
+  color: var(--brand);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.eeat-compliance-text h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--brand-dark);
+  margin-bottom: 2px;
+}
+.eeat-compliance-text p {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+.eeat-compliance-text a {
+  color: var(--brand);
+  text-decoration: underline;
+}
+.eeat-compliance-text a:hover {
+  color: var(--brand-dark);
+}
 </style>
 </head>
 <body>
@@ -380,6 +506,58 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
   <h2 class="st">Questions fréquentes</h2>
   <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Le président de SASU cotise-t-il au chômage ?</button><div class="faq-a">Non — le statut assimilé salarié donne accès au régime général de sécurité sociale mais pas à l'assurance chômage, sauf cumul avec un contrat de travail distinct dans certaines conditions.</div></div>
   <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Salaire ou dividendes en SASU, que choisir ?</button><div class="faq-a">Les dividendes évitent les charges sociales (soumis à la flat tax de 31,4% depuis le 1er janvier 2026) mais ne créent aucun droit à la retraite ni de protection sociale — un équilibre est généralement préférable à un choix extrême. Voir le comparateur EURL vs SASU pour le détail du calcul.</div></div>
+  
+  <div class="eeat-section">
+    <h2 class="eeat-title">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--brand);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+      Transparence, Méthodologie &amp; E-E-A-T
+    </h2>
+    <div class="eeat-grid">
+      <div class="eeat-author-card">
+        <div class="eeat-avatar">OS</div>
+        <div class="eeat-author-info">
+          <h3>Calculateur Statuts Juridiques</h3>
+          <div class="eeat-author-subtitle">Outil Open Source Collaboratif</div>
+          <p>
+            Ce comparateur est un outil pédagogique open-source conçu pour vulgariser et simplifier la compréhension des différents statuts juridiques en France. Les calculs appliquent de manière déterministe les taux et barèmes réglementaires connus.
+          </p>
+        </div>
+      </div>
+      <div class="eeat-compliance">
+        <div class="eeat-badge-list">
+          <span class="eeat-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            Vulgarisation Pédagogique
+          </span>
+          <span class="eeat-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Taux réglementaires 2026
+          </span>
+        </div>
+        <div class="eeat-compliance-item">
+          <svg class="eeat-compliance-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+          <div class="eeat-compliance-text">
+            <h4>Méthodologie &amp; Limites du simulateur</h4>
+            <p>Les calculs reposent sur les barèmes de la Loi de Finances 2026 et de l'URSSAF (notamment le taux de flat tax de 31,4% sur les dividendes). Nos formules sont simplifiées et ne remplacent pas un calcul au barème progressif par tranche. Pour une simulation officielle complète, référez-vous au moteur de calcul officiel de l'État : <a href="https://mon-entreprise.urssaf.fr/" target="_blank" rel="noopener noreferrer">mon-entreprise.urssaf.fr</a>.</p>
+          </div>
+        </div>
+        <div class="eeat-compliance-item">
+          <svg class="eeat-compliance-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <div class="eeat-compliance-text">
+            <h4>Conseil &amp; Validation Professionnelle</h4>
+            <p>Ce site n'étant pas audité par un expert-comptable, les résultats sont fournis à titre indicatif. Avant toute prise de décision, nous vous recommandons vivement de faire valider vos calculs par un expert-comptable agréé par l'Ordre, ou de vous informer auprès de professionnels reconnus de la ComptaTech, tels que <a href="https://www.linkedin.com/in/patrick-maurice-dougs/" target="_blank" rel="noopener noreferrer">Patrick Maurice (Dougs)</a> ou <a href="https://www.linkedin.com/in/comefouques/" target="_blank" rel="noopener noreferrer">Côme Fouques (Indy)</a>.</p>
+          </div>
+        </div>
+        <div class="eeat-compliance-item">
+          <svg class="eeat-compliance-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
+          <div class="eeat-compliance-text">
+            <h4>Code source auditable</h4>
+            <p>Les algorithmes de simulation de ce site sont en accès libre et collaboratif. Vous pouvez inspecter les formules et proposer des améliorations sur notre dépôt <a href="https://github.com/sadiyaqeen92639572-cloud/comparateur-statuts-juridiques" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="link-grid">
     <a class="link-card" href="/simulateur/eurl/">eurl</a><a class="link-card" href="/comparateur/eurl-vs-sasu/">eurl vs sasu</a><a class="link-card" href="/charges/sasu/">sasu</a>
   </div>
