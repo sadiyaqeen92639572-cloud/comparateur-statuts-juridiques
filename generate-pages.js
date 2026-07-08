@@ -363,7 +363,7 @@ function formatStatutFacts(statut) {
   <table class="data-table"><thead><tr><th>Donnée</th><th>Valeur</th></tr></thead><tbody>
     ${rows.map(r => `<tr><td>${esc(r[0])}</td><td class="hl">${r[1]}</td></tr>`).join('')}
   </tbody></table>
-  <p style="font-size:.78rem;color:var(--muted);">Données ${STATUTS_DATA.version} — à titre indicatif, vérifiées par un professionnel avant toute décision. Source structurée : <code>data/statuts.json</code>.</p>`;
+  <p style="font-size:.88rem;color:var(--muted);">Données ${STATUTS_DATA.version} — à titre indicatif, vérifiées par un professionnel avant toute décision. Source structurée : <code>data/statuts.json</code>.</p>`;
 }
 
 // Formule(s) de calcul par statut + liens sources officiels associés — génère depuis
@@ -439,9 +439,9 @@ function formulesEtSourcesBlock(statutIds) {
   <h2 class="st">Formules de calcul &amp; sources officielles</h2>
   <div class="method">
     ${blocs}
-    <p style="font-size:.78rem;color:var(--muted);margin:14px 0 6px;">Formules appliquées de façon déterministe à partir de <code>data/statuts.json</code> (${STATUTS_DATA.version}) — approximations pédagogiques, pas un calcul officiel URSSAF/impots.gouv.fr au barème exact par tranche.</p>
+    <p style="font-size:.88rem;color:var(--muted);margin:14px 0 6px;">Formules appliquées de façon déterministe à partir de <code>data/statuts.json</code> (${STATUTS_DATA.version}) — approximations pédagogiques, pas un calcul officiel URSSAF/impots.gouv.fr au barème exact par tranche.</p>
     <h3 class="sub">Sources officielles</h3>
-    <ul style="padding-left:18px;font-size:.88rem;">
+    <ul style="padding-left:18px;font-size:.98rem;">
       ${sources.map(s => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener nofollow">${esc(s.label)}</a></li>`).join('')}
     </ul>
   </div>`;
@@ -462,46 +462,46 @@ header p { color:rgba(255,255,255,.92); font-size:1rem; max-width:600px; margin:
 @media (max-width:580px){ .form-grid{ grid-template-columns:1fr; } }
 .form-group { display:flex; flex-direction:column; gap:6px; }
 .form-group.full { grid-column:1 / -1; }
-label { font-size:.79rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; }
+label { font-size:.89rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; }
 select, input[type=number] { border:2px solid var(--border); border-radius:8px; padding:12px 14px; font-size:1rem; color:var(--text); background:#fff; width:100%; }
 select:focus, input[type=number]:focus { outline:none; border-color:var(--brand); }
 .calc-btn { width:100%; margin-top:22px; padding:17px; background:var(--brand); color:#fff; border:none; border-radius:10px; font-size:1.08rem; font-weight:700; cursor:pointer; }
 .calc-btn:hover { background:var(--brand-dark); }
 .result { display:none; margin-top:26px; }
 .result-hero { background:linear-gradient(135deg,var(--brand-dark),var(--brand)); border-radius:10px; padding:26px; color:#fff; text-align:center; margin-bottom:14px; }
-.result-hero .rl { font-size:.76rem; font-weight:700; text-transform:uppercase; letter-spacing:.5px; opacity:.85; margin-bottom:4px; }
+.result-hero .rl { font-size:.86rem; font-weight:700; text-transform:uppercase; letter-spacing:.5px; opacity:.85; margin-bottom:4px; }
 .result-hero .ra { font-size:2.3rem; font-weight:900; line-height:1.1; }
 .result-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px; }
 @media (max-width:480px){ .result-grid{ grid-template-columns:1fr 1fr; } }
 .r-stat { background:var(--brand-light); border-radius:8px; padding:14px; text-align:center; }
 .r-stat .sv { font-size:1.1rem; font-weight:800; color:var(--brand-dark); }
-.r-stat .sl { font-size:.72rem; color:var(--muted); margin-top:2px; }
+.r-stat .sl { font-size:.82rem; color:var(--muted); margin-top:2px; }
 .content { padding-bottom:64px; }
 h2.st { font-size:1.3rem; font-weight:800; margin:48px 0 16px; }
 h3.sub { font-size:1rem; font-weight:700; margin:24px 0 10px; color:var(--brand-dark); }
 p { color:#2c3844; margin-bottom:14px; line-height:1.75; }
-.method { background:#fff; border:1px solid var(--border); border-radius:12px; padding:26px 26px 18px; margin:0 0 36px; font-size:.9rem; }
-.method .code { background:#0d1b28; color:#dbe8f2; border-radius:8px; padding:16px 18px; font-family:'Courier New',monospace; font-size:.82rem; line-height:1.9; margin:10px 0; overflow-x:auto; }
+.method { background:#fff; border:1px solid var(--border); border-radius:12px; padding:26px 26px 18px; margin:0 0 36px; font-size:1rem; }
+.method .code { background:#0d1b28; color:#dbe8f2; border-radius:8px; padding:16px 18px; font-family:'Courier New',monospace; font-size:.92rem; line-height:1.9; margin:10px 0; overflow-x:auto; }
 .method a { color:var(--brand); }
-.data-table { width:100%; border-collapse:collapse; margin:18px 0; font-size:.88rem; }
+.data-table { width:100%; border-collapse:collapse; margin:18px 0; font-size:.98rem; }
 .data-table th { background:var(--brand); color:#fff; padding:10px 14px; text-align:left; font-weight:600; }
 .data-table td { padding:10px 14px; border-bottom:1px solid var(--border); }
 .data-table tr:nth-child(even) td { background:#f2f6f9; }
 .hl { font-weight:700; color:var(--brand-dark); }
 .link-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:10px; margin:18px 0; }
-.link-card { display:block; background:#fff; border:1px solid var(--border); border-radius:8px; padding:12px 14px; text-decoration:none; color:var(--text); font-size:.88rem; font-weight:600; }
+.link-card { display:block; background:#fff; border:1px solid var(--border); border-radius:8px; padding:12px 14px; text-decoration:none; color:var(--text); font-size:.98rem; font-weight:600; }
 .link-card:hover { border-color:var(--brand); color:var(--brand-dark); }
 .faq-item { border-bottom:1px solid var(--border); }
-.faq-q { width:100%; background:none; border:none; text-align:left; padding:17px 0; font-size:.92rem; font-weight:600; cursor:pointer; display:flex; justify-content:space-between; align-items:center; color:var(--text); }
+.faq-q { width:100%; background:none; border:none; text-align:left; padding:17px 0; font-size:1.02rem; font-weight:600; cursor:pointer; display:flex; justify-content:space-between; align-items:center; color:var(--text); }
 .faq-q::after { content:'+'; font-size:1.3rem; color:var(--brand); flex-shrink:0; margin-left:12px; }
 .faq-q.open::after { content:'−'; }
-.faq-a { display:none; padding:0 0 16px; font-size:.88rem; color:#3d4a56; line-height:1.75; }
+.faq-a { display:none; padding:0 0 16px; font-size:.98rem; color:#3d4a56; line-height:1.75; }
 .faq-a.open { display:block; }
-.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--brand-dark); text-decoration:none; font-weight:600; font-size:.88rem; margin-bottom:28px; }
-footer { background:#0d3352; color:#c3d3e0; text-align:center; padding:30px 20px; font-size:.8rem; }
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--brand-dark); text-decoration:none; font-weight:600; font-size:.98rem; margin-bottom:28px; }
+footer { background:#0d3352; color:#c3d3e0; text-align:center; padding:30px 20px; font-size:.9rem; }
 footer p { color:#c3d3e0; }
 footer a { color:#dbe8f2; }
-.disc { background:#123f66; border-radius:8px; padding:13px 18px; margin-bottom:16px; font-size:.78rem; color:#c3d3e0; line-height:1.6; }
+.disc { background:#123f66; border-radius:8px; padding:13px 18px; margin-bottom:16px; font-size:.88rem; color:#c3d3e0; line-height:1.6; }
 `;
 
 function pageShell({ title, desc, keywords, canonical, jsonld, body }) {
@@ -775,7 +775,7 @@ function renderMigration(cfg) {
     <tr><td>${esc(nomFrom)} (avant)</td><td class="hl">${eur(cmp.resA.revenu_net_apres_impot)}</td></tr>
     <tr><td>${esc(nomTo)} (après)</td><td class="hl">${eur(cmp.resB.revenu_net_apres_impot)}</td></tr>
   </tbody></table>
-  <p style="font-size:.78rem;color:var(--muted);">Estimation à titre d'exemple, hypothèses de rémunération/dividendes fixées ci-dessus — utilisez le <a href="/comparateur/${cfg.from}-vs-${cfg.to}/">comparateur ${esc(nomFrom)} vs ${esc(nomTo)}</a> pour ajuster à votre situation.</p>
+  <p style="font-size:.88rem;color:var(--muted);">Estimation à titre d'exemple, hypothèses de rémunération/dividendes fixées ci-dessus — utilisez le <a href="/comparateur/${cfg.from}-vs-${cfg.to}/">comparateur ${esc(nomFrom)} vs ${esc(nomTo)}</a> pour ajuster à votre situation.</p>
   ${formulesEtSourcesBlock([cfg.from, cfg.to])}
   ${faqBlock(cfg.faq)}
   <div class="link-grid">
