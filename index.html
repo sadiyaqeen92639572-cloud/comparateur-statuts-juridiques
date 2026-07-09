@@ -53,6 +53,11 @@ footer a { color:#dbe8f2; }
 .section[id] { scroll-margin-top:54px; }
 .embed-tool[id] { scroll-margin-top:64px; }
 
+.quicklinks { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-bottom:12px; }
+.quicklinks-label { font-size:.8rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.4px; margin-right:2px; }
+.quicklinks .pill { display:inline-block; padding:7px 14px; border-radius:20px; background:var(--brand-light); color:var(--brand-dark); font-size:.85rem; font-weight:600; text-decoration:none; border:1px solid transparent; }
+.quicklinks .pill:hover { background:var(--brand); color:#fff; }
+
 /* Dropdown menu — Simulateurs / Comparateurs */
 .nav-item { position:relative; display:inline-block; }
 .nav-item > a::after { content:'▾'; font-size:.7em; margin-left:4px; opacity:.6; }
@@ -263,6 +268,25 @@ footer a { color:#dbe8f2; }
     <a href="#methodologie">Méthodologie</a>
   </div>
 </nav>
+
+<div class="container" style="padding-top:28px;">
+  <div class="quicklinks">
+    <span class="quicklinks-label">Accès rapide simulateurs :</span>
+    <a class="pill" href="#sim-auto-entrepreneur">Auto-entrepreneur</a>
+    <a class="pill" href="#sim-entreprise-individuelle">Entreprise individuelle</a>
+    <a class="pill" href="#sim-eurl">EURL</a>
+    <a class="pill" href="#sim-sasu">SASU</a>
+    <a class="pill" href="#sim-sarl">SARL</a>
+  </div>
+  <div class="quicklinks">
+    <span class="quicklinks-label">Accès rapide comparateurs :</span>
+    <a class="pill" href="#cmp-ae-sasu">Auto-entrepreneur vs SASU</a>
+    <a class="pill" href="#cmp-ae-eurl">Auto-entrepreneur vs EURL</a>
+    <a class="pill" href="#cmp-eurl-sasu">EURL vs SASU</a>
+    <a class="pill" href="#cmp-sasu-sarl">SASU vs SARL</a>
+    <a class="pill" href="#cmp-ae-ei">Auto-entrepreneur vs Entreprise individuelle</a>
+  </div>
+</div>
 
 <div class="container section" id="simulateurs">
   <h2 class="st">Simulateurs par statut</h2>
