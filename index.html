@@ -75,7 +75,8 @@ footer a { color:#dbe8f2; }
 .faq-a.open { display:block; }
 
 .embed-tool { background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
-.et-title { font-size:1.05rem; font-weight:800; margin-bottom:14px; color:var(--brand-dark); }
+.et-title { font-size:1.05rem; font-weight:800; margin-bottom:4px; color:var(--brand-dark); }
+.et-headline { font-size:.85rem; color:var(--muted); line-height:1.55; margin-bottom:16px; }
 .et-form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px; }
 @media (max-width:560px) { .et-form-grid { grid-template-columns:1fr; } }
 .et-form-grid .form-group.full { grid-column:1 / -1; }
@@ -269,6 +270,7 @@ footer a { color:#dbe8f2; }
   
   <div class="embed-tool" id="sim-auto-entrepreneur">
     <h3 class="et-title">Auto-entrepreneur</h3>
+    <p class="et-headline">Simulateur auto-entrepreneur : calculez vos cotisations sociales, votre abattement forfaitaire et votre revenu net réel selon votre chiffre d'affaires.</p>
     <div class="et-form-grid">
       <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca-sim-auto-entrepreneur" min="0" step="1000" value="40000"></div>
       <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi-sim-auto-entrepreneur"><option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option></select></div>
@@ -293,6 +295,7 @@ footer a { color:#dbe8f2; }
 
   <div class="embed-tool" id="sim-entreprise-individuelle">
     <h3 class="et-title">Entreprise individuelle</h3>
+    <p class="et-headline">Simulateur entreprise individuelle (EI) : calculez charges réelles déductibles, impôt sur le revenu et revenu net au régime réel.</p>
     <div class="et-form-grid">
       <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca-sim-entreprise-individuelle" min="0" step="1000" value="60000"></div>
       <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi-sim-entreprise-individuelle"><option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option></select></div>
@@ -317,6 +320,7 @@ footer a { color:#dbe8f2; }
 
   <div class="embed-tool" id="sim-eurl">
     <h3 class="et-title">EURL</h3>
+    <p class="et-headline">Simulateur EURL : calculez l'impôt sur les sociétés, les cotisations TNS du gérant et le revenu net total selon votre rémunération et vos dividendes.</p>
     <div class="et-form-grid">
       <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca-sim-eurl" min="0" step="1000" value="80000"></div>
       <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi-sim-eurl"><option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option></select></div>
@@ -343,6 +347,7 @@ footer a { color:#dbe8f2; }
 
   <div class="embed-tool" id="sim-sasu">
     <h3 class="et-title">SASU</h3>
+    <p class="et-headline">Simulateur SASU : calculez l'impôt sur les sociétés, les charges du président assimilé salarié et la flat tax sur dividendes.</p>
     <div class="et-form-grid">
       <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca-sim-sasu" min="0" step="1000" value="80000"></div>
       <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi-sim-sasu"><option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option></select></div>
@@ -369,6 +374,7 @@ footer a { color:#dbe8f2; }
 
   <div class="embed-tool" id="sim-sarl">
     <h3 class="et-title">SARL</h3>
+    <p class="et-headline">Simulateur SARL : calculez l'IS et le revenu net du gérant, majoritaire (TNS) ou minoritaire (assimilé salarié).</p>
     <div class="et-form-grid">
       <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca-sim-sarl" min="0" step="1000" value="100000"></div>
       <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi-sim-sarl"><option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option></select></div>
@@ -400,6 +406,7 @@ footer a { color:#dbe8f2; }
   
   <div class="embed-tool" id="cmp-ae-sasu">
     <h3 class="et-title">Auto-entrepreneur vs SASU</h3>
+    <p class="et-headline">Comparateur auto-entrepreneur vs SASU : trouvez le seuil de chiffre d'affaires à partir duquel la SASU devient plus avantageuse.</p>
     <div class="et-form-grid">
       <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca-cmp-ae-sasu" min="0" step="1000" value="60000"></div>
       <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi-cmp-ae-sasu"><option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option></select></div>
@@ -423,6 +430,7 @@ footer a { color:#dbe8f2; }
 
   <div class="embed-tool" id="cmp-ae-eurl">
     <h3 class="et-title">Auto-entrepreneur vs EURL</h3>
+    <p class="et-headline">Comparateur auto-entrepreneur vs EURL : comparez charges, responsabilité et seuil de bascule selon votre CA.</p>
     <div class="et-form-grid">
       <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca-cmp-ae-eurl" min="0" step="1000" value="60000"></div>
       <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi-cmp-ae-eurl"><option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option></select></div>
@@ -446,6 +454,7 @@ footer a { color:#dbe8f2; }
 
   <div class="embed-tool" id="cmp-eurl-sasu">
     <h3 class="et-title">EURL vs SASU</h3>
+    <p class="et-headline">Comparateur EURL vs SASU : régime social du dirigeant (TNS vs assimilé salarié), fiscalité et seuil de bascule.</p>
     <div class="et-form-grid">
       <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca-cmp-eurl-sasu" min="0" step="1000" value="80000"></div>
       <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi-cmp-eurl-sasu"><option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option></select></div>
@@ -469,6 +478,7 @@ footer a { color:#dbe8f2; }
 
   <div class="embed-tool" id="cmp-sasu-sarl">
     <h3 class="et-title">SASU vs SARL</h3>
+    <p class="et-headline">Comparateur SASU vs SARL : souplesse statutaire, cadre légal et régime social du dirigeant.</p>
     <div class="et-form-grid">
       <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca-cmp-sasu-sarl" min="0" step="1000" value="100000"></div>
       <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi-cmp-sasu-sarl"><option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option></select></div>
@@ -492,6 +502,7 @@ footer a { color:#dbe8f2; }
 
   <div class="embed-tool" id="cmp-ae-ei">
     <h3 class="et-title">Auto-entrepreneur vs Entreprise individuelle</h3>
+    <p class="et-headline">Comparateur auto-entrepreneur vs EI : régime micro ou régime réel, seuil à partir duquel les charges réelles deviennent plus avantageuses.</p>
     <div class="et-form-grid">
       <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca-cmp-ae-ei" min="0" step="1000" value="50000"></div>
       <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi-cmp-ae-ei"><option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option></select></div>
