@@ -64,6 +64,31 @@ footer a { color:#dbe8f2; }
 .faq-a { display:none; padding:0 0 16px; font-size:.9rem; color:var(--muted); line-height:1.7; }
 .faq-a.open { display:block; }
 
+.embed-tool { background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+.et-title { font-size:1.05rem; font-weight:800; margin-bottom:14px; color:var(--brand-dark); }
+.et-form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px; }
+@media (max-width:560px) { .et-form-grid { grid-template-columns:1fr; } }
+.et-form-grid .form-group.full { grid-column:1 / -1; }
+.et-form-grid label { font-size:.78rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.4px; display:block; margin-bottom:4px; }
+.et-form-grid input, .et-form-grid select { border:2px solid var(--border); border-radius:8px; padding:9px 11px; font-size:.92rem; width:100%; }
+.et-form-grid input:focus, .et-form-grid select:focus { outline:none; border-color:var(--brand); }
+.calc-btn-mini { width:100%; padding:12px; background:var(--brand); color:#fff; border:none; border-radius:8px; font-size:.92rem; font-weight:700; cursor:pointer; }
+.calc-btn-mini:hover { background:var(--brand-dark); }
+.result-mini { display:none; margin-top:16px; }
+.result-mini.show { display:block; }
+.result-mini .rm-net { background:linear-gradient(135deg,var(--brand-dark),var(--brand)); border-radius:8px; padding:16px; color:#fff; text-align:center; margin-bottom:10px; }
+.result-mini .rm-net span { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.4px; opacity:.85; display:block; margin-bottom:2px; }
+.result-mini .rm-net strong { font-size:1.5rem; font-weight:900; }
+.result-mini .rm-sub { font-size:.78rem; color:var(--muted); text-align:center; margin:-4px 0 10px; }
+.result-mini .rm-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+.result-mini .rm-grid > div { background:var(--brand-light); border-radius:8px; padding:10px; text-align:center; }
+.result-mini .rm-grid span { display:block; font-size:.95rem; font-weight:800; color:var(--brand-dark); }
+.result-mini .rm-grid small { font-size:.72rem; color:var(--muted); }
+.et-method { border-top:1px solid var(--border); margin-top:16px; padding-top:14px; font-size:.85rem; }
+.et-method strong { color:var(--brand-dark); }
+.et-code { background:#0d1b28; color:#dbe8f2; border-radius:8px; padding:12px 14px; font-family:'Courier New',monospace; font-size:.78rem; line-height:1.8; margin:8px 0; overflow-x:auto; }
+.et-method a { font-size:.85rem; font-weight:600; }
+
 /* E-E-A-T Section styles */
 .eeat-section {
   background: #fff;
@@ -212,24 +237,251 @@ footer a { color:#dbe8f2; }
 <div class="container section" id="simulateurs">
   <h2 class="st">Simulateurs par statut</h2>
   <p class="intro-text">Estimez en quelques secondes vos cotisations sociales, votre impôt et votre revenu net selon le statut juridique choisi : auto-entrepreneur, entreprise individuelle, EURL, SASU ou SARL. Chaque simulateur applique les taux et seuils 2026 propres à ce statut.</p>
-  <div class="grid">
-    <a class="card" href="/simulateur/auto-entrepreneur/"><h3>Auto-entrepreneur</h3><p>Micro-entreprise : cotisations, abattement, revenu net.</p></a>
-    <a class="card" href="/simulateur/entreprise-individuelle/"><h3>Entreprise individuelle</h3><p>Régime réel : charges déductibles, revenu net.</p></a>
-    <a class="card" href="/simulateur/eurl/"><h3>EURL</h3><p>IS, cotisations TNS du gérant.</p></a>
-    <a class="card" href="/simulateur/sasu/"><h3>SASU</h3><p>IS, charges président, dividendes.</p></a>
-    <a class="card" href="/simulateur/sarl/"><h3>SARL</h3><p>Gérant majoritaire ou minoritaire.</p></a>
+  
+  <div class="embed-tool">
+    <h3 class="et-title">Auto-entrepreneur</h3>
+    <div class="et-form-grid">
+      <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca-sim-auto-entrepreneur" min="0" step="1000" value="40000"></div>
+      <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi-sim-auto-entrepreneur"><option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option></select></div>
+      <div class="form-group full"><label>Type d'activité</label><select id="ta-sim-auto-entrepreneur"><option value="vente_marchandises">Vente de marchandises</option><option value="prestations_services_bic">Prestations de services (BIC)</option><option value="prestations_services_bnc" selected>Prestations de services (BNC)</option></select></div>
+      
+    </div>
+    <button class="calc-btn-mini" onclick="calcSim('sim-auto-entrepreneur')">Calculer mon revenu net →</button>
+    <div class="result-mini" id="result-sim-auto-entrepreneur">
+      <div class="rm-net"><span>Revenu net annuel estimé</span><strong id="rnet-sim-auto-entrepreneur"></strong></div>
+      <div class="rm-grid">
+        <div><span id="rcotis-sim-auto-entrepreneur"></span><small>Cotisations sociales</small></div>
+        <div><span id="rimpot-sim-auto-entrepreneur"></span><small>Impôt sur le revenu</small></div>
+        <div><span id="rtaux-sim-auto-entrepreneur"></span><small>Taux de prélèvement global</small></div>
+      </div>
+    </div>
+    <div class="et-method">
+      <strong>Méthode de calcul :</strong>
+      <div class="et-code">cotisations_sociales = CA × taux_cotisations (selon activité)<br>revenu_imposable = CA × (1 − abattement_forfaitaire)<br>impôt = revenu_imposable × TMI (ou CA × taux_versement_libératoire si option VLF)<br>revenu_net = CA − cotisations_sociales − impôt</div>
+      <a href="/simulateur/auto-entrepreneur/">Voir la page détaillée, chiffres clés, sources officielles et FAQ →</a>
+    </div>
+  </div>
+
+  <div class="embed-tool">
+    <h3 class="et-title">Entreprise individuelle</h3>
+    <div class="et-form-grid">
+      <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca-sim-entreprise-individuelle" min="0" step="1000" value="60000"></div>
+      <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi-sim-entreprise-individuelle"><option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option></select></div>
+      
+      
+    </div>
+    <button class="calc-btn-mini" onclick="calcSim('sim-entreprise-individuelle')">Calculer mon revenu net →</button>
+    <div class="result-mini" id="result-sim-entreprise-individuelle">
+      <div class="rm-net"><span>Revenu net annuel estimé</span><strong id="rnet-sim-entreprise-individuelle"></strong></div>
+      <div class="rm-grid">
+        <div><span id="rcotis-sim-entreprise-individuelle"></span><small>Cotisations sociales</small></div>
+        <div><span id="rimpot-sim-entreprise-individuelle"></span><small>Impôt sur le revenu</small></div>
+        <div><span id="rtaux-sim-entreprise-individuelle"></span><small>Taux de prélèvement global</small></div>
+      </div>
+    </div>
+    <div class="et-method">
+      <strong>Méthode de calcul :</strong>
+      <div class="et-code">bénéfice = CA − charges_réelles<br>cotisations_sociales = bénéfice × taux_TNS_estimé (≈30%)<br>revenu_imposable = bénéfice − cotisations_sociales<br>impôt = revenu_imposable × TMI<br>revenu_net = bénéfice − cotisations_sociales − impôt</div>
+      <a href="/simulateur/entreprise-individuelle/">Voir la page détaillée, chiffres clés, sources officielles et FAQ →</a>
+    </div>
+  </div>
+
+  <div class="embed-tool">
+    <h3 class="et-title">EURL</h3>
+    <div class="et-form-grid">
+      <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca-sim-eurl" min="0" step="1000" value="80000"></div>
+      <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi-sim-eurl"><option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option></select></div>
+      
+      <div class="form-group"><label>Rémunération dirigeant (€/an)</label><input type="number" id="rem-sim-eurl" min="0" step="1000" value="40000"></div>
+       <div class="form-group"><label>Charges d'exploitation (€/an)</label><input type="number" id="chg-sim-eurl" min="0" step="1000" value="8000"></div>
+       <div class="form-group full"><label>Dividendes versés (€/an)</label><input type="number" id="div-sim-eurl" min="0" step="1000" value="12000"></div>
+    </div>
+    <button class="calc-btn-mini" onclick="calcSim('sim-eurl')">Calculer mon revenu net →</button>
+    <div class="result-mini" id="result-sim-eurl">
+      <div class="rm-net"><span>Revenu net annuel estimé</span><strong id="rnet-sim-eurl"></strong></div>
+      <div class="rm-grid">
+        <div><span id="rcotis-sim-eurl"></span><small>Cotisations sociales dirigeant</small></div>
+        <div><span id="rimpot-sim-eurl"></span><small>IS + impôt sur rémunération</small></div>
+        <div><span id="rtaux-sim-eurl"></span><small>Taux de prélèvement global</small></div>
+      </div>
+    </div>
+    <div class="et-method">
+      <strong>Méthode de calcul :</strong>
+      <div class="et-code">bénéfice_avant_IS = CA − charges_exploitation − rémunération_gérant − cotisations_TNS_gérant<br>IS = bénéfice×15% (jusqu'à 42 500€) + (bénéfice−42 500€)×25% au-delà<br>rémunération_nette = rémunération_gérant − cotisations_TNS_gérant (≈45%)<br>dividendes_nets = dividendes_versés × (1 − 31,4%)<br>revenu_net_foyer = rémunération_nette − impôt(TMI) + dividendes_nets</div>
+      <a href="/simulateur/eurl/">Voir la page détaillée, chiffres clés, sources officielles et FAQ →</a>
+    </div>
+  </div>
+
+  <div class="embed-tool">
+    <h3 class="et-title">SASU</h3>
+    <div class="et-form-grid">
+      <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca-sim-sasu" min="0" step="1000" value="80000"></div>
+      <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi-sim-sasu"><option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option></select></div>
+      
+      <div class="form-group"><label>Rémunération dirigeant (€/an)</label><input type="number" id="rem-sim-sasu" min="0" step="1000" value="40000"></div>
+       <div class="form-group"><label>Charges d'exploitation (€/an)</label><input type="number" id="chg-sim-sasu" min="0" step="1000" value="8000"></div>
+       <div class="form-group full"><label>Dividendes versés (€/an)</label><input type="number" id="div-sim-sasu" min="0" step="1000" value="12000"></div>
+    </div>
+    <button class="calc-btn-mini" onclick="calcSim('sim-sasu')">Calculer mon revenu net →</button>
+    <div class="result-mini" id="result-sim-sasu">
+      <div class="rm-net"><span>Revenu net annuel estimé</span><strong id="rnet-sim-sasu"></strong></div>
+      <div class="rm-grid">
+        <div><span id="rcotis-sim-sasu"></span><small>Cotisations sociales dirigeant</small></div>
+        <div><span id="rimpot-sim-sasu"></span><small>IS + impôt sur rémunération</small></div>
+        <div><span id="rtaux-sim-sasu"></span><small>Taux de prélèvement global</small></div>
+      </div>
+    </div>
+    <div class="et-method">
+      <strong>Méthode de calcul :</strong>
+      <div class="et-code">bénéfice_avant_IS = CA − charges_exploitation − rémunération_président − cotisations_président<br>IS = bénéfice×15% (jusqu'à 42 500€) + (bénéfice−42 500€)×25% au-delà<br>rémunération_nette = rémunération_président − cotisations_président (≈65%, assimilé salarié)<br>dividendes_nets = dividendes_versés × (1 − 31,4%)<br>revenu_net_foyer = rémunération_nette − impôt(TMI) + dividendes_nets</div>
+      <a href="/simulateur/sasu/">Voir la page détaillée, chiffres clés, sources officielles et FAQ →</a>
+    </div>
+  </div>
+
+  <div class="embed-tool">
+    <h3 class="et-title">SARL</h3>
+    <div class="et-form-grid">
+      <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca-sim-sarl" min="0" step="1000" value="100000"></div>
+      <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi-sim-sarl"><option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option></select></div>
+      
+      <div class="form-group"><label>Rémunération dirigeant (€/an)</label><input type="number" id="rem-sim-sarl" min="0" step="1000" value="50000"></div>
+       <div class="form-group"><label>Charges d'exploitation (€/an)</label><input type="number" id="chg-sim-sarl" min="0" step="1000" value="10000"></div>
+       <div class="form-group full"><label>Dividendes versés (€/an)</label><input type="number" id="div-sim-sarl" min="0" step="1000" value="15000"></div>
+    </div>
+    <button class="calc-btn-mini" onclick="calcSim('sim-sarl')">Calculer mon revenu net →</button>
+    <div class="result-mini" id="result-sim-sarl">
+      <div class="rm-net"><span>Revenu net annuel estimé</span><strong id="rnet-sim-sarl"></strong></div>
+      <div class="rm-grid">
+        <div><span id="rcotis-sim-sarl"></span><small>Cotisations sociales dirigeant</small></div>
+        <div><span id="rimpot-sim-sarl"></span><small>IS + impôt sur rémunération</small></div>
+        <div><span id="rtaux-sim-sarl"></span><small>Taux de prélèvement global</small></div>
+      </div>
+    </div>
+    <div class="et-method">
+      <strong>Méthode de calcul :</strong>
+      <div class="et-code">bénéfice_avant_IS = CA − charges_exploitation − rémunération_gérant − cotisations_gérant<br>IS = bénéfice×15% (jusqu'à 42 500€) + (bénéfice−42 500€)×25% au-delà<br>rémunération_nette = rémunération_gérant − cotisations_gérant (≈45% TNS majoritaire ou ≈65% assimilé salarié minoritaire)<br>dividendes_nets = dividendes_versés × (1 − 31,4%)<br>revenu_net_foyer = rémunération_nette − impôt(TMI) + dividendes_nets</div>
+      <a href="/simulateur/sarl/">Voir la page détaillée, chiffres clés, sources officielles et FAQ →</a>
+    </div>
   </div>
 </div>
 
 <div class="container section" id="comparateurs">
   <h2 class="st">Comparateurs</h2>
   <p class="intro-text">Vous hésitez entre deux statuts ? Ces comparateurs calculent le seuil de bascule exact selon votre chiffre d'affaires prévisionnel — le point à partir duquel un statut devient plus avantageux que l'autre en revenu net.</p>
-  <div class="grid">
-    <a class="card" href="/comparateur/auto-entrepreneur-vs-sasu/"><h3>Auto-entrepreneur vs SASU</h3><p>Seuil de bascule calculé selon votre CA.</p></a>
-    <a class="card" href="/comparateur/auto-entrepreneur-vs-eurl/"><h3>Auto-entrepreneur vs EURL</h3><p>Comparez charges et responsabilité.</p></a>
-    <a class="card" href="/comparateur/eurl-vs-sasu/"><h3>EURL vs SASU</h3><p>TNS ou assimilé salarié pour le dirigeant.</p></a>
-    <a class="card" href="/comparateur/sasu-vs-sarl/"><h3>SASU vs SARL</h3><p>Souplesse statutaire vs cadre légal.</p></a>
-    <a class="card" href="/comparateur/auto-entrepreneur-vs-entreprise-individuelle/"><h3>Auto-entrepreneur vs EI</h3><p>Micro ou régime réel ?</p></a>
+  
+  <div class="embed-tool">
+    <h3 class="et-title">Auto-entrepreneur vs SASU</h3>
+    <div class="et-form-grid">
+      <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca-cmp-ae-sasu" min="0" step="1000" value="60000"></div>
+      <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi-cmp-ae-sasu"><option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option></select></div>
+      <div class="form-group full"><label>Type d'activité (statut micro)</label><select id="ta-cmp-ae-sasu"><option value="vente_marchandises">Vente de marchandises</option><option value="prestations_services_bic">Prestations de services (BIC)</option><option value="prestations_services_bnc" selected>Prestations de services (BNC)</option></select></div>
+    </div>
+    <button class="calc-btn-mini" onclick="calcCmp('cmp-ae-sasu')">Comparer les deux statuts →</button>
+    <div class="result-mini" id="result-cmp-ae-sasu">
+      <div class="rm-net"><span>Seuil de bascule (CA)</span><strong id="rseuil-cmp-ae-sasu"></strong></div>
+      <div class="rm-sub" id="rseuilsub-cmp-ae-sasu"></div>
+      <div class="rm-grid" style="grid-template-columns:1fr 1fr;">
+        <div><span id="rneta-cmp-ae-sasu"></span><small>Revenu net — Auto-entrepreneur</small></div>
+        <div><span id="rnetb-cmp-ae-sasu"></span><small>Revenu net — SASU</small></div>
+      </div>
+    </div>
+    <div class="et-method">
+      <strong>Méthode de calcul :</strong>
+      <div class="et-code">seuil_bascule = recherche dichotomique du CA où revenu_net(Auto-entrepreneur) = revenu_net(SASU)<br>(cf. formules détaillées de chaque statut sur sa page dédiée)</div>
+      <a href="/comparateur/auto-entrepreneur-vs-sasu/">Voir la page détaillée, chiffres clés, sources officielles et FAQ →</a>
+    </div>
+  </div>
+
+  <div class="embed-tool">
+    <h3 class="et-title">Auto-entrepreneur vs EURL</h3>
+    <div class="et-form-grid">
+      <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca-cmp-ae-eurl" min="0" step="1000" value="60000"></div>
+      <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi-cmp-ae-eurl"><option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option></select></div>
+      <div class="form-group full"><label>Type d'activité (statut micro)</label><select id="ta-cmp-ae-eurl"><option value="vente_marchandises">Vente de marchandises</option><option value="prestations_services_bic">Prestations de services (BIC)</option><option value="prestations_services_bnc" selected>Prestations de services (BNC)</option></select></div>
+    </div>
+    <button class="calc-btn-mini" onclick="calcCmp('cmp-ae-eurl')">Comparer les deux statuts →</button>
+    <div class="result-mini" id="result-cmp-ae-eurl">
+      <div class="rm-net"><span>Seuil de bascule (CA)</span><strong id="rseuil-cmp-ae-eurl"></strong></div>
+      <div class="rm-sub" id="rseuilsub-cmp-ae-eurl"></div>
+      <div class="rm-grid" style="grid-template-columns:1fr 1fr;">
+        <div><span id="rneta-cmp-ae-eurl"></span><small>Revenu net — Auto-entrepreneur</small></div>
+        <div><span id="rnetb-cmp-ae-eurl"></span><small>Revenu net — EURL</small></div>
+      </div>
+    </div>
+    <div class="et-method">
+      <strong>Méthode de calcul :</strong>
+      <div class="et-code">seuil_bascule = recherche dichotomique du CA où revenu_net(Auto-entrepreneur) = revenu_net(EURL)<br>(cf. formules détaillées de chaque statut sur sa page dédiée)</div>
+      <a href="/comparateur/auto-entrepreneur-vs-eurl/">Voir la page détaillée, chiffres clés, sources officielles et FAQ →</a>
+    </div>
+  </div>
+
+  <div class="embed-tool">
+    <h3 class="et-title">EURL vs SASU</h3>
+    <div class="et-form-grid">
+      <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca-cmp-eurl-sasu" min="0" step="1000" value="80000"></div>
+      <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi-cmp-eurl-sasu"><option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option></select></div>
+      
+    </div>
+    <button class="calc-btn-mini" onclick="calcCmp('cmp-eurl-sasu')">Comparer les deux statuts →</button>
+    <div class="result-mini" id="result-cmp-eurl-sasu">
+      <div class="rm-net"><span>Seuil de bascule (CA)</span><strong id="rseuil-cmp-eurl-sasu"></strong></div>
+      <div class="rm-sub" id="rseuilsub-cmp-eurl-sasu"></div>
+      <div class="rm-grid" style="grid-template-columns:1fr 1fr;">
+        <div><span id="rneta-cmp-eurl-sasu"></span><small>Revenu net — EURL</small></div>
+        <div><span id="rnetb-cmp-eurl-sasu"></span><small>Revenu net — SASU</small></div>
+      </div>
+    </div>
+    <div class="et-method">
+      <strong>Méthode de calcul :</strong>
+      <div class="et-code">seuil_bascule = recherche dichotomique du CA où revenu_net(EURL) = revenu_net(SASU)<br>(cf. formules détaillées de chaque statut sur sa page dédiée)</div>
+      <a href="/comparateur/eurl-vs-sasu/">Voir la page détaillée, chiffres clés, sources officielles et FAQ →</a>
+    </div>
+  </div>
+
+  <div class="embed-tool">
+    <h3 class="et-title">SASU vs SARL</h3>
+    <div class="et-form-grid">
+      <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca-cmp-sasu-sarl" min="0" step="1000" value="100000"></div>
+      <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi-cmp-sasu-sarl"><option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option></select></div>
+      
+    </div>
+    <button class="calc-btn-mini" onclick="calcCmp('cmp-sasu-sarl')">Comparer les deux statuts →</button>
+    <div class="result-mini" id="result-cmp-sasu-sarl">
+      <div class="rm-net"><span>Seuil de bascule (CA)</span><strong id="rseuil-cmp-sasu-sarl"></strong></div>
+      <div class="rm-sub" id="rseuilsub-cmp-sasu-sarl"></div>
+      <div class="rm-grid" style="grid-template-columns:1fr 1fr;">
+        <div><span id="rneta-cmp-sasu-sarl"></span><small>Revenu net — SASU</small></div>
+        <div><span id="rnetb-cmp-sasu-sarl"></span><small>Revenu net — SARL</small></div>
+      </div>
+    </div>
+    <div class="et-method">
+      <strong>Méthode de calcul :</strong>
+      <div class="et-code">seuil_bascule = recherche dichotomique du CA où revenu_net(SASU) = revenu_net(SARL)<br>(cf. formules détaillées de chaque statut sur sa page dédiée)</div>
+      <a href="/comparateur/sasu-vs-sarl/">Voir la page détaillée, chiffres clés, sources officielles et FAQ →</a>
+    </div>
+  </div>
+
+  <div class="embed-tool">
+    <h3 class="et-title">Auto-entrepreneur vs Entreprise individuelle</h3>
+    <div class="et-form-grid">
+      <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca-cmp-ae-ei" min="0" step="1000" value="50000"></div>
+      <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi-cmp-ae-ei"><option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option></select></div>
+      <div class="form-group full"><label>Type d'activité (statut micro)</label><select id="ta-cmp-ae-ei"><option value="vente_marchandises">Vente de marchandises</option><option value="prestations_services_bic">Prestations de services (BIC)</option><option value="prestations_services_bnc" selected>Prestations de services (BNC)</option></select></div>
+    </div>
+    <button class="calc-btn-mini" onclick="calcCmp('cmp-ae-ei')">Comparer les deux statuts →</button>
+    <div class="result-mini" id="result-cmp-ae-ei">
+      <div class="rm-net"><span>Seuil de bascule (CA)</span><strong id="rseuil-cmp-ae-ei"></strong></div>
+      <div class="rm-sub" id="rseuilsub-cmp-ae-ei"></div>
+      <div class="rm-grid" style="grid-template-columns:1fr 1fr;">
+        <div><span id="rneta-cmp-ae-ei"></span><small>Revenu net — Auto-entrepreneur</small></div>
+        <div><span id="rnetb-cmp-ae-ei"></span><small>Revenu net — Entreprise individuelle</small></div>
+      </div>
+    </div>
+    <div class="et-method">
+      <strong>Méthode de calcul :</strong>
+      <div class="et-code">seuil_bascule = recherche dichotomique du CA où revenu_net(Auto-entrepreneur) = revenu_net(Entreprise individuelle)<br>(cf. formules détaillées de chaque statut sur sa page dédiée)</div>
+      <a href="/comparateur/auto-entrepreneur-vs-entreprise-individuelle/">Voir la page détaillée, chiffres clés, sources officielles et FAQ →</a>
+    </div>
   </div>
 </div>
 
@@ -337,6 +589,260 @@ footer a { color:#dbe8f2; }
 function toggleFaq(btn) {
   btn.classList.toggle('open');
   btn.nextElementSibling.classList.toggle('open');
+}
+</script>
+
+<script>
+/*
+ * Moteur de calcul pur — aucune ref DOM, aucun accès fichier.
+ * Utilisé (a) côté build par generate-pages.js via require(), (b) inliné
+ * côté client dans les pages générées (même pattern que meat-cooking-time-calculator).
+ *
+ * Approximations MVP à valider contre le simulateur officiel URSSAF avant publication
+ * (voir plan de build, étape 2): calcul de l'IR simplifié via TMI marginal plutôt que
+ * barème progressif complet par tranche; cotisations société traitées en taux moyen
+ * plutôt qu'en barème réel (PASS, tranches TNS, etc.).
+ */
+
+function appliquerTmi(revenuImposable, tmi) {
+  return Math.max(0, revenuImposable) * tmi;
+}
+
+function calculIS(benefice, constantes) {
+  const b = Math.max(0, benefice);
+  const { seuil_benefice, taux } = constantes.is_taux_reduit;
+  const tauxNormal = constantes.is_taux_normal;
+  if (b <= seuil_benefice) return b * taux;
+  return seuil_benefice * taux + (b - seuil_benefice) * tauxNormal;
+}
+
+function calculerIndividuel(statut, params) {
+  const { ca, type_activite, charges_reelles = 0, option_vlf = false, tmi = 0.30 } = params;
+
+  if (statut.regime_fiscal === "micro-fiscal") {
+    const tauxCotis = statut.taux_cotisations_sociales[type_activite];
+    const abattement = statut.abattement_forfaitaire[type_activite];
+    const seuil = statut.seuils_ca[type_activite];
+
+    const cotisations_sociales = ca * tauxCotis;
+    const revenu_imposable = ca * (1 - abattement);
+
+    let impot_revenu;
+    if (option_vlf) {
+      impot_revenu = ca * statut.versement_liberatoire_taux[type_activite];
+    } else {
+      impot_revenu = appliquerTmi(revenu_imposable, tmi);
+    }
+
+    const revenu_net_apres_impot = ca - cotisations_sociales - impot_revenu;
+
+    return {
+      revenu_imposable,
+      cotisations_sociales,
+      impot_revenu,
+      revenu_net_apres_impot,
+      taux_prelevement_global: ca > 0 ? (cotisations_sociales + impot_revenu) / ca : 0,
+      alerte_depassement_seuil: seuil != null && ca > seuil
+    };
+  }
+
+  // EI régime réel (BIC/BNC)
+  const benefice = ca - charges_reelles;
+  const cotisations_sociales = Math.max(0, benefice) * (statut.taux_cotisations_sociales_estime || 0.30);
+  const revenu_imposable = benefice - cotisations_sociales;
+  const impot_revenu = appliquerTmi(revenu_imposable, tmi);
+  const revenu_net_apres_impot = benefice - cotisations_sociales - impot_revenu;
+
+  return {
+    revenu_imposable,
+    cotisations_sociales,
+    impot_revenu,
+    revenu_net_apres_impot,
+    taux_prelevement_global: ca > 0 ? (cotisations_sociales + impot_revenu) / ca : 0,
+    alerte_depassement_seuil: false
+  };
+}
+
+function calculerSociete(statut, params, constantes) {
+  const {
+    ca,
+    charges_exploitation = 0,
+    remuneration_gerant = 0,
+    tmi = 0.30,
+    dividendes_verses = 0
+  } = params;
+
+  const estAssimileSalarie = statut.regime_social_president === "assimile_salarie"
+    || statut.regime_social_gerant_minoritaire === "assimile_salarie" && params.gerant_minoritaire;
+
+  const tauxChargesSalarie = statut.taux_charges_president_salaire
+    || statut.taux_charges_gerant_minoritaire_salaire
+    || 0.65;
+  const tauxChargesTns = statut.taux_cotisations_tns_estime || 0.45;
+
+  const cotisations_sociales_gerant = estAssimileSalarie
+    ? remuneration_gerant * tauxChargesSalarie
+    : remuneration_gerant * tauxChargesTns;
+
+  const remuneration_nette_sociale = remuneration_gerant - cotisations_sociales_gerant;
+
+  const benefice_avant_is = ca - charges_exploitation - remuneration_gerant - cotisations_sociales_gerant;
+  const is_du = calculIS(benefice_avant_is, constantes);
+  const benefice_apres_is = Math.max(0, benefice_avant_is) - is_du;
+
+  const dividendes = Math.min(dividendes_verses, Math.max(0, benefice_apres_is));
+  const dividendes_nets_apres_flat_tax = dividendes * (1 - constantes.flat_tax_dividendes);
+
+  const impot_revenu_remuneration = appliquerTmi(remuneration_nette_sociale, tmi);
+  const revenu_net_total_foyer = remuneration_nette_sociale - impot_revenu_remuneration + dividendes_nets_apres_flat_tax;
+
+  return {
+    benefice_avant_is,
+    is_du,
+    remuneration_nette_sociale,
+    cotisations_sociales_gerant,
+    impot_revenu_remuneration,
+    dividendes_nets_apres_flat_tax,
+    revenu_net_total_foyer,
+    taux_prelevement_global: ca > 0 ? 1 - (revenu_net_total_foyer / ca) : 0
+  };
+}
+
+function calculerStatut(statutId, params, statutsData) {
+  const statut = statutsData.statuts[statutId];
+  if (!statut) throw new Error(`Statut inconnu: ${statutId}`);
+  const resultat = statut.categorie === "individuel"
+    ? calculerIndividuel(statut, params)
+    : calculerSociete(statut, params, statutsData.constantes_communes);
+  return { ...resultat, revenu_net_apres_impot: resultat.revenu_net_apres_impot ?? resultat.revenu_net_total_foyer };
+}
+
+function comparerStatuts(idA, idB, params, statutsData) {
+  const resA = calculerStatut(idA, params, statutsData);
+  const resB = calculerStatut(idB, params, statutsData);
+  return {
+    resA,
+    resB,
+    delta_revenu_net: resB.revenu_net_apres_impot - resA.revenu_net_apres_impot,
+    seuil_bascule_ca: findSeuilBascule(idA, idB, params, statutsData)
+  };
+}
+
+function deltaAt(idA, idB, ca, baseParams, statutsData) {
+  const params = { ...baseParams, ca };
+  const resA = calculerStatut(idA, params, statutsData);
+  const resB = calculerStatut(idB, params, statutsData);
+  return resB.revenu_net_apres_impot - resA.revenu_net_apres_impot;
+}
+
+function findSeuilBascule(idA, idB, baseParams, statutsData, opts = {}) {
+  const { min = 0, max = 300000, tol = 100 } = opts;
+  let lo = min, hi = max;
+  const deltaLo = deltaAt(idA, idB, lo, baseParams, statutsData);
+  const deltaHi = deltaAt(idA, idB, hi, baseParams, statutsData);
+
+  if (Math.sign(deltaLo) === Math.sign(deltaHi)) {
+    // Pas de croisement détecté dans l'intervalle — dominance monotone (ou absence de test fin,
+    // voir testMonotonicite() pour vérifier avant de généraliser sur une nouvelle paire).
+    return null;
+  }
+
+  while (hi - lo > tol) {
+    const mid = (lo + hi) / 2;
+    const deltaMid = deltaAt(idA, idB, mid, baseParams, statutsData);
+    if (Math.sign(deltaMid) === Math.sign(deltaLo)) {
+      lo = mid;
+    } else {
+      hi = mid;
+    }
+  }
+  return Math.round((lo + hi) / 2);
+}
+
+function testMonotonicite(idA, idB, baseParams, statutsData, opts = {}) {
+  const { min = 0, max = 300000, pas = 1000 } = opts;
+  let changementsDeSigne = 0;
+  let signePrecedent = null;
+  for (let ca = min; ca <= max; ca += pas) {
+    const delta = deltaAt(idA, idB, ca, baseParams, statutsData);
+    const signe = Math.sign(delta);
+    if (signePrecedent !== null && signe !== 0 && signe !== signePrecedent) {
+      changementsDeSigne++;
+    }
+    if (signe !== 0) signePrecedent = signe;
+  }
+  return { changementsDeSigne, monotone: changementsDeSigne <= 1 };
+}
+
+function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opts = {}) {
+  const { pas = 5000 } = opts;
+  const statut = statutsData.statuts[statutId];
+  const budgetDistribuable = params.ca - (params.charges_exploitation || 0);
+
+  let meilleur = null;
+  const points = [];
+  for (let remuneration = 0; remuneration <= budgetDistribuable; remuneration += pas) {
+    const resultat = calculerSociete(statut, { ...params, remuneration_gerant: remuneration, dividendes_verses: budgetDistribuable }, statutsData.constantes_communes);
+    points.push({ remuneration, revenu_net_total_foyer: resultat.revenu_net_total_foyer });
+    if (!meilleur || resultat.revenu_net_total_foyer > meilleur.revenu_net_total_foyer) {
+      meilleur = { remuneration, revenu_net_total_foyer: resultat.revenu_net_total_foyer };
+    }
+  }
+  return { meilleur, points };
+}
+
+
+const STATUTS_DATA = {"version":"2026-01","verifie_expert_comptable":false,"avertissement":"Taux et seuils à faire valider par un expert-comptable avant publication. Voir plan de build — étape 1.","sources":{"urssaf_taux_micro":"https://www.urssaf.fr/accueil/actualites/taux-cotisations-autoentrepeneur.html","plafonds_ca_micro":"https://www.impots.gouv.fr/professionnel/questions/pour-rester-micro-entrepreneur-quel-montant-de-chiffre-daffaires-ou-de","abattement_forfaitaire":"https://entreprendre.service-public.gouv.fr/vosdroits/F23267","versement_liberatoire":"https://www.impots.gouv.fr/professionnel/questions/en-tant-que-micro-entrepreneur-sous-quelles-conditions-puis-je-opter-pour-l","loi_patrimoine_ei":"https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000045167536","loi_patrimoine_ei_explication":"https://entreprendre.service-public.gouv.fr/vosdroits/F36354","is_taux":"https://bofip.impots.gouv.fr/bofip/2065-PGP.html/identifiant=BOI-IS-LIQ-20-20-20230621","is_taux_reduit_conditions":"https://bofip.impots.gouv.fr/bofip/2062-PGP.html/identifiant=BOI-IS-LIQ-20-10-20230621","flat_tax_dividendes":"https://www.impots.gouv.fr/international-particulier/mes-dividendes","gerant_sarl":"https://entreprendre.service-public.gouv.fr/vosdroits/F36235","president_sasu":"https://entreprendre.service-public.gouv.fr/vosdroits/F36240","franchise_tva":"https://entreprendre.service-public.gouv.fr/vosdroits/F21746","bareme_ir":"https://www.service-public.gouv.fr/particuliers/vosdroits/F1419"},"constantes_communes":{"flat_tax_dividendes":0.314,"flat_tax_dividendes_detail":{"prelevements_sociaux":0.186,"ir_forfaitaire":0.128},"flat_tax_dividendes_note":"31,4% depuis le 1er janvier 2026 (hausse CSG 17,2%→18,6%). Le taux 30% (17,2%+12,8%) ne s'applique plus qu'à l'assurance-vie, au PEL/CEL, au PEP et aux plus-values immobilières — pas aux dividendes de société.","is_taux_normal":0.25,"is_taux_reduit":{"taux":0.15,"seuil_benefice":42500,"conditions":"CA < 10M€, capital entièrement libéré, détenu à 75% min par personnes physiques"},"tmi_bareme_indicatif":[0,0.11,0.3,0.41,0.45]},"statuts":{"auto-entrepreneur":{"nom":"Auto-entrepreneur (micro-entreprise)","nom_court":"Auto-entrepreneur","categorie":"individuel","regime_fiscal":"micro-fiscal","regime_social":"micro-social","seuils_ca":{"vente_marchandises":203100,"prestations_services_bic":83600,"prestations_services_bnc":83600},"taux_cotisations_sociales":{"vente_marchandises":0.123,"prestations_services_bic":0.212,"prestations_services_bnc":0.256},"abattement_forfaitaire":{"vente_marchandises":0.71,"prestations_services_bic":0.5,"prestations_services_bnc":0.34},"versement_liberatoire_taux":{"vente_marchandises":0.01,"prestations_services_bic":0.017,"prestations_services_bnc":0.022},"versement_liberatoire_possible":true,"versement_liberatoire_condition_rfr":"revenu fiscal de référence N-2 sous seuil par part","tva_franchise_base":true,"tva_franchise_seuils":{"services":37500,"tolerance_services":41250,"biens":85000,"tolerance_biens":93500},"tva_franchise_note":"Seuils inchangés en 2026 malgré deux tentatives de réforme (PLF2025 puis PLF2026) vers un seuil unique — la première a été abrogée par la loi n°2025-1044 du 3 novembre 2025 (\"loi Midy\"), la seconde retirée du PLF2026.","responsabilite":"patrimoine_personnel_protege_par_defaut","responsabilite_exceptions":["fraude_fiscale_ou_sociale","manquement_grave_aux_obligations","renonciation_explicite_a_la_demande_d_un_creancier","dettes_nees_avant_15_05_2022"],"responsabilite_note_contenu_visible":"À mentionner explicitement dans le texte visible (pas seulement dans les données): les banques exigent quasi-systématiquement la renonciation à cette protection pour accorder un crédit professionnel — cas d'usage le plus fréquent en pratique.","protection_sociale":"SSI (aligné régime général depuis 2020)","cout_creation_moyen":0,"comptabilite_obligatoire":"simplifiee"},"entreprise-individuelle":{"nom":"Entreprise individuelle (régime réel)","nom_court":"EI","categorie":"individuel","regime_fiscal":"IR (BIC/BNC réel), option IS possible depuis 2022","regime_social":"TNS","seuils_ca":null,"taux_cotisations_sociales_estime":0.3,"responsabilite":"patrimoine_personnel_protege_par_defaut","responsabilite_exceptions":["fraude_fiscale_ou_sociale","manquement_grave_aux_obligations","renonciation_explicite_a_la_demande_d_un_creancier","dettes_nees_avant_15_05_2022"],"responsabilite_note_contenu_visible":"Même nuance que auto-entrepreneur: renonciation quasi-systématique exigée par les banques pour un prêt pro.","protection_sociale":"SSI","cout_creation_moyen":0,"comptabilite_obligatoire":"reelle"},"eurl":{"nom":"Entreprise Unipersonnelle à Responsabilité Limitée","nom_court":"EURL","categorie":"societe","regime_fiscal_defaut":"IR","regime_fiscal_options":["IR","IS"],"regime_social_gerant":"TNS","taux_cotisations_tns_estime":0.45,"responsabilite":"limitee_aux_apports","protection_sociale":"SSI","cout_creation_moyen":250,"comptabilite_obligatoire":"reelle_complete","capital_social_minimum":1},"sasu":{"nom":"Société par Actions Simplifiée Unipersonnelle","nom_court":"SASU","categorie":"societe","regime_fiscal_defaut":"IS","regime_fiscal_options":["IS","IR (5 ans max, conditions)"],"regime_social_president":"assimile_salarie","taux_charges_president_salaire":0.65,"responsabilite":"limitee_aux_apports","protection_sociale":"Régime général (hors assurance chômage)","cout_creation_moyen":250,"comptabilite_obligatoire":"reelle_complete","capital_social_minimum":1},"sarl":{"nom":"Société à Responsabilité Limitée","nom_court":"SARL","categorie":"societe","associes_min":2,"regime_fiscal_defaut":"IS","regime_fiscal_options":["IS","IR (5 ans max, conditions)"],"regime_social_gerant_majoritaire":"TNS","regime_social_gerant_minoritaire":"assimile_salarie","taux_cotisations_tns_estime":0.45,"taux_charges_gerant_minoritaire_salaire":0.65,"responsabilite":"limitee_aux_apports","cout_creation_moyen":250,"comptabilite_obligatoire":"reelle_complete","capital_social_minimum":1}}};
+const SIM_CFG = {"sim-auto-entrepreneur":{"statutId":"auto-entrepreneur","isIndividuel":true},"sim-entreprise-individuelle":{"statutId":"entreprise-individuelle","isIndividuel":true},"sim-eurl":{"statutId":"eurl","isIndividuel":false},"sim-sasu":{"statutId":"sasu","isIndividuel":false},"sim-sarl":{"statutId":"sarl","isIndividuel":false}};
+const CMP_CFG = {"cmp-ae-sasu":{"idA":"auto-entrepreneur","idB":"sasu","nomA":"Auto-entrepreneur","nomB":"SASU","params":{"type_activite":"prestations_services_bnc","charges_exploitation":8000,"remuneration_gerant":25000,"dividendes_verses":15000,"tmi":0.3}},"cmp-ae-eurl":{"idA":"auto-entrepreneur","idB":"eurl","nomA":"Auto-entrepreneur","nomB":"EURL","params":{"type_activite":"prestations_services_bnc","charges_exploitation":8000,"remuneration_gerant":25000,"dividendes_verses":15000,"tmi":0.3}},"cmp-eurl-sasu":{"idA":"eurl","idB":"sasu","nomA":"EURL","nomB":"SASU","params":{"charges_exploitation":10000,"remuneration_gerant":30000,"dividendes_verses":20000,"tmi":0.3}},"cmp-sasu-sarl":{"idA":"sasu","idB":"sarl","nomA":"SASU","nomB":"SARL","params":{"charges_exploitation":15000,"remuneration_gerant":35000,"dividendes_verses":20000,"tmi":0.3}},"cmp-ae-ei":{"idA":"auto-entrepreneur","idB":"entreprise-individuelle","nomA":"Auto-entrepreneur","nomB":"Entreprise individuelle","params":{"type_activite":"prestations_services_bnc","charges_reelles":15000,"tmi":0.3}}};
+function eur(n){ return Math.round(n).toLocaleString('fr-FR')+' €'; }
+function pct(n){ return (n*100).toFixed(1).replace('.',',')+' %'; }
+function calcSim(key){
+  const cfg = SIM_CFG[key];
+  const ca = parseFloat(document.getElementById('ca-'+key).value)||0;
+  const tmi = parseFloat(document.getElementById('tmi-'+key).value);
+  const params = { ca, tmi };
+  const taEl = document.getElementById('ta-'+key);
+  if (taEl) params.type_activite = taEl.value;
+  if (!cfg.isIndividuel) {
+    params.remuneration_gerant = parseFloat(document.getElementById('rem-'+key).value)||0;
+    params.charges_exploitation = parseFloat(document.getElementById('chg-'+key).value)||0;
+    params.dividendes_verses = parseFloat(document.getElementById('div-'+key).value)||0;
+  } else {
+    params.charges_reelles = 0;
+  }
+  const res = calculerStatut(cfg.statutId, params, STATUTS_DATA);
+  document.getElementById('rnet-'+key).textContent = eur(res.revenu_net_apres_impot);
+  if (cfg.isIndividuel) {
+    document.getElementById('rcotis-'+key).textContent = eur(res.cotisations_sociales);
+    document.getElementById('rimpot-'+key).textContent = eur(res.impot_revenu);
+  } else {
+    document.getElementById('rcotis-'+key).textContent = eur(res.cotisations_sociales_gerant);
+    document.getElementById('rimpot-'+key).textContent = eur(res.is_du + (res.impot_revenu_remuneration||0));
+  }
+  document.getElementById('rtaux-'+key).textContent = pct(res.taux_prelevement_global);
+  document.getElementById('result-'+key).classList.add('show');
+  document.getElementById('result-'+key).scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function calcCmp(key){
+  const cfg = CMP_CFG[key];
+  const ca = parseFloat(document.getElementById('ca-'+key).value)||0;
+  const tmi = parseFloat(document.getElementById('tmi-'+key).value);
+  const params = Object.assign({}, cfg.params, { ca, tmi });
+  const taEl = document.getElementById('ta-'+key);
+  if (taEl) params.type_activite = taEl.value;
+  const cmp = comparerStatuts(cfg.idA, cfg.idB, params, STATUTS_DATA);
+  document.getElementById('rneta-'+key).textContent = eur(cmp.resA.revenu_net_apres_impot);
+  document.getElementById('rnetb-'+key).textContent = eur(cmp.resB.revenu_net_apres_impot);
+  if (cmp.seuil_bascule_ca == null) {
+    document.getElementById('rseuil-'+key).textContent = 'Aucun croisement';
+    document.getElementById('rseuilsub-'+key).textContent = (cmp.delta_revenu_net >= 0 ? cfg.nomB : cfg.nomA) + ' reste préférable sur toute la plage 0–300k€ (à ces hypothèses)';
+  } else {
+    document.getElementById('rseuil-'+key).textContent = eur(cmp.seuil_bascule_ca);
+    document.getElementById('rseuilsub-'+key).textContent = 'CA à partir duquel le statut le plus avantageux change (à ces hypothèses)';
+  }
+  document.getElementById('result-'+key).classList.add('show');
+  document.getElementById('result-'+key).scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 </script>
 </body>

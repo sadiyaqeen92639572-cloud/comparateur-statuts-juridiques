@@ -719,7 +719,15 @@ ${body}
 function simulateurWidget(cfg, statutId) {
   const isIndividuel = STATUTS_DATA.statuts[statutId].categorie === 'individuel';
   const isMicro = STATUTS_DATA.statuts[statutId].regime_fiscal === 'micro-fiscal';
-  const PAGE = { statutId, ca_defaut: cfg.ca_defaut, type_activite_defaut: cfg.type_activite_defaut || null, isMicro, isIndividuel };
+  // Défauts société: rémunération ~50% du CA, charges d'exploitation ~10%, dividendes le solde imposable estimé —
+  // ajustables par l'utilisateur, juste des valeurs de départ pédagogiques.
+  const remuneration_defaut = Math.round(cfg.ca_defaut * 0.5 / 1000) * 1000;
+  const charges_defaut = Math.round(cfg.ca_defaut * 0.1 / 1000) * 1000;
+  const dividendes_defaut = Math.round(cfg.ca_defaut * 0.15 / 1000) * 1000;
+  const PAGE = {
+    statutId, ca_defaut: cfg.ca_defaut, type_activite_defaut: cfg.type_activite_defaut || null, isMicro, isIndividuel,
+    remuneration_defaut, charges_defaut, dividendes_defaut
+  };
 
   const typeActiviteField = isMicro
     ? `<div class="form-group full"><label>Type d'activité</label><select id="typeActivite">
@@ -727,6 +735,19 @@ function simulateurWidget(cfg, statutId) {
         <option value="prestations_services_bic" selected>Prestations de services (BIC)</option>
         <option value="prestations_services_bnc">Prestations de services (BNC)</option>
       </select></div>` : '';
+
+  const societeFields = !isIndividuel
+    ? `<div class="form-group"><label>Rémunération dirigeant (€/an)</label><input type="number" id="remuneration" min="0" step="1000" value="${remuneration_defaut}"></div>
+      <div class="form-group"><label>Charges d'exploitation (€/an)</label><input type="number" id="charges" min="0" step="1000" value="${charges_defaut}"></div>
+      <div class="form-group full"><label>Dividendes versés (€/an)</label><input type="number" id="dividendes" min="0" step="1000" value="${dividendes_defaut}"></div>` : '';
+
+  const resultStat = isIndividuel
+    ? `<div class="r-stat"><div class="sv" id="r-cotis"></div><div class="sl">Cotisations sociales</div></div>
+        <div class="r-stat"><div class="sv" id="r-impot"></div><div class="sl">Impôt sur le revenu</div></div>
+        <div class="r-stat"><div class="sv" id="r-taux"></div><div class="sl">Taux de prélèvement global</div></div>`
+    : `<div class="r-stat"><div class="sv" id="r-cotis"></div><div class="sl">Cotisations sociales dirigeant</div></div>
+        <div class="r-stat"><div class="sv" id="r-impot"></div><div class="sl">IS + impôt sur rémunération</div></div>
+        <div class="r-stat"><div class="sv" id="r-taux"></div><div class="sl">Taux de prélèvement global</div></div>`;
 
   return `
   <div class="tool-card">
@@ -736,6 +757,7 @@ function simulateurWidget(cfg, statutId) {
         <option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option>
       </select></div>
       ${typeActiviteField}
+      ${societeFields}
     </div>
     <button class="calc-btn" onclick="calculate()">Calculer mon revenu net →</button>
     <div class="result" id="result">
@@ -744,9 +766,7 @@ function simulateurWidget(cfg, statutId) {
         <div class="ra" id="r-net"></div>
       </div>
       <div class="result-grid">
-        <div class="r-stat"><div class="sv" id="r-cotis"></div><div class="sl">Cotisations sociales</div></div>
-        <div class="r-stat"><div class="sv" id="r-impot"></div><div class="sl">Impôt sur le revenu</div></div>
-        <div class="r-stat"><div class="sv" id="r-taux"></div><div class="sl">Taux de prélèvement global</div></div>
+        ${resultStat}
       </div>
     </div>
   </div>
@@ -761,10 +781,20 @@ function simulateurWidget(cfg, statutId) {
     const tmi = parseFloat(document.getElementById('tmi').value);
     const typeActiviteEl = document.getElementById('typeActivite');
     const params = { ca, tmi, type_activite: typeActiviteEl ? typeActiviteEl.value : undefined };
+    if (!PAGE.isIndividuel) {
+      params.remuneration_gerant = parseFloat(document.getElementById('remuneration').value)||0;
+      params.charges_exploitation = parseFloat(document.getElementById('charges').value)||0;
+      params.dividendes_verses = parseFloat(document.getElementById('dividendes').value)||0;
+    }
     const res = calculerStatut(PAGE.statutId, params, STATUTS_DATA);
     document.getElementById('r-net').textContent = eur(res.revenu_net_apres_impot);
-    document.getElementById('r-cotis').textContent = eur(res.cotisations_sociales);
-    document.getElementById('r-impot').textContent = eur(res.impot_revenu);
+    if (PAGE.isIndividuel) {
+      document.getElementById('r-cotis').textContent = eur(res.cotisations_sociales);
+      document.getElementById('r-impot').textContent = eur(res.impot_revenu);
+    } else {
+      document.getElementById('r-cotis').textContent = eur(res.cotisations_sociales_gerant);
+      document.getElementById('r-impot').textContent = eur(res.is_du + (res.impot_revenu_remuneration||0));
+    }
     document.getElementById('r-taux').textContent = pct(res.taux_prelevement_global);
     document.getElementById('result').style.display='block';
     document.getElementById('result').scrollIntoView({behavior:'smooth',block:'nearest'});
