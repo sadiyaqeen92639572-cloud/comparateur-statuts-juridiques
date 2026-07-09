@@ -18,6 +18,9 @@
   { "@type": "WebApplication", "name": "Comparateur de statuts juridiques", "url": "https://calculateur-statuts-juridiques.fr/", "applicationCategory": "FinanceApplication", "operatingSystem": "Any", "inLanguage": "fr", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" } },
   { "@type": "FAQPage", "mainEntity": [
     { "@type": "Question", "name": "Quel statut juridique choisir pour créer mon entreprise ?", "acceptedAnswer": { "@type": "Answer", "text": "Cela dépend de votre chiffre d'affaires prévisionnel, de vos charges réelles, et de vos préférences en matière de régime social. Utilisez nos comparateurs pour estimer le revenu net de chaque statut selon votre situation." } },
+    { "@type": "Question", "name": "Auto-entrepreneur, EURL, SASU ou SARL : quelle différence principale ?", "acceptedAnswer": { "@type": "Answer", "text": "L'auto-entrepreneur (micro-entreprise) a des cotisations simplifiées mais un CA plafonné et pas de charges déductibles. L'EURL et la SASU sont des sociétés unipersonnelles soumises à l'IS, avec un régime social différent pour le dirigeant (TNS pour l'EURL, assimilé salarié pour la SASU). La SARL est la version pluripersonnelle de l'EURL." } },
+    { "@type": "Question", "name": "Quel est le statut le moins cher en charges sociales ?", "acceptedAnswer": { "@type": "Answer", "text": "L'auto-entrepreneur a le taux de charges le plus simple (environ 12,3% à 21,1% du CA selon l'activité) mais sans déduction de frais réels. Pour un dirigeant qui se verse un salaire, l'EURL (régime TNS) a des cotisations sociales généralement moins élevées que la SASU (régime assimilé salarié), mais la SASU protège mieux socialement." } },
+    { "@type": "Question", "name": "Comment savoir à quel chiffre d'affaires il faut changer de statut ?", "acceptedAnswer": { "@type": "Answer", "text": "Chaque statut a un seuil de bascule différent selon l'activité et les charges réelles. Nos comparateurs calculent ce seuil précisément à partir de votre CA prévisionnel et vos charges — utilisez le comparateur correspondant à votre situation (auto-entrepreneur vs SASU, EURL vs SASU, etc.)." } },
     { "@type": "Question", "name": "Les simulateurs de ce site remplacent-ils un expert-comptable ?", "acceptedAnswer": { "@type": "Answer", "text": "Non — ce sont des estimations indicatives basées sur des taux et seuils simplifiés. Faites toujours valider votre choix par un expert-comptable ou un avocat avant de créer votre entreprise." } }
   ] }
  ]
@@ -41,6 +44,25 @@ h2.st { font-size:1.3rem; font-weight:800; margin-bottom:20px; }
 .disc { background:#123f66; color:#c3d3e0; border-radius:8px; padding:14px 18px; margin:24px 0; font-size:.92rem; line-height:1.6; }
 footer { background:#0d3352; color:#c3d3e0; text-align:center; padding:30px 20px; font-size:.9rem; }
 footer a { color:#dbe8f2; }
+
+/* Sticky anchor nav */
+.subnav { position:sticky; top:0; z-index:50; background:#fff; border-bottom:1px solid var(--border); overflow-x:auto; white-space:nowrap; }
+.subnav .container { display:flex; gap:4px; padding:0 20px; }
+.subnav a { display:inline-block; padding:14px 14px; font-size:.88rem; font-weight:700; color:var(--muted); text-decoration:none; border-bottom:2px solid transparent; }
+.subnav a:hover, .subnav a.active { color:var(--brand-dark); border-color:var(--brand); }
+.section[id] { scroll-margin-top:54px; }
+.intro-text { color:var(--muted); font-size:.95rem; max-width:680px; margin:-8px 0 20px; line-height:1.7; }
+.quickref-table { width:100%; border-collapse:collapse; margin:18px 0 8px; font-size:.88rem; background:#fff; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); }
+.quickref-table th { background:var(--brand); color:#fff; padding:10px 14px; text-align:left; font-weight:600; }
+.quickref-table td { padding:10px 14px; border-bottom:1px solid var(--border); }
+.quickref-table tr:last-child td { border-bottom:none; }
+.quickref-table tr:nth-child(even) td { background:#f8faff; }
+.faq-item { border-bottom:1px solid var(--border); }
+.faq-q { width:100%; background:none; border:none; text-align:left; padding:16px 0; font-size:.95rem; font-weight:700; cursor:pointer; display:flex; justify-content:space-between; align-items:center; color:var(--text); }
+.faq-q::after { content:'+'; font-size:1.3rem; color:var(--brand); flex-shrink:0; margin-left:12px; }
+.faq-q.open::after { content:'\2212'; }
+.faq-a { display:none; padding:0 0 16px; font-size:.9rem; color:var(--muted); line-height:1.7; }
+.faq-a.open { display:block; }
 
 /* E-E-A-T Section styles */
 .eeat-section {
@@ -175,8 +197,21 @@ footer a { color:#dbe8f2; }
   <p>Simulateurs gratuits pour choisir entre auto-entrepreneur, entreprise individuelle, EURL, SASU et SARL — charges, impôts et revenu net calculés selon votre situation.</p>
 </header>
 
-<div class="container section">
+<nav class="subnav">
+  <div class="container">
+    <a href="#simulateurs">Simulateurs</a>
+    <a href="#comparateurs">Comparateurs</a>
+    <a href="#tableau-comparatif">Tableau comparatif</a>
+    <a href="#migration">Migration</a>
+    <a href="#metier">Par métier</a>
+    <a href="#faq">FAQ</a>
+    <a href="#methodologie">Méthodologie</a>
+  </div>
+</nav>
+
+<div class="container section" id="simulateurs">
   <h2 class="st">Simulateurs par statut</h2>
+  <p class="intro-text">Estimez en quelques secondes vos cotisations sociales, votre impôt et votre revenu net selon le statut juridique choisi : auto-entrepreneur, entreprise individuelle, EURL, SASU ou SARL. Chaque simulateur applique les taux et seuils 2026 propres à ce statut.</p>
   <div class="grid">
     <a class="card" href="/simulateur/auto-entrepreneur/"><h3>Auto-entrepreneur</h3><p>Micro-entreprise : cotisations, abattement, revenu net.</p></a>
     <a class="card" href="/simulateur/entreprise-individuelle/"><h3>Entreprise individuelle</h3><p>Régime réel : charges déductibles, revenu net.</p></a>
@@ -186,8 +221,9 @@ footer a { color:#dbe8f2; }
   </div>
 </div>
 
-<div class="container section">
+<div class="container section" id="comparateurs">
   <h2 class="st">Comparateurs</h2>
+  <p class="intro-text">Vous hésitez entre deux statuts ? Ces comparateurs calculent le seuil de bascule exact selon votre chiffre d'affaires prévisionnel — le point à partir duquel un statut devient plus avantageux que l'autre en revenu net.</p>
   <div class="grid">
     <a class="card" href="/comparateur/auto-entrepreneur-vs-sasu/"><h3>Auto-entrepreneur vs SASU</h3><p>Seuil de bascule calculé selon votre CA.</p></a>
     <a class="card" href="/comparateur/auto-entrepreneur-vs-eurl/"><h3>Auto-entrepreneur vs EURL</h3><p>Comparez charges et responsabilité.</p></a>
@@ -197,16 +233,33 @@ footer a { color:#dbe8f2; }
   </div>
 </div>
 
-<div class="container section">
+<div class="container section" id="tableau-comparatif" style="padding-top:0;">
+  <h2 class="st">Tableau comparatif rapide des statuts</h2>
+  <p class="intro-text">Aperçu synthétique pour orienter votre choix avant d'utiliser un simulateur détaillé.</p>
+  <table class="quickref-table">
+    <thead><tr><th>Statut</th><th>Régime social dirigeant</th><th>Imposition</th><th>Plafond CA</th><th>Charges déductibles</th></tr></thead>
+    <tbody>
+      <tr><td>Auto-entrepreneur</td><td>TNS (micro-social)</td><td>IR (micro-fiscal ou versement libératoire)</td><td>Oui (77 700 € / 188 700 €)</td><td>Non</td></tr>
+      <tr><td>Entreprise individuelle</td><td>TNS</td><td>IR (régime réel)</td><td>Non</td><td>Oui</td></tr>
+      <tr><td>EURL</td><td>TNS (si gérant associé unique)</td><td>IS (option) ou IR</td><td>Non</td><td>Oui</td></tr>
+      <tr><td>SASU</td><td>Assimilé salarié</td><td>IS</td><td>Non</td><td>Oui</td></tr>
+      <tr><td>SARL</td><td>TNS (gérant majoritaire) ou assimilé salarié (minoritaire)</td><td>IS</td><td>Non</td><td>Oui</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="container section" id="migration">
   <h2 class="st">Guides de migration</h2>
+  <p class="intro-text">Passer d'un statut à un autre implique des démarches administratives et un impact réel sur votre revenu net. Ces guides détaillent les étapes concrètes.</p>
   <div class="grid">
     <a class="card" href="/migration/auto-entrepreneur-vers-sasu/"><h3>Auto-entrepreneur → SASU</h3><p>Étapes et impact sur le revenu net.</p></a>
     <a class="card" href="/migration/auto-entrepreneur-vers-eurl/"><h3>Auto-entrepreneur → EURL</h3><p>Étapes et impact sur le revenu net.</p></a>
   </div>
 </div>
 
-<div class="container section">
+<div class="container section" id="metier">
   <h2 class="st">Par métier</h2>
+  <p class="intro-text">Simulations pré-remplies avec un chiffre d'affaires et des charges typiques d'une profession, pour un résultat immédiatement parlant.</p>
   <div class="grid">
     <a class="card" href="/metier/consultant-auto-entrepreneur-vs-sasu/"><h3>Consultant : AE vs SASU</h3><p>Simulation pré-remplie pour un consultant.</p></a>
     <a class="card" href="/metier/developpeur-auto-entrepreneur-vs-eurl/"><h3>Développeur : AE vs EURL</h3><p>Simulation pré-remplie pour un développeur freelance.</p></a>
@@ -214,7 +267,16 @@ footer a { color:#dbe8f2; }
   <div class="disc">Simulateurs à titre indicatif — taux et seuils 2026 simplifiés, à faire valider par un expert-comptable ou un avocat avant toute décision de création ou de transformation d'entreprise.</div>
 </div>
 
-<div class="container section" style="padding-top: 0;">
+<div class="container section" id="faq">
+  <h2 class="st">Questions fréquentes</h2>
+  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Quel statut juridique choisir pour créer mon entreprise ?</button><div class="faq-a">Cela dépend de votre chiffre d'affaires prévisionnel, de vos charges réelles, et de vos préférences en matière de régime social. Utilisez nos comparateurs pour estimer le revenu net de chaque statut selon votre situation.</div></div>
+  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Auto-entrepreneur, EURL, SASU ou SARL : quelle différence principale ?</button><div class="faq-a">L'auto-entrepreneur (micro-entreprise) a des cotisations simplifiées mais un CA plafonné et pas de charges déductibles. L'EURL et la SASU sont des sociétés unipersonnelles soumises à l'IS, avec un régime social différent pour le dirigeant (TNS pour l'EURL, assimilé salarié pour la SASU). La SARL est la version pluripersonnelle de l'EURL.</div></div>
+  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Quel est le statut le moins cher en charges sociales ?</button><div class="faq-a">L'auto-entrepreneur a le taux de charges le plus simple (environ 12,3% à 21,1% du CA selon l'activité) mais sans déduction de frais réels. Pour un dirigeant qui se verse un salaire, l'EURL (régime TNS) a des cotisations sociales généralement moins élevées que la SASU (régime assimilé salarié), mais la SASU protège mieux socialement.</div></div>
+  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Comment savoir à quel chiffre d'affaires il faut changer de statut ?</button><div class="faq-a">Chaque statut a un seuil de bascule différent selon l'activité et les charges réelles. Nos comparateurs calculent ce seuil précisément à partir de votre CA prévisionnel et vos charges — utilisez le comparateur correspondant à votre situation.</div></div>
+  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Les simulateurs de ce site remplacent-ils un expert-comptable ?</button><div class="faq-a">Non — ce sont des estimations indicatives basées sur des taux et seuils simplifiés. Faites toujours valider votre choix par un expert-comptable ou un avocat avant de créer votre entreprise.</div></div>
+</div>
+
+<div class="container section" id="methodologie" style="padding-top: 0;">
   <div class="eeat-section">
     <h2 class="eeat-title">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--brand);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
@@ -271,6 +333,12 @@ footer a { color:#dbe8f2; }
 <footer>
   <p>Comparateur de statuts juridiques — France 2026</p>
 </footer>
+<script>
+function toggleFaq(btn) {
+  btn.classList.toggle('open');
+  btn.nextElementSibling.classList.toggle('open');
+}
+</script>
 </body>
 </html>
 
