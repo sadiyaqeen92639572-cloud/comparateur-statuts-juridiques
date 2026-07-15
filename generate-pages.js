@@ -15,6 +15,14 @@ const {
 const SITE_URL = 'https://calculateur-statuts-juridiques.fr'; // TODO: remplacer avant mise en ligne + fichier CNAME
 const TODAY = new Date().toISOString().slice(0, 10);
 
+const GESMINE_ORG_JSONLD = {
+  '@type': 'Organization',
+  name: 'Comparateur de statuts juridiques',
+  legalName: 'Gesmine-Invest Limited',
+  identifier: { '@type': 'PropertyValue', propertyID: 'UK Company Number', value: '14120136' },
+  address: { '@type': 'PostalAddress', streetAddress: 'Hardy House, 269 Poynders Gardens', addressLocality: 'London', postalCode: 'SW4 8PQ', addressCountry: 'GB' }
+};
+
 const STATUTS_DATA = JSON.parse(fs.readFileSync(path.join(__dirname, 'data/statuts.json')));
 
 // Presets métier — non réglementaires, restent inline (voir avis Gemini dans le plan).
@@ -707,7 +715,7 @@ ${keywords ? `<meta name="keywords" content="${esc(keywords)}">` : ''}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://calculateur-statuts-juridiques.fr/og-image.png">
 <script type="application/ld+json">
-${JSON.stringify({ '@context': 'https://schema.org', '@graph': jsonld }, null, 1)}
+${JSON.stringify({ '@context': 'https://schema.org', '@graph': [...jsonld, GESMINE_ORG_JSONLD] }, null, 1)}
 <\/script>
 <style>${CSS}</style>
 </head>
@@ -716,6 +724,7 @@ ${body}
 <footer><div class="container">
   <div class="disc">Simulateur à titre indicatif, basé sur des taux ${STATUTS_DATA.version} — ne remplace pas l'avis d'un expert-comptable ou d'un avocat. ${STATUTS_DATA.avertissement}</div>
   <p><a href="/">Comparateur de statuts juridiques</a></p>
+  <p style="font-size:.72rem;margin-top:8px;">Comparateur de statuts juridiques fait partie de Gesmine-Invest Limited, société immatriculée au Royaume-Uni sous le numéro 14120136, siège social Hardy House, 269 Poynders Gardens, Londres, Royaume-Uni, SW4 8PQ.</p>
 </div></footer>
 </body>
 </html>`;
