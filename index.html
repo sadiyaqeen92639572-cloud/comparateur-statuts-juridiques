@@ -560,7 +560,8 @@ footer a { color:#dbe8f2; }
 <div class="container section" id="tableau-comparatif" style="padding-top:0;">
   <h2 class="st">Tableau comparatif rapide des statuts</h2>
   <p class="intro-text">Aperçu synthétique pour orienter votre choix avant d'utiliser un simulateur détaillé.</p>
-  <table class="quickref-table">
+  <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+  <table class="quickref-table" style="min-width:620px;">
     <thead><tr><th>Statut</th><th>Régime social dirigeant</th><th>Imposition</th><th>Plafond CA</th><th>Charges déductibles</th></tr></thead>
     <tbody>
       <tr><td>Auto-entrepreneur</td><td>TNS (micro-social)</td><td>IR (micro-fiscal ou versement libératoire)</td><td>Oui (77 700 € / 188 700 €)</td><td>Non</td></tr>
@@ -570,6 +571,7 @@ footer a { color:#dbe8f2; }
       <tr><td>SARL</td><td>TNS (gérant majoritaire) ou assimilé salarié (minoritaire)</td><td>IS</td><td>Non</td><td>Oui</td></tr>
     </tbody>
   </table>
+  </div>
 </div>
 
 <div class="container section" id="migration">
