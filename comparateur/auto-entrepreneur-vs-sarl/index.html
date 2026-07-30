@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SASU ou SARL : comparateur et simulateur 2026</title>
-<meta name="description" content="SASU ou SARL ? Comparez le régime social du dirigeant et la fiscalité selon votre situation.">
+<title>Auto-entrepreneur ou SARL : simulateur comparatif 2026</title>
+<meta name="description" content="Comparez charges, revenu net et responsabilité entre auto-entrepreneur et SARL selon votre chiffre d'affaires — pertinent dès que vous vous associez.">
 
-<link rel="canonical" href="https://calculateur-statuts-juridiques.fr/comparateur/sasu-vs-sarl/">
+<link rel="canonical" href="https://calculateur-statuts-juridiques.fr/comparateur/auto-entrepreneur-vs-sarl/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.png" type="image/png">
-<meta property="og:title" content="SASU ou SARL : comparateur et simulateur 2026">
-<meta property="og:description" content="SASU ou SARL ? Comparez le régime social du dirigeant et la fiscalité selon votre situation.">
+<meta property="og:title" content="Auto-entrepreneur ou SARL : simulateur comparatif 2026">
+<meta property="og:description" content="Comparez charges, revenu net et responsabilité entre auto-entrepreneur et SARL selon votre chiffre d'affaires — pertinent dès que vous vous associez.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://calculateur-statuts-juridiques.fr/comparateur/sasu-vs-sarl/">
+<meta property="og:url" content="https://calculateur-statuts-juridiques.fr/comparateur/auto-entrepreneur-vs-sarl/">
 <meta property="og:image" content="https://calculateur-statuts-juridiques.fr/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,8 +24,8 @@
  "@graph": [
   {
    "@type": "WebApplication",
-   "name": "SASU ou SARL : quel statut choisir ?",
-   "url": "https://calculateur-statuts-juridiques.fr/comparateur/sasu-vs-sarl/",
+   "name": "Auto-entrepreneur ou SARL : quel statut choisir ?",
+   "url": "https://calculateur-statuts-juridiques.fr/comparateur/auto-entrepreneur-vs-sarl/",
    "applicationCategory": "FinanceApplication",
    "operatingSystem": "Any",
    "inLanguage": "fr",
@@ -40,10 +40,18 @@
    "mainEntity": [
     {
      "@type": "Question",
-     "name": "SASU ou SARL, quelle différence principale ?",
+     "name": "Pourquoi comparer auto-entrepreneur et SARL alors que l'un est individuel ?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "La SARL impose un minimum de 2 associés et un cadre légal plus rigide; la SASU offre plus de liberté statutaire et peut rester unipersonnelle."
+      "text": "La question se pose typiquement quand un auto-entrepreneur s'associe avec quelqu'un d'autre — le régime micro ne permet pas plusieurs associés, la SARL devient alors l'alternative naturelle (ou la SAS, voir le comparateur SAS vs SARL)."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "À partir de quel CA la SARL devient-elle plus intéressante ?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Cela dépend fortement du régime social retenu pour le ou les gérants (majoritaire TNS ou minoritaire assimilé salarié) — voir le seuil de bascule calculé ci-dessus pour vos hypothèses."
      }
     }
    ]
@@ -261,18 +269,22 @@ footer a { color:#dbe8f2; }
 <body>
 
 <header><div class="container">
-  <h1>SASU ou SARL : quel statut choisir ?</h1>
-  <p>SASU ou SARL ? Comparez le régime social du dirigeant et la fiscalité selon votre situation.</p>
+  <h1>Auto-entrepreneur ou SARL : quel statut choisir ?</h1>
+  <p>Comparez charges, revenu net et responsabilité entre auto-entrepreneur et SARL selon votre chiffre d'affaires — pertinent dès que vous vous associez.</p>
 </div></header>
 <div class="container tool-wrapper">
   
   <div class="tool-card">
     <div class="form-grid">
-      <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca" min="0" step="1000" value="100000"></div>
+      <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca" min="0" step="1000" value="70000"></div>
       <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi">
         <option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option>
       </select></div>
-      
+      <div class="form-group full"><label>Type d'activité (statut micro)</label><select id="typeActivite">
+        <option value="vente_marchandises">Vente de marchandises</option>
+        <option value="prestations_services_bic">Prestations de services (BIC)</option>
+        <option value="prestations_services_bnc" selected>Prestations de services (BNC)</option>
+      </select></div>
     </div>
     <button class="calc-btn" onclick="calculate()">Comparer les deux statuts →</button>
     <div class="result" id="result">
@@ -282,13 +294,13 @@ footer a { color:#dbe8f2; }
         <div class="rs" id="r-seuil-sub"></div>
       </div>
       <div class="result-grid" style="grid-template-columns:1fr 1fr;">
-        <div class="r-stat"><div class="sv" id="r-net-a"></div><div class="sl">Revenu net — SASU</div></div>
+        <div class="r-stat"><div class="sv" id="r-net-a"></div><div class="sl">Revenu net — Auto-entrepreneur</div></div>
         <div class="r-stat"><div class="sv" id="r-net-b"></div><div class="sl">Revenu net — SARL</div></div>
       </div>
     </div>
   </div>
   <script>
-  const PAGE = {"idA":"sasu","idB":"sarl","ca_defaut":100000,"params_defaut":{"charges_exploitation":15000,"remuneration_gerant":35000,"dividendes_verses":20000,"tmi":0.3},"nomA":"SASU","nomB":"SARL"};
+  const PAGE = {"idA":"auto-entrepreneur","idB":"sarl","ca_defaut":70000,"params_defaut":{"type_activite":"prestations_services_bnc","charges_exploitation":10000,"remuneration_gerant":28000,"dividendes_verses":15000,"tmi":0.3},"nomA":"Auto-entrepreneur","nomB":"SARL"};
   /*
  * Moteur de calcul pur — aucune ref DOM, aucun accès fichier.
  * Utilisé (a) côté build par generate-pages.js via require(), (b) inliné
@@ -515,11 +527,11 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
 <div class="container content">
   <a class="back-link" href="/">← Tous les statuts</a>
   <h2 class="st">Seuil de bascule</h2>
-  <p>Sur la plage de chiffre d'affaires testée (0 à 300 000 €), l'un des deux statuts reste préférable à ces hypothèses — utilisez le simulateur ci-dessus pour tester vos propres paramètres.</p>
+  <p>À hypothèses constantes (rémunération, charges et dividendes fixés comme ci-dessus), le statut le plus avantageux bascule autour d'un chiffre d'affaires de <strong>19 739 €</strong>. Ajustez les paramètres du simulateur pour votre situation réelle.</p>
   
-  <h2 class="st">Chiffres clés — Société par Actions Simplifiée Unipersonnelle</h2>
+  <h2 class="st">Chiffres clés — Auto-entrepreneur (micro-entreprise)</h2>
   <table class="data-table"><thead><tr><th>Donnée</th><th>Valeur</th></tr></thead><tbody>
-    <tr><td>Catégorie</td><td class="hl">Société</td></tr><tr><td>Régime fiscal par défaut</td><td class="hl">IS</td></tr><tr><td>Responsabilité</td><td class="hl">Responsabilité limitée aux apports</td></tr><tr><td>Coût de création moyen</td><td class="hl">250 €</td></tr>
+    <tr><td>Catégorie</td><td class="hl">Entreprise individuelle</td></tr><tr><td>Régime fiscal</td><td class="hl">micro-fiscal</td></tr><tr><td>Régime social</td><td class="hl">micro-social</td></tr><tr><td>Plafond CA — vente marchandises</td><td class="hl">203 100 €</td></tr><tr><td>Plafond CA — prestations services bic</td><td class="hl">83 600 €</td></tr><tr><td>Plafond CA — prestations services bnc</td><td class="hl">83 600 €</td></tr><tr><td>Cotisations sociales — vente marchandises</td><td class="hl">12,3 %</td></tr><tr><td>Cotisations sociales — prestations services bic</td><td class="hl">21,2 %</td></tr><tr><td>Cotisations sociales — prestations services bnc</td><td class="hl">25,6 %</td></tr><tr><td>Responsabilité</td><td class="hl">Patrimoine personnel protégé par défaut</td></tr><tr><td>⚠️ À noter</td><td class="hl">À mentionner explicitement dans le texte visible (pas seulement dans les données): les banques exigent quasi-systématiquement la renonciation à cette protection pour accorder un crédit professionnel — cas d'usage le plus fréquent en pratique.</td></tr><tr><td>Coût de création moyen</td><td class="hl">0 €</td></tr>
   </tbody></table>
   <p style="font-size:.88rem;color:var(--muted);">Données 2026-01 — à titre indicatif, vérifiées par un professionnel avant toute décision. Source structurée : <code>data/statuts.json</code>.</p>
   
@@ -531,18 +543,19 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
   
   <h2 class="st">Formules de calcul &amp; sources officielles</h2>
   <div class="method">
-    <h3 class="sub">SASU</h3>
-    <div class="code">bénéfice_avant_IS = CA − charges_exploitation − rémunération_dirigeant − cotisations_sociales_dirigeant<br>IS = bénéfice×15% (jusqu'à 42 500€) + (bénéfice−42 500€)×25% au-delà<br>rémunération_nette = rémunération_dirigeant − cotisations_sociales_dirigeant<br>dividendes_nets = dividendes_versés × (1 − 31,4%)  (flat tax / PFU)<br>revenu_net_foyer = rémunération_nette − impôt(TMI) + dividendes_nets</div><h3 class="sub">SARL</h3>
+    <h3 class="sub">Auto-entrepreneur</h3>
+    <div class="code">cotisations_sociales = CA × taux_cotisations (selon activité)<br>revenu_imposable = CA × (1 − abattement_forfaitaire)<br>impôt = revenu_imposable × TMI  (ou CA × taux_versement_libératoire si option VLF)<br>revenu_net = CA − cotisations_sociales − impôt</div><h3 class="sub">SARL</h3>
     <div class="code">bénéfice_avant_IS = CA − charges_exploitation − rémunération_dirigeant − cotisations_sociales_dirigeant<br>IS = bénéfice×15% (jusqu'à 42 500€) + (bénéfice−42 500€)×25% au-delà<br>rémunération_nette = rémunération_dirigeant − cotisations_sociales_dirigeant<br>dividendes_nets = dividendes_versés × (1 − 31,4%)  (flat tax / PFU)<br>revenu_net_foyer = rémunération_nette − impôt(TMI) + dividendes_nets</div>
     <p style="font-size:.88rem;color:var(--muted);margin:14px 0 6px;">Formules appliquées de façon déterministe à partir de <code>data/statuts.json</code> (2026-01) — approximations pédagogiques, pas un calcul officiel URSSAF/impots.gouv.fr au barème exact par tranche.</p>
     <h3 class="sub">Sources officielles</h3>
     <ul style="padding-left:18px;font-size:.98rem;">
-      <li><a href="https://www.service-public.gouv.fr/particuliers/vosdroits/F1419" target="_blank" rel="noopener nofollow">Barème progressif de l'impôt sur le revenu — service-public.fr</a></li><li><a href="https://bofip.impots.gouv.fr/bofip/2065-PGP.html/identifiant=BOI-IS-LIQ-20-20-20230621" target="_blank" rel="noopener nofollow">Taux de l'impôt sur les sociétés — BOFiP</a></li><li><a href="https://bofip.impots.gouv.fr/bofip/2062-PGP.html/identifiant=BOI-IS-LIQ-20-10-20230621" target="_blank" rel="noopener nofollow">Conditions du taux réduit d'IS (15%) — BOFiP</a></li><li><a href="https://www.impots.gouv.fr/international-particulier/mes-dividendes" target="_blank" rel="noopener nofollow">Prélèvement forfaitaire unique (PFU) sur dividendes — impots.gouv.fr</a></li><li><a href="https://entreprendre.service-public.gouv.fr/vosdroits/F36240" target="_blank" rel="noopener nofollow">Régime social assimilé salarié du président (SAS/SASU) — service-public.fr</a></li><li><a href="https://entreprendre.service-public.gouv.fr/vosdroits/F36235" target="_blank" rel="noopener nofollow">Régime social du gérant de SARL — service-public.fr</a></li>
+      <li><a href="https://www.service-public.gouv.fr/particuliers/vosdroits/F1419" target="_blank" rel="noopener nofollow">Barème progressif de l'impôt sur le revenu — service-public.fr</a></li><li><a href="https://www.urssaf.fr/accueil/actualites/taux-cotisations-autoentrepeneur.html" target="_blank" rel="noopener nofollow">Taux de cotisations micro-entrepreneur — URSSAF</a></li><li><a href="https://www.impots.gouv.fr/professionnel/questions/pour-rester-micro-entrepreneur-quel-montant-de-chiffre-daffaires-ou-de" target="_blank" rel="noopener nofollow">Plafonds de chiffre d'affaires micro-entrepreneur — impots.gouv.fr</a></li><li><a href="https://entreprendre.service-public.gouv.fr/vosdroits/F23267" target="_blank" rel="noopener nofollow">Abattement forfaitaire micro-fiscal — service-public.fr</a></li><li><a href="https://www.impots.gouv.fr/professionnel/questions/en-tant-que-micro-entrepreneur-sous-quelles-conditions-puis-je-opter-pour-l" target="_blank" rel="noopener nofollow">Versement libératoire de l'impôt sur le revenu — impots.gouv.fr</a></li><li><a href="https://entreprendre.service-public.gouv.fr/vosdroits/F21746" target="_blank" rel="noopener nofollow">Franchise en base de TVA — service-public.fr</a></li><li><a href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000045167536" target="_blank" rel="noopener nofollow">Loi n° 2022-172 du 14 février 2022 — Légifrance</a></li><li><a href="https://entreprendre.service-public.gouv.fr/vosdroits/F36354" target="_blank" rel="noopener nofollow">Protection du patrimoine personnel de l'entrepreneur individuel — service-public.fr</a></li><li><a href="https://bofip.impots.gouv.fr/bofip/2065-PGP.html/identifiant=BOI-IS-LIQ-20-20-20230621" target="_blank" rel="noopener nofollow">Taux de l'impôt sur les sociétés — BOFiP</a></li><li><a href="https://bofip.impots.gouv.fr/bofip/2062-PGP.html/identifiant=BOI-IS-LIQ-20-10-20230621" target="_blank" rel="noopener nofollow">Conditions du taux réduit d'IS (15%) — BOFiP</a></li><li><a href="https://www.impots.gouv.fr/international-particulier/mes-dividendes" target="_blank" rel="noopener nofollow">Prélèvement forfaitaire unique (PFU) sur dividendes — impots.gouv.fr</a></li><li><a href="https://entreprendre.service-public.gouv.fr/vosdroits/F36235" target="_blank" rel="noopener nofollow">Régime social du gérant de SARL — service-public.fr</a></li>
     </ul>
   </div>
   
   <h2 class="st">Questions fréquentes</h2>
-  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">SASU ou SARL, quelle différence principale ?</button><div class="faq-a">La SARL impose un minimum de 2 associés et un cadre légal plus rigide; la SASU offre plus de liberté statutaire et peut rester unipersonnelle.</div></div>
+  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Pourquoi comparer auto-entrepreneur et SARL alors que l'un est individuel ?</button><div class="faq-a">La question se pose typiquement quand un auto-entrepreneur s'associe avec quelqu'un d'autre — le régime micro ne permet pas plusieurs associés, la SARL devient alors l'alternative naturelle (ou la SAS, voir le comparateur SAS vs SARL).</div></div>
+  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">À partir de quel CA la SARL devient-elle plus intéressante ?</button><div class="faq-a">Cela dépend fortement du régime social retenu pour le ou les gérants (majoritaire TNS ou minoritaire assimilé salarié) — voir le seuil de bascule calculé ci-dessus pour vos hypothèses.</div></div>
   
   <div class="eeat-section">
     <h2 class="eeat-title">
@@ -597,7 +610,7 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
   </div>
   
   <div class="link-grid">
-    <a class="link-card" href="/charges/sasu/">sasu</a><a class="link-card" href="/charges/sarl/">sarl</a><a class="link-card" href="/quel-statut-choisir//">quel statut choisir</a>
+    <a class="link-card" href="/charges/auto-entrepreneur/">auto entrepreneur</a><a class="link-card" href="/charges/sarl/">sarl</a><a class="link-card" href="/comparateur/sas-vs-sarl/">sas vs sarl</a><a class="link-card" href="/quel-statut-choisir//">quel statut choisir</a>
   </div>
 </div>
 <footer><div class="container">

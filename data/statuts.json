@@ -117,6 +117,21 @@
       "comptabilite_obligatoire": "reelle_complete",
       "capital_social_minimum": 1
     },
+    "sas": {
+      "nom": "Société par Actions Simplifiée",
+      "nom_court": "SAS",
+      "categorie": "societe",
+      "associes_min": 2,
+      "regime_fiscal_defaut": "IS",
+      "regime_fiscal_options": ["IS", "IR (5 ans max, conditions)"],
+      "regime_social_president": "assimile_salarie",
+      "taux_charges_president_salaire": 0.65,
+      "responsabilite": "limitee_aux_apports",
+      "protection_sociale": "Régime général (hors assurance chômage)",
+      "cout_creation_moyen": 250,
+      "comptabilite_obligatoire": "reelle_complete",
+      "capital_social_minimum": 1
+    },
     "sarl": {
       "nom": "Société à Responsabilité Limitée",
       "nom_court": "SARL",

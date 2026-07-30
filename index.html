@@ -60,6 +60,17 @@ footer a { color:#dbe8f2; }
 .subnav a:hover, .subnav a.active { color:var(--brand-dark); border-color:var(--brand); }
 .section[id] { scroll-margin-top:54px; }
 .embed-tool[id] { scroll-margin-top:64px; }
+/* Subnav wraps to 2-3 lignes en mobile (8 items, flex-wrap) — le sticky nav devient
+   bien plus haut que les 54px calculés pour la ligne unique desktop, du coup les
+   ancres atterrissaient sous le nav. Marge augmentée en conséquence. */
+@media (max-width:760px) {
+  .section[id] { scroll-margin-top:130px; }
+  .embed-tool[id] { scroll-margin-top:140px; }
+}
+@media (max-width:480px) {
+  .section[id] { scroll-margin-top:160px; }
+  .embed-tool[id] { scroll-margin-top:170px; }
+}
 
 .quicklinks { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-bottom:12px; }
 .quicklinks-label { font-size:.8rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.4px; margin-right:2px; }
@@ -269,6 +280,7 @@ footer a { color:#dbe8f2; }
         <a href="#cmp-ae-ei">Auto-entrepreneur vs Entreprise individuelle<small>Micro ou régime réel ?</small></a>
       </div>
     </div>
+    <a href="/quel-statut-choisir/">Quel statut choisir ?</a>
     <a href="#tableau-comparatif">Tableau comparatif</a>
     <a href="#migration">Migration</a>
     <a href="#metier">Par métier</a>
@@ -278,6 +290,10 @@ footer a { color:#dbe8f2; }
 </nav>
 
 <div class="container" style="padding-top:28px;">
+  <div class="quicklinks">
+    <span class="quicklinks-label">Pas sûr de votre statut ?</span>
+    <a class="pill" href="/quel-statut-choisir/" style="background:var(--brand);color:#fff;">Faire le quiz en 4 questions →</a>
+  </div>
   <div class="quicklinks">
     <span class="quicklinks-label">Accès rapide simulateurs :</span>
     <a class="pill" href="#sim-auto-entrepreneur">Auto-entrepreneur</a>
@@ -666,22 +682,64 @@ function toggleFaq(btn) {
   btn.nextElementSibling.classList.toggle('open');
 }
 
-// Menu déroulant tactile: 1er tap ouvre le sous-menu, tap ailleurs le referme.
-document.querySelectorAll('.nav-item > a').forEach(function(trigger){
-  trigger.addEventListener('click', function(e){
-    if (window.matchMedia('(hover: hover)').matches) return; // desktop: hover suffit
-    const dropdown = trigger.nextElementSibling;
-    if (!dropdown.classList.contains('open')) {
-      e.preventDefault();
-      document.querySelectorAll('.dropdown.open').forEach(function(d){ d.classList.remove('open'); });
-      dropdown.classList.add('open');
-    }
-  });
-});
 document.addEventListener('click', function(e){
   if (!e.target.closest('.nav-item')) {
     document.querySelectorAll('.dropdown.open').forEach(function(d){ d.classList.remove('open'); });
   }
+});
+
+// Scroll vers les ancres avec un offset dynamique = hauteur réelle du sticky nav.
+// Le subnav (8 items) passe sur 2-3 lignes en mobile/tablette selon la largeur —
+// un offset CSS fixe (scroll-margin-top) ne peut pas suivre ce nombre de lignes variable.
+function scrollToAnchor(hash) {
+  const id = hash.slice(1);
+  const container = document.getElementById(id);
+  if (!container) return;
+  // Cibler le titre lui-même (h1-h3), pas le conteneur — .section a 44px de
+  // padding-top, donc atterrir sur le conteneur laissait un vide au-dessus du titre.
+  const target = container.querySelector('h1,h2,h3') || container;
+  const nav = document.querySelector('.subnav');
+  const navHeight = nav ? nav.getBoundingClientRect().height : 0;
+  const y = target.getBoundingClientRect().top + window.scrollY - navHeight - 14;
+  window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+}
+
+// Handler unique par lien — avant, le toggle dropdown tactile et le scroll vers
+// l'ancre étaient deux listeners séparés sur les mêmes <a> "Simulateurs"/"Comparateurs".
+// Sur mobile (pas de hover), les deux se déclenchaient sur le même clic et se
+// marchaient dessus (ouverture dropdown + scroll simultanés, résultat incohérent
+// selon le lien). Un seul handler par lien élimine la course.
+document.querySelectorAll('.subnav .container > a[href^="#"], .subnav .nav-item > a[href^="#"], .quicklinks a[href^="#"]').forEach(function(a){
+  const hash = a.getAttribute('href');
+  if (hash.length <= 1 || !document.getElementById(hash.slice(1))) return;
+  const navItem = a.parentElement.classList.contains('nav-item') ? a.parentElement : null;
+  a.addEventListener('click', function(e){
+    if (navItem && !window.matchMedia('(hover: hover)').matches) {
+      const dropdown = navItem.querySelector('.dropdown');
+      if (dropdown && !dropdown.classList.contains('open')) {
+        e.preventDefault();
+        document.querySelectorAll('.dropdown.open').forEach(function(d){ d.classList.remove('open'); });
+        dropdown.classList.add('open');
+        return; // 1er tap: ouvre juste le sous-menu, ne scrolle pas encore
+      }
+    }
+    e.preventDefault();
+    history.pushState(null, '', hash);
+    scrollToAnchor(hash);
+  });
+});
+// Liens dans les dropdowns (#sim-*, #cmp-*) — pas de logique de toggle, scroll direct.
+document.querySelectorAll('.dropdown a[href^="#"]').forEach(function(a){
+  const hash = a.getAttribute('href');
+  if (hash.length <= 1 || !document.getElementById(hash.slice(1))) return;
+  a.addEventListener('click', function(e){
+    e.preventDefault();
+    history.pushState(null, '', hash);
+    scrollToAnchor(hash);
+  });
+});
+window.addEventListener('load', function(){
+  if (location.hash) setTimeout(function(){ scrollToAnchor(location.hash); }, 60);
 });
 </script>
 

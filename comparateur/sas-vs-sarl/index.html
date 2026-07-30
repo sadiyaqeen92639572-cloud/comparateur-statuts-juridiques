@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SASU ou SARL : comparateur et simulateur 2026</title>
-<meta name="description" content="SASU ou SARL ? Comparez le régime social du dirigeant et la fiscalité selon votre situation.">
+<title>SAS ou SARL : comparateur et simulateur 2026</title>
+<meta name="description" content="SAS ou SARL ? Comparez régime social du dirigeant, fiscalité et liberté statutaire pour une société à plusieurs associés.">
 
-<link rel="canonical" href="https://calculateur-statuts-juridiques.fr/comparateur/sasu-vs-sarl/">
+<link rel="canonical" href="https://calculateur-statuts-juridiques.fr/comparateur/sas-vs-sarl/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.png" type="image/png">
-<meta property="og:title" content="SASU ou SARL : comparateur et simulateur 2026">
-<meta property="og:description" content="SASU ou SARL ? Comparez le régime social du dirigeant et la fiscalité selon votre situation.">
+<meta property="og:title" content="SAS ou SARL : comparateur et simulateur 2026">
+<meta property="og:description" content="SAS ou SARL ? Comparez régime social du dirigeant, fiscalité et liberté statutaire pour une société à plusieurs associés.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://calculateur-statuts-juridiques.fr/comparateur/sasu-vs-sarl/">
+<meta property="og:url" content="https://calculateur-statuts-juridiques.fr/comparateur/sas-vs-sarl/">
 <meta property="og:image" content="https://calculateur-statuts-juridiques.fr/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,8 +24,8 @@
  "@graph": [
   {
    "@type": "WebApplication",
-   "name": "SASU ou SARL : quel statut choisir ?",
-   "url": "https://calculateur-statuts-juridiques.fr/comparateur/sasu-vs-sarl/",
+   "name": "SAS ou SARL : quel statut choisir à plusieurs associés ?",
+   "url": "https://calculateur-statuts-juridiques.fr/comparateur/sas-vs-sarl/",
    "applicationCategory": "FinanceApplication",
    "operatingSystem": "Any",
    "inLanguage": "fr",
@@ -40,10 +40,18 @@
    "mainEntity": [
     {
      "@type": "Question",
-     "name": "SASU ou SARL, quelle différence principale ?",
+     "name": "SAS ou SARL, quelle différence principale à plusieurs associés ?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "La SARL impose un minimum de 2 associés et un cadre légal plus rigide; la SASU offre plus de liberté statutaire et peut rester unipersonnelle."
+      "text": "La SAS offre une liberté statutaire quasi totale (répartition du pouvoir, catégories d'actions, entrée facilitée d'investisseurs) tandis que la SARL est plus encadrée par la loi. Côté social, le président de SAS est assimilé salarié (charges plus élevées) contre TNS pour un gérant majoritaire de SARL (charges plus faibles mais couverture sociale moindre)."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "La SAS est-elle plus adaptée pour lever des fonds ?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Oui — c'est la forme privilégiée par les investisseurs (capital-risque, business angels) car elle permet des pactes d'actionnaires flexibles et des catégories d'actions différenciées, ce que la SARL ne permet pas."
      }
     }
    ]
@@ -261,14 +269,14 @@ footer a { color:#dbe8f2; }
 <body>
 
 <header><div class="container">
-  <h1>SASU ou SARL : quel statut choisir ?</h1>
-  <p>SASU ou SARL ? Comparez le régime social du dirigeant et la fiscalité selon votre situation.</p>
+  <h1>SAS ou SARL : quel statut choisir à plusieurs associés ?</h1>
+  <p>SAS ou SARL ? Comparez régime social du dirigeant, fiscalité et liberté statutaire pour une société à plusieurs associés.</p>
 </div></header>
 <div class="container tool-wrapper">
   
   <div class="tool-card">
     <div class="form-grid">
-      <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca" min="0" step="1000" value="100000"></div>
+      <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca" min="0" step="1000" value="120000"></div>
       <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi">
         <option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option>
       </select></div>
@@ -282,13 +290,13 @@ footer a { color:#dbe8f2; }
         <div class="rs" id="r-seuil-sub"></div>
       </div>
       <div class="result-grid" style="grid-template-columns:1fr 1fr;">
-        <div class="r-stat"><div class="sv" id="r-net-a"></div><div class="sl">Revenu net — SASU</div></div>
+        <div class="r-stat"><div class="sv" id="r-net-a"></div><div class="sl">Revenu net — SAS</div></div>
         <div class="r-stat"><div class="sv" id="r-net-b"></div><div class="sl">Revenu net — SARL</div></div>
       </div>
     </div>
   </div>
   <script>
-  const PAGE = {"idA":"sasu","idB":"sarl","ca_defaut":100000,"params_defaut":{"charges_exploitation":15000,"remuneration_gerant":35000,"dividendes_verses":20000,"tmi":0.3},"nomA":"SASU","nomB":"SARL"};
+  const PAGE = {"idA":"sas","idB":"sarl","ca_defaut":120000,"params_defaut":{"charges_exploitation":18000,"remuneration_gerant":40000,"dividendes_verses":25000,"tmi":0.3},"nomA":"SAS","nomB":"SARL"};
   /*
  * Moteur de calcul pur — aucune ref DOM, aucun accès fichier.
  * Utilisé (a) côté build par generate-pages.js via require(), (b) inliné
@@ -517,7 +525,7 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
   <h2 class="st">Seuil de bascule</h2>
   <p>Sur la plage de chiffre d'affaires testée (0 à 300 000 €), l'un des deux statuts reste préférable à ces hypothèses — utilisez le simulateur ci-dessus pour tester vos propres paramètres.</p>
   
-  <h2 class="st">Chiffres clés — Société par Actions Simplifiée Unipersonnelle</h2>
+  <h2 class="st">Chiffres clés — Société par Actions Simplifiée</h2>
   <table class="data-table"><thead><tr><th>Donnée</th><th>Valeur</th></tr></thead><tbody>
     <tr><td>Catégorie</td><td class="hl">Société</td></tr><tr><td>Régime fiscal par défaut</td><td class="hl">IS</td></tr><tr><td>Responsabilité</td><td class="hl">Responsabilité limitée aux apports</td></tr><tr><td>Coût de création moyen</td><td class="hl">250 €</td></tr>
   </tbody></table>
@@ -531,7 +539,7 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
   
   <h2 class="st">Formules de calcul &amp; sources officielles</h2>
   <div class="method">
-    <h3 class="sub">SASU</h3>
+    <h3 class="sub">SAS</h3>
     <div class="code">bénéfice_avant_IS = CA − charges_exploitation − rémunération_dirigeant − cotisations_sociales_dirigeant<br>IS = bénéfice×15% (jusqu'à 42 500€) + (bénéfice−42 500€)×25% au-delà<br>rémunération_nette = rémunération_dirigeant − cotisations_sociales_dirigeant<br>dividendes_nets = dividendes_versés × (1 − 31,4%)  (flat tax / PFU)<br>revenu_net_foyer = rémunération_nette − impôt(TMI) + dividendes_nets</div><h3 class="sub">SARL</h3>
     <div class="code">bénéfice_avant_IS = CA − charges_exploitation − rémunération_dirigeant − cotisations_sociales_dirigeant<br>IS = bénéfice×15% (jusqu'à 42 500€) + (bénéfice−42 500€)×25% au-delà<br>rémunération_nette = rémunération_dirigeant − cotisations_sociales_dirigeant<br>dividendes_nets = dividendes_versés × (1 − 31,4%)  (flat tax / PFU)<br>revenu_net_foyer = rémunération_nette − impôt(TMI) + dividendes_nets</div>
     <p style="font-size:.88rem;color:var(--muted);margin:14px 0 6px;">Formules appliquées de façon déterministe à partir de <code>data/statuts.json</code> (2026-01) — approximations pédagogiques, pas un calcul officiel URSSAF/impots.gouv.fr au barème exact par tranche.</p>
@@ -542,7 +550,8 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
   </div>
   
   <h2 class="st">Questions fréquentes</h2>
-  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">SASU ou SARL, quelle différence principale ?</button><div class="faq-a">La SARL impose un minimum de 2 associés et un cadre légal plus rigide; la SASU offre plus de liberté statutaire et peut rester unipersonnelle.</div></div>
+  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">SAS ou SARL, quelle différence principale à plusieurs associés ?</button><div class="faq-a">La SAS offre une liberté statutaire quasi totale (répartition du pouvoir, catégories d'actions, entrée facilitée d'investisseurs) tandis que la SARL est plus encadrée par la loi. Côté social, le président de SAS est assimilé salarié (charges plus élevées) contre TNS pour un gérant majoritaire de SARL (charges plus faibles mais couverture sociale moindre).</div></div>
+  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">La SAS est-elle plus adaptée pour lever des fonds ?</button><div class="faq-a">Oui — c'est la forme privilégiée par les investisseurs (capital-risque, business angels) car elle permet des pactes d'actionnaires flexibles et des catégories d'actions différenciées, ce que la SARL ne permet pas.</div></div>
   
   <div class="eeat-section">
     <h2 class="eeat-title">
@@ -597,7 +606,7 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
   </div>
   
   <div class="link-grid">
-    <a class="link-card" href="/charges/sasu/">sasu</a><a class="link-card" href="/charges/sarl/">sarl</a><a class="link-card" href="/quel-statut-choisir//">quel statut choisir</a>
+    <a class="link-card" href="/simulateur/sas/">sas</a><a class="link-card" href="/simulateur/sarl/">sarl</a><a class="link-card" href="/charges/sarl/">sarl</a><a class="link-card" href="/quel-statut-choisir//">quel statut choisir</a>
   </div>
 </div>
 <footer><div class="container">

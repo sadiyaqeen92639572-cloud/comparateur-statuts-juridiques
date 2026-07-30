@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quel statut juridique choisir en 2026 ? Quiz gratuit en 4 questions</title>
+<meta name="description" content="Répondez à 4 questions (associés, chiffre d'affaires, régime social, levée de fonds) pour savoir quel statut juridique choisir : auto-entrepreneur, EI, EURL, SASU, SARL ou SAS.">
+<link rel="canonical" href="https://calculateur-statuts-juridiques.fr/quel-statut-choisir/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png">
+<meta property="og:title" content="Quel statut juridique choisir en 2026 ? Quiz gratuit">
+<meta property="og:description" content="4 questions pour identifier le statut juridique le plus adapté à votre projet, avec lien direct vers le simulateur correspondant.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://calculateur-statuts-juridiques.fr/quel-statut-choisir/">
+<meta property="og:image" content="https://calculateur-statuts-juridiques.fr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://calculateur-statuts-juridiques.fr/og-image.png">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  { "@type": "WebApplication", "name": "Quel statut juridique choisir ?", "url": "https://calculateur-statuts-juridiques.fr/quel-statut-choisir/", "applicationCategory": "FinanceApplication", "operatingSystem": "Any", "inLanguage": "fr", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" } },
+  { "@type": "FAQPage", "mainEntity": [
+    { "@type": "Question", "name": "Ce quiz remplace-t-il un simulateur financier ?", "acceptedAnswer": { "@type": "Answer", "text": "Non — il oriente vers le statut le plus probable selon des critères non financiers (nombre d'associés, priorités sociales, levée de fonds). Utilisez ensuite le simulateur ou comparateur du statut recommandé pour un calcul chiffré précis selon votre chiffre d'affaires." } },
+    { "@type": "Question", "name": "Le résultat est-il définitif ?", "acceptedAnswer": { "@type": "Answer", "text": "Non, c'est une orientation à valider avec les simulateurs chiffrés et, avant toute création, avec un expert-comptable ou un avocat." } }
+  ] },
+  { "@type": "Organization", "name": "Comparateur de statuts juridiques", "legalName": "Gesmine-Invest Limited", "identifier": { "@type": "PropertyValue", "propertyID": "UK Company Number", "value": "14120136" }, "address": { "@type": "PostalAddress", "streetAddress": "Hardy House, 269 Poynders Gardens", "addressLocality": "London", "postalCode": "SW4 8PQ", "addressCountry": "GB" } }
+ ]
+}
+</script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --brand:#1a4d7a; --brand-dark:#0d3352; --brand-light:#e8f0f7; --accent:#1a7a5c; --text:#1a2027; --muted:#5c6b7a; --border:#dde5ec; --bg:#f7f9fb; --radius:12px; }
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color:var(--text); background:var(--bg); font-size:16px; line-height:1.65; }
+header { background:linear-gradient(135deg,var(--brand-dark) 0%,var(--brand) 100%); color:#fff; padding:52px 20px 88px; text-align:center; }
+header h1 { font-size:clamp(1.4rem,4vw,2.1rem); font-weight:800; margin-bottom:12px; }
+header p { color:rgba(255,255,255,.92); font-size:1rem; max-width:600px; margin:0 auto; }
+.container { max-width:840px; margin:0 auto; padding:0 20px; }
+.tool-wrapper { margin:-56px auto 48px; }
+.tool-card { background:#fff; border-radius:var(--radius); box-shadow:0 8px 40px rgba(13,51,82,.14); border:1px solid var(--border); padding:32px 28px; }
+@media (max-width:580px){ .tool-card{ padding:22px 16px; } }
+.q-step { display:none; }
+.q-step.active { display:block; }
+.q-label { font-size:.8rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; margin-bottom:10px; }
+.q-title { font-size:1.15rem; font-weight:800; margin-bottom:18px; color:var(--brand-dark); }
+.q-options { display:flex; flex-direction:column; gap:10px; }
+.q-opt { display:block; width:100%; text-align:left; background:#fff; border:2px solid var(--border); border-radius:10px; padding:16px 18px; font-size:1rem; font-weight:600; color:var(--text); cursor:pointer; }
+.q-opt:hover { border-color:var(--brand); background:var(--brand-light); }
+.q-progress { display:flex; gap:6px; margin-bottom:24px; }
+.q-progress span { height:5px; flex:1; border-radius:3px; background:var(--border); }
+.q-progress span.done { background:var(--brand); }
+.q-back { display:inline-block; margin-top:18px; font-size:.9rem; font-weight:700; color:var(--muted); background:none; border:none; cursor:pointer; }
+.q-result { display:none; text-align:center; }
+.q-result.active { display:block; }
+.q-result-badge { display:inline-block; background:var(--brand-light); color:var(--brand-dark); font-size:.8rem; font-weight:700; text-transform:uppercase; letter-spacing:.5px; padding:6px 14px; border-radius:20px; margin-bottom:14px; }
+.q-result h2 { font-size:1.6rem; font-weight:900; color:var(--brand-dark); margin-bottom:10px; }
+.q-result p.reason { color:var(--muted); font-size:1rem; max-width:520px; margin:0 auto 22px; }
+.q-result-links { display:flex; flex-direction:column; gap:10px; max-width:380px; margin:0 auto; }
+.q-result-links a { display:block; background:var(--brand); color:#fff; text-decoration:none; font-weight:700; padding:14px 18px; border-radius:10px; }
+.q-result-links a.secondary { background:#fff; color:var(--brand-dark); border:2px solid var(--border); }
+.q-result-links a:hover { background:var(--brand-dark); }
+.q-restart { margin-top:20px; font-size:.9rem; color:var(--muted); background:none; border:none; text-decoration:underline; cursor:pointer; }
+.content { padding-bottom:64px; }
+h2.st { font-size:1.3rem; font-weight:800; margin:48px 0 16px; }
+p { color:#2c3844; margin-bottom:14px; line-height:1.75; }
+.link-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:10px; margin:18px 0; }
+.link-card { display:block; background:#fff; border:1px solid var(--border); border-radius:8px; padding:12px 14px; text-decoration:none; color:var(--text); font-size:.98rem; font-weight:600; }
+.link-card:hover { border-color:var(--brand); color:var(--brand-dark); }
+.faq-item { border-bottom:1px solid var(--border); }
+.faq-q { width:100%; background:none; border:none; text-align:left; padding:17px 0; font-size:1.02rem; font-weight:600; cursor:pointer; display:flex; justify-content:space-between; align-items:center; color:var(--text); }
+.faq-q::after { content:'+'; font-size:1.3rem; color:var(--brand); flex-shrink:0; margin-left:12px; }
+.faq-q.open::after { content:'\2212'; }
+.faq-a { display:none; padding:0 0 16px; font-size:.98rem; color:#3d4a56; line-height:1.75; }
+.faq-a.open { display:block; }
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--brand-dark); text-decoration:none; font-weight:600; font-size:.98rem; margin-bottom:28px; }
+footer { background:#0d3352; color:#c3d3e0; text-align:center; padding:30px 20px; font-size:.9rem; }
+footer p { color:#c3d3e0; }
+footer a { color:#dbe8f2; }
+.disc { background:#123f66; border-radius:8px; padding:13px 18px; margin-bottom:16px; font-size:.88rem; color:#c3d3e0; line-height:1.6; }
+</style>
+</head>
+<body>
+<header><div class="container">
+  <h1>Quel statut juridique choisir en 2026 ?</h1>
+  <p>4 questions rapides pour identifier le statut le plus adapté à votre projet, avec un lien direct vers le simulateur chiffré correspondant.</p>
+</div></header>
+
+<div class="container tool-wrapper">
+  <div class="tool-card">
+    <div class="q-progress" id="progress"></div>
+
+    <div class="q-step active" data-step="0">
+      <div class="q-label">Question 1 / 4</div>
+      <div class="q-title">Combien d'associés votre projet compte-t-il ?</div>
+      <div class="q-options">
+        <button class="q-opt" data-q="associes" data-v="seul">Je suis seul(e)</button>
+        <button class="q-opt" data-q="associes" data-v="plusieurs">Nous sommes 2 ou plus</button>
+      </div>
+    </div>
+
+    <div class="q-step" data-step="1">
+      <div class="q-label">Question 2 / 4</div>
+      <div class="q-title" id="q2-title">Quel chiffre d'affaires annuel prévoyez-vous ?</div>
+      <div class="q-options">
+        <button class="q-opt" data-q="ca" data-v="sous_plafond">Sous 80 000 € et charges réelles faibles</button>
+        <button class="q-opt" data-q="ca" data-v="au_dessus">Au-dessus, ou charges réelles importantes (matériel, local, sous-traitance...)</button>
+      </div>
+    </div>
+
+    <div class="q-step" data-step="2">
+      <div class="q-label">Question 3 / 4</div>
+      <div class="q-title">Entre charges sociales réduites et meilleure protection sociale, votre priorité ?</div>
+      <div class="q-options">
+        <button class="q-opt" data-q="regime" data-v="tns">Charges réduites (régime TNS) — quitte à avoir une couverture sociale plus légère</button>
+        <button class="q-opt" data-q="regime" data-v="salarie">Meilleure couverture sociale (régime général, assimilé salarié) — même si les charges sont plus élevées</button>
+      </div>
+    </div>
+
+    <div class="q-step" data-step="3">
+      <div class="q-label">Question 4 / 4</div>
+      <div class="q-title" id="q4-title">Envisagez-vous de faire entrer des investisseurs au capital ?</div>
+      <div class="q-options">
+        <button class="q-opt" data-q="levee" data-v="oui">Oui, ou je veux une grande liberté statutaire</button>
+        <button class="q-opt" data-q="levee" data-v="non">Non, un cadre légal simple me suffit</button>
+      </div>
+    </div>
+
+    <button class="q-back" id="backBtn" style="display:none;">← Question précédente</button>
+
+    <div class="q-result" id="result">
+      <div class="q-result-badge" id="r-badge">Recommandation</div>
+      <h2 id="r-nom"></h2>
+      <p class="reason" id="r-reason"></p>
+      <div class="q-result-links" id="r-links"></div>
+      <button class="q-restart" id="restartBtn">Recommencer le quiz</button>
+    </div>
+  </div>
+</div>
+
+<div class="container content">
+  <a class="back-link" href="/">← Tous les statuts</a>
+  <h2 class="st">Comment fonctionne cette recommandation ?</h2>
+  <p>Ce quiz croise 4 critères non financiers — nombre d'associés, chiffre d'affaires prévisionnel, priorité sociale (charges réduites vs meilleure couverture) et projet de levée de fonds — pour orienter vers le statut le plus probable dans la majorité des cas. Il ne remplace pas un calcul chiffré : une fois orienté, utilisez le simulateur ou le <a href="/#comparateurs">comparateur</a> du statut recommandé pour estimer précisément votre revenu net selon votre chiffre d'affaires réel, puis validez votre choix avec un expert-comptable.</p>
+  <h2 class="st">Questions fréquentes</h2>
+  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Ce quiz remplace-t-il un simulateur financier ?</button><div class="faq-a">Non — il oriente vers le statut le plus probable selon des critères non financiers. Utilisez ensuite le simulateur ou comparateur du statut recommandé pour un calcul chiffré précis selon votre chiffre d'affaires.</div></div>
+  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Le résultat est-il définitif ?</button><div class="faq-a">Non, c'est une orientation à valider avec les simulateurs chiffrés et, avant toute création, avec un expert-comptable ou un avocat.</div></div>
+  <div class="link-grid">
+    <a class="link-card" href="/simulateur/auto-entrepreneur/">Simulateur auto-entrepreneur</a>
+    <a class="link-card" href="/simulateur/eurl/">Simulateur EURL</a>
+    <a class="link-card" href="/simulateur/sasu/">Simulateur SASU</a>
+    <a class="link-card" href="/simulateur/sas/">Simulateur SAS</a>
+    <a class="link-card" href="/simulateur/sarl/">Simulateur SARL</a>
+    <a class="link-card" href="/arbitrage/sasu-remuneration-vs-dividendes/">Arbitrage salaire/dividendes</a>
+  </div>
+</div>
+
+<footer><div class="container">
+  <div class="disc">Recommandation à titre indicatif — ne remplace pas l'avis d'un expert-comptable ou d'un avocat.</div>
+  <p><a href="/">Comparateur de statuts juridiques</a></p>
+  <p style="font-size:.72rem;margin-top:8px;">Comparateur de statuts juridiques fait partie de Gesmine-Invest Limited, société immatriculée au Royaume-Uni sous le numéro 14120136, siège social Hardy House, 269 Poynders Gardens, Londres, Royaume-Uni, SW4 8PQ.</p>
+</div></footer>
+
+<script>
+const answers = {};
+let step = 0;
+const steps = document.querySelectorAll('.q-step');
+const progress = document.getElementById('progress');
+steps.forEach(() => { const s = document.createElement('span'); progress.appendChild(s); });
+const progressDots = progress.querySelectorAll('span');
+
+function showStep(i) {
+  steps.forEach(s => s.classList.toggle('active', Number(s.dataset.step) === i));
+  progressDots.forEach((d, idx) => d.classList.toggle('done', idx <= i));
+  document.getElementById('backBtn').style.display = i > 0 ? 'inline-block' : 'none';
+  document.getElementById('result').classList.remove('active');
+}
+
+document.querySelectorAll('.q-opt').forEach(btn => {
+  btn.addEventListener('click', () => {
+    answers[btn.dataset.q] = btn.dataset.v;
+    if (answers.associes === 'plusieurs' && btn.dataset.q === 'associes') {
+      document.getElementById('q2-title').textContent = "Quel chiffre d'affaires annuel prévoyez-vous (total société) ?";
+    }
+    // Solo: la question 4 (levée de fonds/investisseurs) ne s'applique qu'aux projets
+    // à plusieurs associés — on la saute pour ne pas poser une question hors sujet.
+    if (btn.dataset.q === 'regime' && answers.associes === 'seul') {
+      computeResult();
+      return;
+    }
+    if (step < steps.length - 1) {
+      step++;
+      showStep(step);
+    } else {
+      computeResult();
+    }
+  });
+});
+
+document.getElementById('backBtn').addEventListener('click', () => {
+  if (step > 0) { step--; showStep(step); }
+});
+document.getElementById('restartBtn').addEventListener('click', () => {
+  step = 0; Object.keys(answers).forEach(k => delete answers[k]); showStep(0);
+});
+
+function computeResult() {
+  let statut, reason, links;
+  if (answers.associes === 'seul') {
+    if (answers.ca === 'sous_plafond') {
+      statut = 'Auto-entrepreneur';
+      reason = "Seul, chiffre d'affaires sous les plafonds micro et charges réelles faibles : le régime auto-entrepreneur offre la simplicité administrative maximale, sans charges fixes.";
+      links = [['/simulateur/auto-entrepreneur/', 'Simulateur auto-entrepreneur'], ['/comparateur/auto-entrepreneur-vs-sasu/', 'Comparer avec SASU', 'secondary']];
+    } else if (answers.regime === 'tns') {
+      statut = 'EURL';
+      reason = "Seul, avec un CA au-dessus des plafonds micro ou des charges réelles importantes, et une priorité sur des charges sociales réduites : le régime TNS de l'EURL est généralement le plus économique.";
+      links = [['/simulateur/eurl/', 'Simulateur EURL'], ['/comparateur/eurl-vs-sasu/', 'Comparer avec SASU', 'secondary']];
+    } else {
+      statut = 'SASU';
+      reason = "Seul, avec un CA au-dessus des plafonds micro et une priorité sur la protection sociale : le statut assimilé salarié de la SASU offre la meilleure couverture (hors chômage).";
+      links = [['/simulateur/sasu/', 'Simulateur SASU'], ['/arbitrage/sasu-remuneration-vs-dividendes/', 'Optimiser salaire vs dividendes', 'secondary']];
+    }
+  } else {
+    if (answers.levee === 'oui') {
+      statut = 'SAS';
+      reason = "Plusieurs associés avec un projet de levée de fonds ou un besoin de liberté statutaire : la SAS est la forme privilégiée par les investisseurs, avec des statuts entièrement personnalisables.";
+      links = [['/simulateur/sas/', 'Simulateur SAS'], ['/comparateur/sas-vs-sarl/', 'Comparer avec SARL', 'secondary']];
+    } else if (answers.regime === 'tns') {
+      statut = 'SARL';
+      reason = "Plusieurs associés, cadre légal simple recherché, priorité sur des charges sociales réduites : le régime TNS du gérant majoritaire de SARL est généralement le plus économique.";
+      links = [['/simulateur/sarl/', 'Simulateur SARL'], ['/comparateur/sas-vs-sarl/', 'Comparer avec SAS', 'secondary']];
+    } else {
+      statut = 'SAS';
+      reason = "Plusieurs associés, priorité sur la protection sociale du dirigeant : le régime assimilé salarié de la SAS (identique à la SASU) offre une meilleure couverture qu'une SARL en régime TNS.";
+      links = [['/simulateur/sas/', 'Simulateur SAS'], ['/comparateur/sas-vs-sarl/', 'Comparer avec SARL', 'secondary']];
+    }
+  }
+  steps.forEach(s => s.classList.remove('active'));
+  document.getElementById('backBtn').style.display = 'none';
+  document.getElementById('r-nom').textContent = statut;
+  document.getElementById('r-reason').textContent = reason;
+  const linksEl = document.getElementById('r-links');
+  linksEl.innerHTML = links.map(l => `<a class="${l[2] || ''}" href="${l[0]}">${l[1]} →</a>`).join('');
+  document.getElementById('result').classList.add('active');
+}
+
+function toggleFaq(b){ b.classList.toggle('open'); b.nextElementSibling.classList.toggle('open'); }
+</script>
+</body>
+</html>

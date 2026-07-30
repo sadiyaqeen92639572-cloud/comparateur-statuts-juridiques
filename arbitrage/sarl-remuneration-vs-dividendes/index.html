@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SASU ou SARL : comparateur et simulateur 2026</title>
-<meta name="description" content="SASU ou SARL ? Comparez le régime social du dirigeant et la fiscalité selon votre situation.">
+<title>Salaire ou dividendes en SARL 2026 : simulateur d'arbitrage optimal</title>
+<meta name="description" content="Trouvez la répartition rémunération/dividendes qui maximise le revenu net du gérant en SARL, selon le régime TNS ou assimilé salarié.">
 
-<link rel="canonical" href="https://calculateur-statuts-juridiques.fr/comparateur/sasu-vs-sarl/">
+<link rel="canonical" href="https://calculateur-statuts-juridiques.fr/arbitrage/sarl-remuneration-vs-dividendes/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.png" type="image/png">
-<meta property="og:title" content="SASU ou SARL : comparateur et simulateur 2026">
-<meta property="og:description" content="SASU ou SARL ? Comparez le régime social du dirigeant et la fiscalité selon votre situation.">
+<meta property="og:title" content="Salaire ou dividendes en SARL 2026 : simulateur d'arbitrage optimal">
+<meta property="og:description" content="Trouvez la répartition rémunération/dividendes qui maximise le revenu net du gérant en SARL, selon le régime TNS ou assimilé salarié.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://calculateur-statuts-juridiques.fr/comparateur/sasu-vs-sarl/">
+<meta property="og:url" content="https://calculateur-statuts-juridiques.fr/arbitrage/sarl-remuneration-vs-dividendes/">
 <meta property="og:image" content="https://calculateur-statuts-juridiques.fr/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,8 +24,8 @@
  "@graph": [
   {
    "@type": "WebApplication",
-   "name": "SASU ou SARL : quel statut choisir ?",
-   "url": "https://calculateur-statuts-juridiques.fr/comparateur/sasu-vs-sarl/",
+   "name": "SARL : salaire ou dividendes, quelle répartition optimale ?",
+   "url": "https://calculateur-statuts-juridiques.fr/arbitrage/sarl-remuneration-vs-dividendes/",
    "applicationCategory": "FinanceApplication",
    "operatingSystem": "Any",
    "inLanguage": "fr",
@@ -40,10 +40,18 @@
    "mainEntity": [
     {
      "@type": "Question",
-     "name": "SASU ou SARL, quelle différence principale ?",
+     "name": "L'arbitrage salaire/dividendes est-il différent pour un gérant majoritaire ?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "La SARL impose un minimum de 2 associés et un cadre légal plus rigide; la SASU offre plus de liberté statutaire et peut rester unipersonnelle."
+      "text": "Oui — au-delà de 10% du capital social, la part de dividendes versée à un gérant majoritaire est soumise aux cotisations TNS comme un salaire, ce qui réduit fortement l'intérêt des dividendes par rapport à une SASU."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Pourquoi le calcul ici suppose-t-il un gérant minoritaire ?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Ce simulateur applique le taux assimilé salarié par défaut sur la rémunération, cohérent avec le moteur de calcul du site — pour un gérant majoritaire (régime TNS), utilisez le simulateur SARL dédié qui permet d'ajuster ce paramètre."
      }
     }
    ]
@@ -261,34 +269,40 @@ footer a { color:#dbe8f2; }
 <body>
 
 <header><div class="container">
-  <h1>SASU ou SARL : quel statut choisir ?</h1>
-  <p>SASU ou SARL ? Comparez le régime social du dirigeant et la fiscalité selon votre situation.</p>
+  <h1>SARL : salaire ou dividendes, quelle répartition optimale ?</h1>
+  <p>Trouvez la répartition rémunération/dividendes qui maximise le revenu net du gérant en SARL, selon le régime TNS ou assimilé salarié.</p>
 </div></header>
 <div class="container tool-wrapper">
   
   <div class="tool-card">
     <div class="form-grid">
       <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca" min="0" step="1000" value="100000"></div>
-      <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi">
+      <div class="form-group"><label>Charges d'exploitation (€/an)</label><input type="number" id="charges" min="0" step="1000" value="10000"></div>
+      <div class="form-group full"><label>Taux marginal d'imposition (TMI)</label><select id="tmi">
         <option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option>
       </select></div>
-      
     </div>
-    <button class="calc-btn" onclick="calculate()">Comparer les deux statuts →</button>
+    <button class="calc-btn" onclick="calculate()">Trouver la répartition optimale →</button>
     <div class="result" id="result">
-      <div class="result-hero" id="seuil-hero">
-        <div class="rl">Seuil de bascule (CA)</div>
-        <div class="ra" id="r-seuil"></div>
-        <div class="rs" id="r-seuil-sub"></div>
+      <div class="result-hero">
+        <div class="rl">Répartition optimale — revenu net max</div>
+        <div class="ra" id="r-net"></div>
       </div>
-      <div class="result-grid" style="grid-template-columns:1fr 1fr;">
-        <div class="r-stat"><div class="sv" id="r-net-a"></div><div class="sl">Revenu net — SASU</div></div>
-        <div class="r-stat"><div class="sv" id="r-net-b"></div><div class="sl">Revenu net — SARL</div></div>
+      <div class="result-grid">
+        <div class="r-stat"><div class="sv" id="r-remu"></div><div class="sl">Rémunération optimale</div></div>
+        <div class="r-stat"><div class="sv" id="r-div"></div><div class="sl">Dividendes optimaux</div></div>
+        <div class="r-stat"><div class="sv" id="r-part"></div><div class="sl">Part rémunération / budget</div></div>
       </div>
+      <h3 class="sub" style="margin-top:22px;">Revenu net selon la part de rémunération</h3>
+      <svg id="chart" viewBox="0 0 600 220" style="width:100%;height:auto;background:#fff;border:1px solid var(--border);border-radius:8px;">
+        <polyline id="chart-line" fill="none" stroke="#1a4d7a" stroke-width="2.5"></polyline>
+        <circle id="chart-best" r="5" fill="#1a7a5c"></circle>
+      </svg>
+      <p style="font-size:.82rem;color:var(--muted);margin-top:8px;">Point vert = répartition optimale. Chaque point du budget distribuable (CA − charges) est testé en rémunération, le solde étant versé en dividendes.</p>
     </div>
   </div>
   <script>
-  const PAGE = {"idA":"sasu","idB":"sarl","ca_defaut":100000,"params_defaut":{"charges_exploitation":15000,"remuneration_gerant":35000,"dividendes_verses":20000,"tmi":0.3},"nomA":"SASU","nomB":"SARL"};
+  const PAGE = {"statutId":"sarl","ca_defaut":100000,"charges_defaut":10000,"nom":"SARL"};
   /*
  * Moteur de calcul pur — aucune ref DOM, aucun accès fichier.
  * Utilisé (a) côté build par generate-pages.js via require(), (b) inliné
@@ -490,21 +504,28 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
 
   const STATUTS_DATA = {"version":"2026-01","verifie_expert_comptable":false,"avertissement":"Taux et seuils à faire valider par un expert-comptable avant publication. Voir plan de build — étape 1.","sources":{"urssaf_taux_micro":"https://www.urssaf.fr/accueil/actualites/taux-cotisations-autoentrepeneur.html","plafonds_ca_micro":"https://www.impots.gouv.fr/professionnel/questions/pour-rester-micro-entrepreneur-quel-montant-de-chiffre-daffaires-ou-de","abattement_forfaitaire":"https://entreprendre.service-public.gouv.fr/vosdroits/F23267","versement_liberatoire":"https://www.impots.gouv.fr/professionnel/questions/en-tant-que-micro-entrepreneur-sous-quelles-conditions-puis-je-opter-pour-l","loi_patrimoine_ei":"https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000045167536","loi_patrimoine_ei_explication":"https://entreprendre.service-public.gouv.fr/vosdroits/F36354","is_taux":"https://bofip.impots.gouv.fr/bofip/2065-PGP.html/identifiant=BOI-IS-LIQ-20-20-20230621","is_taux_reduit_conditions":"https://bofip.impots.gouv.fr/bofip/2062-PGP.html/identifiant=BOI-IS-LIQ-20-10-20230621","flat_tax_dividendes":"https://www.impots.gouv.fr/international-particulier/mes-dividendes","gerant_sarl":"https://entreprendre.service-public.gouv.fr/vosdroits/F36235","president_sasu":"https://entreprendre.service-public.gouv.fr/vosdroits/F36240","franchise_tva":"https://entreprendre.service-public.gouv.fr/vosdroits/F21746","bareme_ir":"https://www.service-public.gouv.fr/particuliers/vosdroits/F1419"},"constantes_communes":{"flat_tax_dividendes":0.314,"flat_tax_dividendes_detail":{"prelevements_sociaux":0.186,"ir_forfaitaire":0.128},"flat_tax_dividendes_note":"31,4% depuis le 1er janvier 2026 (hausse CSG 17,2%→18,6%). Le taux 30% (17,2%+12,8%) ne s'applique plus qu'à l'assurance-vie, au PEL/CEL, au PEP et aux plus-values immobilières — pas aux dividendes de société.","is_taux_normal":0.25,"is_taux_reduit":{"taux":0.15,"seuil_benefice":42500,"conditions":"CA < 10M€, capital entièrement libéré, détenu à 75% min par personnes physiques"},"tmi_bareme_indicatif":[0,0.11,0.3,0.41,0.45]},"statuts":{"auto-entrepreneur":{"nom":"Auto-entrepreneur (micro-entreprise)","nom_court":"Auto-entrepreneur","categorie":"individuel","regime_fiscal":"micro-fiscal","regime_social":"micro-social","seuils_ca":{"vente_marchandises":203100,"prestations_services_bic":83600,"prestations_services_bnc":83600},"taux_cotisations_sociales":{"vente_marchandises":0.123,"prestations_services_bic":0.212,"prestations_services_bnc":0.256},"abattement_forfaitaire":{"vente_marchandises":0.71,"prestations_services_bic":0.5,"prestations_services_bnc":0.34},"versement_liberatoire_taux":{"vente_marchandises":0.01,"prestations_services_bic":0.017,"prestations_services_bnc":0.022},"versement_liberatoire_possible":true,"versement_liberatoire_condition_rfr":"revenu fiscal de référence N-2 sous seuil par part","tva_franchise_base":true,"tva_franchise_seuils":{"services":37500,"tolerance_services":41250,"biens":85000,"tolerance_biens":93500},"tva_franchise_note":"Seuils inchangés en 2026 malgré deux tentatives de réforme (PLF2025 puis PLF2026) vers un seuil unique — la première a été abrogée par la loi n°2025-1044 du 3 novembre 2025 (\"loi Midy\"), la seconde retirée du PLF2026.","responsabilite":"patrimoine_personnel_protege_par_defaut","responsabilite_exceptions":["fraude_fiscale_ou_sociale","manquement_grave_aux_obligations","renonciation_explicite_a_la_demande_d_un_creancier","dettes_nees_avant_15_05_2022"],"responsabilite_note_contenu_visible":"À mentionner explicitement dans le texte visible (pas seulement dans les données): les banques exigent quasi-systématiquement la renonciation à cette protection pour accorder un crédit professionnel — cas d'usage le plus fréquent en pratique.","protection_sociale":"SSI (aligné régime général depuis 2020)","cout_creation_moyen":0,"comptabilite_obligatoire":"simplifiee"},"entreprise-individuelle":{"nom":"Entreprise individuelle (régime réel)","nom_court":"EI","categorie":"individuel","regime_fiscal":"IR (BIC/BNC réel), option IS possible depuis 2022","regime_social":"TNS","seuils_ca":null,"taux_cotisations_sociales_estime":0.3,"responsabilite":"patrimoine_personnel_protege_par_defaut","responsabilite_exceptions":["fraude_fiscale_ou_sociale","manquement_grave_aux_obligations","renonciation_explicite_a_la_demande_d_un_creancier","dettes_nees_avant_15_05_2022"],"responsabilite_note_contenu_visible":"Même nuance que auto-entrepreneur: renonciation quasi-systématique exigée par les banques pour un prêt pro.","protection_sociale":"SSI","cout_creation_moyen":0,"comptabilite_obligatoire":"reelle"},"eurl":{"nom":"Entreprise Unipersonnelle à Responsabilité Limitée","nom_court":"EURL","categorie":"societe","regime_fiscal_defaut":"IR","regime_fiscal_options":["IR","IS"],"regime_social_gerant":"TNS","taux_cotisations_tns_estime":0.45,"responsabilite":"limitee_aux_apports","protection_sociale":"SSI","cout_creation_moyen":250,"comptabilite_obligatoire":"reelle_complete","capital_social_minimum":1},"sasu":{"nom":"Société par Actions Simplifiée Unipersonnelle","nom_court":"SASU","categorie":"societe","regime_fiscal_defaut":"IS","regime_fiscal_options":["IS","IR (5 ans max, conditions)"],"regime_social_president":"assimile_salarie","taux_charges_president_salaire":0.65,"responsabilite":"limitee_aux_apports","protection_sociale":"Régime général (hors assurance chômage)","cout_creation_moyen":250,"comptabilite_obligatoire":"reelle_complete","capital_social_minimum":1},"sas":{"nom":"Société par Actions Simplifiée","nom_court":"SAS","categorie":"societe","associes_min":2,"regime_fiscal_defaut":"IS","regime_fiscal_options":["IS","IR (5 ans max, conditions)"],"regime_social_president":"assimile_salarie","taux_charges_president_salaire":0.65,"responsabilite":"limitee_aux_apports","protection_sociale":"Régime général (hors assurance chômage)","cout_creation_moyen":250,"comptabilite_obligatoire":"reelle_complete","capital_social_minimum":1},"sarl":{"nom":"Société à Responsabilité Limitée","nom_court":"SARL","categorie":"societe","associes_min":2,"regime_fiscal_defaut":"IS","regime_fiscal_options":["IS","IR (5 ans max, conditions)"],"regime_social_gerant_majoritaire":"TNS","regime_social_gerant_minoritaire":"assimile_salarie","taux_cotisations_tns_estime":0.45,"taux_charges_gerant_minoritaire_salaire":0.65,"responsabilite":"limitee_aux_apports","cout_creation_moyen":250,"comptabilite_obligatoire":"reelle_complete","capital_social_minimum":1}}};
   function eur(n){ return Math.round(n).toLocaleString('fr-FR')+' €'; }
+  function pct(n){ return (n*100).toFixed(1).replace('.',',')+' %'; }
   function calculate(){
     const ca = parseFloat(document.getElementById('ca').value)||0;
+    const charges_exploitation = parseFloat(document.getElementById('charges').value)||0;
     const tmi = parseFloat(document.getElementById('tmi').value);
-    const typeActiviteEl = document.getElementById('typeActivite');
-    const params = Object.assign({}, PAGE.params_defaut, { ca, tmi });
-    if (typeActiviteEl) params.type_activite = typeActiviteEl.value;
-    const cmp = comparerStatuts(PAGE.idA, PAGE.idB, params, STATUTS_DATA);
-    document.getElementById('r-net-a').textContent = eur(cmp.resA.revenu_net_apres_impot);
-    document.getElementById('r-net-b').textContent = eur(cmp.resB.revenu_net_apres_impot);
-    if (cmp.seuil_bascule_ca == null) {
-      document.getElementById('r-seuil').textContent = 'Aucun croisement';
-      document.getElementById('r-seuil-sub').textContent = (cmp.delta_revenu_net >= 0 ? PAGE.nomB : PAGE.nomA) + ' reste préférable sur toute la plage 0–300k€ (à ces hypothèses)';
-    } else {
-      document.getElementById('r-seuil').textContent = eur(cmp.seuil_bascule_ca);
-      document.getElementById('r-seuil-sub').textContent = 'CA à partir duquel le statut le plus avantageux change (à ces hypothèses)';
+    const budget = Math.max(0, ca - charges_exploitation);
+    const pas = Math.max(1000, Math.round(budget / 40 / 1000) * 1000);
+    const { meilleur, points } = optimiserSplitRemunerationDividendes(PAGE.statutId, { ca, charges_exploitation, tmi }, STATUTS_DATA, { pas });
+    document.getElementById('r-net').textContent = eur(meilleur.revenu_net_total_foyer);
+    document.getElementById('r-remu').textContent = eur(meilleur.remuneration);
+    document.getElementById('r-div').textContent = eur(Math.max(0, budget - meilleur.remuneration));
+    document.getElementById('r-part').textContent = budget > 0 ? pct(meilleur.remuneration / budget) : '—';
+    if (points.length > 1) {
+      const xs = points.map(p => p.remuneration);
+      const ys = points.map(p => p.revenu_net_total_foyer);
+      const xMin = Math.min(...xs), xMax = Math.max(...xs) || 1;
+      const yMin = Math.min(...ys), yMax = Math.max(...ys) || 1;
+      const sx = x => 10 + (x - xMin) / (xMax - xMin || 1) * 580;
+      const sy = y => 210 - (y - yMin) / (yMax - yMin || 1) * 200;
+      document.getElementById('chart-line').setAttribute('points', points.map(p => sx(p.remuneration) + ',' + sy(p.revenu_net_total_foyer)).join(' '));
+      document.getElementById('chart-best').setAttribute('cx', sx(meilleur.remuneration));
+      document.getElementById('chart-best').setAttribute('cy', sy(meilleur.revenu_net_total_foyer));
     }
     document.getElementById('result').style.display='block';
     document.getElementById('result').scrollIntoView({behavior:'smooth',block:'nearest'});
@@ -514,14 +535,8 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
 </div>
 <div class="container content">
   <a class="back-link" href="/">← Tous les statuts</a>
-  <h2 class="st">Seuil de bascule</h2>
-  <p>Sur la plage de chiffre d'affaires testée (0 à 300 000 €), l'un des deux statuts reste préférable à ces hypothèses — utilisez le simulateur ci-dessus pour tester vos propres paramètres.</p>
-  
-  <h2 class="st">Chiffres clés — Société par Actions Simplifiée Unipersonnelle</h2>
-  <table class="data-table"><thead><tr><th>Donnée</th><th>Valeur</th></tr></thead><tbody>
-    <tr><td>Catégorie</td><td class="hl">Société</td></tr><tr><td>Régime fiscal par défaut</td><td class="hl">IS</td></tr><tr><td>Responsabilité</td><td class="hl">Responsabilité limitée aux apports</td></tr><tr><td>Coût de création moyen</td><td class="hl">250 €</td></tr>
-  </tbody></table>
-  <p style="font-size:.88rem;color:var(--muted);">Données 2026-01 — à titre indicatif, vérifiées par un professionnel avant toute décision. Source structurée : <code>data/statuts.json</code>.</p>
+  <h2 class="st">Pourquoi arbitrer entre rémunération et dividendes ?</h2>
+  <p>En SARL, chaque euro versé en rémunération au dirigeant supporte des cotisations sociales (45,0 % environ) mais ouvre des droits sociaux (retraite, maladie). Chaque euro versé en dividendes évite ces cotisations mais passe par l'impôt sur les sociétés puis la flat tax de 31,4 % — et ne crée aucun droit social. Le simulateur ci-dessus teste toutes les répartitions possibles du budget distribuable (CA − charges d'exploitation) et identifie celle qui maximise le revenu net du foyer, à taux marginal d'imposition constant.</p>
   
   <h2 class="st">Chiffres clés — Société à Responsabilité Limitée</h2>
   <table class="data-table"><thead><tr><th>Donnée</th><th>Valeur</th></tr></thead><tbody>
@@ -531,18 +546,18 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
   
   <h2 class="st">Formules de calcul &amp; sources officielles</h2>
   <div class="method">
-    <h3 class="sub">SASU</h3>
-    <div class="code">bénéfice_avant_IS = CA − charges_exploitation − rémunération_dirigeant − cotisations_sociales_dirigeant<br>IS = bénéfice×15% (jusqu'à 42 500€) + (bénéfice−42 500€)×25% au-delà<br>rémunération_nette = rémunération_dirigeant − cotisations_sociales_dirigeant<br>dividendes_nets = dividendes_versés × (1 − 31,4%)  (flat tax / PFU)<br>revenu_net_foyer = rémunération_nette − impôt(TMI) + dividendes_nets</div><h3 class="sub">SARL</h3>
+    <h3 class="sub">SARL</h3>
     <div class="code">bénéfice_avant_IS = CA − charges_exploitation − rémunération_dirigeant − cotisations_sociales_dirigeant<br>IS = bénéfice×15% (jusqu'à 42 500€) + (bénéfice−42 500€)×25% au-delà<br>rémunération_nette = rémunération_dirigeant − cotisations_sociales_dirigeant<br>dividendes_nets = dividendes_versés × (1 − 31,4%)  (flat tax / PFU)<br>revenu_net_foyer = rémunération_nette − impôt(TMI) + dividendes_nets</div>
     <p style="font-size:.88rem;color:var(--muted);margin:14px 0 6px;">Formules appliquées de façon déterministe à partir de <code>data/statuts.json</code> (2026-01) — approximations pédagogiques, pas un calcul officiel URSSAF/impots.gouv.fr au barème exact par tranche.</p>
     <h3 class="sub">Sources officielles</h3>
     <ul style="padding-left:18px;font-size:.98rem;">
-      <li><a href="https://www.service-public.gouv.fr/particuliers/vosdroits/F1419" target="_blank" rel="noopener nofollow">Barème progressif de l'impôt sur le revenu — service-public.fr</a></li><li><a href="https://bofip.impots.gouv.fr/bofip/2065-PGP.html/identifiant=BOI-IS-LIQ-20-20-20230621" target="_blank" rel="noopener nofollow">Taux de l'impôt sur les sociétés — BOFiP</a></li><li><a href="https://bofip.impots.gouv.fr/bofip/2062-PGP.html/identifiant=BOI-IS-LIQ-20-10-20230621" target="_blank" rel="noopener nofollow">Conditions du taux réduit d'IS (15%) — BOFiP</a></li><li><a href="https://www.impots.gouv.fr/international-particulier/mes-dividendes" target="_blank" rel="noopener nofollow">Prélèvement forfaitaire unique (PFU) sur dividendes — impots.gouv.fr</a></li><li><a href="https://entreprendre.service-public.gouv.fr/vosdroits/F36240" target="_blank" rel="noopener nofollow">Régime social assimilé salarié du président (SAS/SASU) — service-public.fr</a></li><li><a href="https://entreprendre.service-public.gouv.fr/vosdroits/F36235" target="_blank" rel="noopener nofollow">Régime social du gérant de SARL — service-public.fr</a></li>
+      <li><a href="https://www.service-public.gouv.fr/particuliers/vosdroits/F1419" target="_blank" rel="noopener nofollow">Barème progressif de l'impôt sur le revenu — service-public.fr</a></li><li><a href="https://bofip.impots.gouv.fr/bofip/2065-PGP.html/identifiant=BOI-IS-LIQ-20-20-20230621" target="_blank" rel="noopener nofollow">Taux de l'impôt sur les sociétés — BOFiP</a></li><li><a href="https://bofip.impots.gouv.fr/bofip/2062-PGP.html/identifiant=BOI-IS-LIQ-20-10-20230621" target="_blank" rel="noopener nofollow">Conditions du taux réduit d'IS (15%) — BOFiP</a></li><li><a href="https://www.impots.gouv.fr/international-particulier/mes-dividendes" target="_blank" rel="noopener nofollow">Prélèvement forfaitaire unique (PFU) sur dividendes — impots.gouv.fr</a></li><li><a href="https://entreprendre.service-public.gouv.fr/vosdroits/F36235" target="_blank" rel="noopener nofollow">Régime social du gérant de SARL — service-public.fr</a></li>
     </ul>
   </div>
   
   <h2 class="st">Questions fréquentes</h2>
-  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">SASU ou SARL, quelle différence principale ?</button><div class="faq-a">La SARL impose un minimum de 2 associés et un cadre légal plus rigide; la SASU offre plus de liberté statutaire et peut rester unipersonnelle.</div></div>
+  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">L'arbitrage salaire/dividendes est-il différent pour un gérant majoritaire ?</button><div class="faq-a">Oui — au-delà de 10% du capital social, la part de dividendes versée à un gérant majoritaire est soumise aux cotisations TNS comme un salaire, ce qui réduit fortement l'intérêt des dividendes par rapport à une SASU.</div></div>
+  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Pourquoi le calcul ici suppose-t-il un gérant minoritaire ?</button><div class="faq-a">Ce simulateur applique le taux assimilé salarié par défaut sur la rémunération, cohérent avec le moteur de calcul du site — pour un gérant majoritaire (régime TNS), utilisez le simulateur SARL dédié qui permet d'ajuster ce paramètre.</div></div>
   
   <div class="eeat-section">
     <h2 class="eeat-title">
@@ -597,7 +612,7 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
   </div>
   
   <div class="link-grid">
-    <a class="link-card" href="/charges/sasu/">sasu</a><a class="link-card" href="/charges/sarl/">sarl</a><a class="link-card" href="/quel-statut-choisir//">quel statut choisir</a>
+    <a class="link-card" href="/simulateur/sarl/">sarl</a><a class="link-card" href="/comparateur/sasu-vs-sarl/">sasu vs sarl</a><a class="link-card" href="/arbitrage/sasu-remuneration-vs-dividendes/">sasu remuneration vs dividendes</a><a class="link-card" href="/quel-statut-choisir//">quel statut choisir</a>
   </div>
 </div>
 <footer><div class="container">

@@ -30,7 +30,11 @@ const METIERS = {
   consultant: { nom: 'Consultant / freelance conseil', type_activite: 'prestations_services_bnc', ca_annuel_exemple: 60000, charges_reelles_estimees_pct: 0.08 },
   developpeur: { nom: 'Développeur freelance', type_activite: 'prestations_services_bnc', ca_annuel_exemple: 70000, charges_reelles_estimees_pct: 0.10 },
   graphiste: { nom: 'Graphiste indépendant', type_activite: 'prestations_services_bnc', ca_annuel_exemple: 40000, charges_reelles_estimees_pct: 0.12 },
-  'coach-sportif': { nom: 'Coach sportif indépendant', type_activite: 'prestations_services_bic', ca_annuel_exemple: 35000, charges_reelles_estimees_pct: 0.15 }
+  'coach-sportif': { nom: 'Coach sportif indépendant', type_activite: 'prestations_services_bic', ca_annuel_exemple: 35000, charges_reelles_estimees_pct: 0.15 },
+  'infirmier-liberal': { nom: 'Infirmier libéral', type_activite: 'prestations_services_bnc', ca_annuel_exemple: 65000, charges_reelles_estimees_pct: 0.10 },
+  vtc: { nom: 'Chauffeur VTC', type_activite: 'prestations_services_bic', ca_annuel_exemple: 45000, charges_reelles_estimees_pct: 0.22 },
+  'e-commercant': { nom: 'E-commerçant', type_activite: 'vente_marchandises', ca_annuel_exemple: 90000, charges_reelles_estimees_pct: 0.55 },
+  formateur: { nom: 'Formateur indépendant', type_activite: 'prestations_services_bnc', ca_annuel_exemple: 50000, charges_reelles_estimees_pct: 0.08 }
 };
 
 // ── Routing table — une entrée = une page. Étendre ici pour ajouter des pages. ──
@@ -49,6 +53,8 @@ const PAGES = [
       ["Le versement libératoire est-il toujours intéressant ?", "Non — il dépend de votre taux marginal d'imposition et de votre revenu fiscal de référence. Il est surtout avantageux si votre TMI est supérieur au taux du versement libératoire."],
       ["Mon patrimoine personnel est-il protégé ?", "Oui, par défaut depuis le 15 mai 2022 votre patrimoine personnel est insaisissable par les créanciers professionnels — sauf en cas de fraude, manquement grave, ou renonciation explicite à la demande d'un créancier (les banques l'exigent quasi-systématiquement pour un prêt professionnel)."]
     ],
+    avantages: ["Création gratuite et quasi-instantanée", "Comptabilité ultra-simplifiée (livre de recettes)", "Cotisations calculées uniquement sur le CA encaissé — zéro charge si CA nul", "Patrimoine personnel protégé par défaut"],
+    inconvenients: ["Plafond de chiffre d'affaires (83 600 € services, 203 100 € vente en 2026)", "Abattement forfaitaire, pas de déduction des charges réelles", "Crédibilité parfois moindre auprès de gros clients ou banques", "Pas de récupération de TVA"],
     liens_internes: ['/simulateur/eurl', '/simulateur/sasu', '/comparateur/auto-entrepreneur-vs-sasu', '/charges/auto-entrepreneur']
   },
   {
@@ -63,6 +69,8 @@ const PAGES = [
       ["Quelle différence entre auto-entrepreneur et entreprise individuelle ?", "L'EI au régime réel déduit les charges réelles (pas un abattement forfaitaire) et n'a pas de plafond de chiffre d'affaires — pertinent quand les charges réelles dépassent l'abattement forfaitaire du régime micro."],
       ["Mon patrimoine personnel est-il protégé en EI ?", "Oui, même protection par défaut que l'auto-entrepreneur depuis le 15 mai 2022, avec les mêmes exceptions (fraude, manquement grave, renonciation à la demande d'un créancier)."]
     ],
+    avantages: ["Pas de plafond de chiffre d'affaires", "Déduction des charges réelles (matériel, local, sous-traitance...)", "Aucun capital social à constituer", "Patrimoine personnel protégé par défaut, comme l'auto-entrepreneur"],
+    inconvenients: ["Comptabilité complète obligatoire (régime réel)", "Cotisations sociales TNS dues même en cas de faible bénéfice", "Pas de personnalité morale distincte (contrairement à l'EURL)"],
     liens_internes: ['/simulateur/auto-entrepreneur', '/charges/entreprise-individuelle']
   },
   {
@@ -77,6 +85,8 @@ const PAGES = [
       ["EURL à l'IR ou à l'IS ?", "Par défaut à l'IR (comme une EI), mais l'option IS est possible et souvent plus avantageuse au-delà d'un certain niveau de bénéfice grâce au taux réduit à 15% jusqu'à 42 500 €."],
       ["Quel régime social pour le gérant d'EURL ?", "Le gérant associé unique relève du régime TNS (travailleur non salarié), avec des cotisations sociales calculées sur sa rémunération."]
     ],
+    avantages: ["Cotisations sociales du gérant (régime TNS) généralement moins élevées qu'en SASU", "Responsabilité limitée aux apports", "Choix entre IR et IS", "Passage possible en SARL en accueillant un associé"],
+    inconvenients: ["Couverture sociale du régime TNS moins protectrice (indemnités journalières, retraite) que le régime général", "Formalités de création et comptabilité complète obligatoires", "Statuts et annonce légale à rédiger, coût de création non nul"],
     liens_internes: ['/simulateur/sasu', '/comparateur/eurl-vs-sasu', '/charges/eurl']
   },
   {
@@ -91,7 +101,9 @@ const PAGES = [
       ["Le président de SASU cotise-t-il au chômage ?", "Non — le statut assimilé salarié donne accès au régime général de sécurité sociale mais pas à l'assurance chômage, sauf cumul avec un contrat de travail distinct dans certaines conditions."],
       ["Salaire ou dividendes en SASU, que choisir ?", "Les dividendes évitent les charges sociales (soumis à la flat tax de 31,4% depuis le 1er janvier 2026) mais ne créent aucun droit à la retraite ni de protection sociale — un équilibre est généralement préférable à un choix extrême. Voir le comparateur EURL vs SASU pour le détail du calcul."]
     ],
-    liens_internes: ['/simulateur/eurl', '/comparateur/eurl-vs-sasu', '/charges/sasu']
+    avantages: ["Régime général de sécurité sociale (meilleure couverture que le TNS)", "Grande liberté statutaire", "Responsabilité limitée aux apports", "Dividendes non soumis aux cotisations sociales (flat tax uniquement)"],
+    inconvenients: ["Charges sociales du président élevées (~65% du net)", "Pas d'assurance chômage pour le président", "Comptabilité complète et formalisme social plus lourds qu'en EURL"],
+    liens_internes: ['/simulateur/eurl', '/simulateur/sas', '/comparateur/eurl-vs-sasu', '/arbitrage/sasu-remuneration-vs-dividendes', '/charges/sasu']
   },
   {
     type: 'simulateur',
@@ -105,7 +117,26 @@ const PAGES = [
       ["Gérant majoritaire ou minoritaire, quelle différence ?", "Le gérant majoritaire (détient plus de 50% des parts, seul ou avec sa famille) relève du régime TNS. Le gérant minoritaire ou égalitaire relève du régime assimilé salarié, comme un président de SASU."],
       ["Pourquoi choisir une SARL plutôt qu'une SASU ?", "La SARL impose un minimum de 2 associés et un cadre plus encadré par la loi (moins de liberté statutaire que la SASU), mais le régime TNS du gérant majoritaire coûte souvent moins cher en cotisations sociales que le régime assimilé salarié."]
     ],
-    liens_internes: ['/simulateur/sasu', '/charges/sarl']
+    avantages: ["Régime TNS du gérant majoritaire souvent moins coûteux en cotisations", "Cadre légal protecteur et éprouvé, statuts types disponibles", "Régime matrimonial des parts sociales protecteur en cas de succession"],
+    inconvenients: ["Minimum 2 associés obligatoire", "Moins de liberté statutaire que la SAS (répartition du pouvoir encadrée par la loi)", "Cession de parts sociales plus formaliste (agrément des associés) qu'en SAS"],
+    liens_internes: ['/simulateur/sasu', '/simulateur/sas', '/comparateur/sas-vs-sarl', '/arbitrage/sarl-remuneration-vs-dividendes', '/charges/sarl']
+  },
+  {
+    type: 'simulateur',
+    statut: 'sas',
+    slug: 'simulateur/sas',
+    titre_seo: 'Simulateur SAS 2026 : président, associés, IS, dividendes',
+    h1: 'Simulateur SAS 2026',
+    desc: "Calculez l'impôt sur les sociétés, les charges du président assimilé salarié, la flat tax sur dividendes et le revenu net total en SAS (société pluripersonnelle).",
+    ca_defaut: 100000,
+    faq: [
+      ["Quelle différence entre SAS et SASU ?", "Aucune différence de régime fiscal ou social pour le président — la SAS impose simplement au moins 2 associés, contrairement à la SASU qui reste unipersonnelle. Le calcul de rémunération/dividendes du dirigeant est identique."],
+      ["Le président de SAS cotise-t-il au chômage ?", "Non — comme en SASU, le statut assimilé salarié donne accès au régime général de sécurité sociale mais pas à l'assurance chômage, sauf cumul avec un contrat de travail distinct dans certaines conditions."],
+      ["Pourquoi choisir une SAS plutôt qu'une SARL pour plusieurs associés ?", "La SAS offre une liberté statutaire bien plus large (répartition du pouvoir, catégories d'actions, entrée d'investisseurs) que la SARL, encadrée par la loi — au prix de charges sociales du président généralement plus élevées que le régime TNS d'un gérant majoritaire de SARL."]
+    ],
+    avantages: ["Liberté statutaire quasi totale (pactes d'actionnaires, catégories d'actions)", "Forme privilégiée par les investisseurs pour une levée de fonds", "Régime général de sécurité sociale pour le président", "Cession d'actions plus simple qu'en SARL"],
+    inconvenients: ["Charges sociales du président élevées (~65% du net)", "Rédaction des statuts plus complexe, souvent avec accompagnement juridique", "Pas d'assurance chômage pour le président"],
+    liens_internes: ['/simulateur/sasu', '/comparateur/sas-vs-sarl', '/comparateur/sas-vs-sasu', '/arbitrage/sas-remuneration-vs-dividendes', '/charges/sarl']
   },
   {
     type: 'comparateur',
@@ -164,6 +195,66 @@ const PAGES = [
       ["SASU ou SARL, quelle différence principale ?", "La SARL impose un minimum de 2 associés et un cadre légal plus rigide; la SASU offre plus de liberté statutaire et peut rester unipersonnelle."]
     ],
     liens_internes: ['/charges/sasu', '/charges/sarl']
+  },
+  {
+    type: 'comparateur',
+    statuts: ['sas', 'sarl'],
+    slug: 'comparateur/sas-vs-sarl',
+    titre_seo: 'SAS ou SARL : comparateur et simulateur 2026',
+    h1: 'SAS ou SARL : quel statut choisir à plusieurs associés ?',
+    desc: 'SAS ou SARL ? Comparez régime social du dirigeant, fiscalité et liberté statutaire pour une société à plusieurs associés.',
+    ca_defaut: 120000,
+    params_defaut: { charges_exploitation: 18000, remuneration_gerant: 40000, dividendes_verses: 25000, tmi: 0.30 },
+    faq: [
+      ["SAS ou SARL, quelle différence principale à plusieurs associés ?", "La SAS offre une liberté statutaire quasi totale (répartition du pouvoir, catégories d'actions, entrée facilitée d'investisseurs) tandis que la SARL est plus encadrée par la loi. Côté social, le président de SAS est assimilé salarié (charges plus élevées) contre TNS pour un gérant majoritaire de SARL (charges plus faibles mais couverture sociale moindre)."],
+      ["La SAS est-elle plus adaptée pour lever des fonds ?", "Oui — c'est la forme privilégiée par les investisseurs (capital-risque, business angels) car elle permet des pactes d'actionnaires flexibles et des catégories d'actions différenciées, ce que la SARL ne permet pas."]
+    ],
+    liens_internes: ['/simulateur/sas', '/simulateur/sarl', '/charges/sarl']
+  },
+  {
+    type: 'comparateur',
+    statuts: ['sas', 'sasu'],
+    slug: 'comparateur/sas-vs-sasu',
+    titre_seo: 'SAS ou SASU : quelle différence en 2026 ?',
+    h1: 'SAS ou SASU : quelle différence ?',
+    desc: 'SAS ou SASU ? Le calcul de rémunération et fiscalité est identique — la seule différence est le nombre d\'associés.',
+    ca_defaut: 100000,
+    params_defaut: { charges_exploitation: 15000, remuneration_gerant: 35000, dividendes_verses: 20000, tmi: 0.30 },
+    faq: [
+      ["Le calcul de revenu net est-il différent entre SAS et SASU ?", "Non — pour un même chiffre d'affaires, mêmes charges et même rémunération du président, le résultat est strictement identique. La SASU est juste une SAS à associé unique."],
+      ["Quand transformer une SASU en SAS ?", "Dès qu'un deuxième associé entre au capital (investisseur, cofondateur) — la transformation est une simple modification statutaire, pas une création de société."]
+    ],
+    liens_internes: ['/simulateur/sas', '/simulateur/sasu', '/comparateur/sas-vs-sarl']
+  },
+  {
+    type: 'comparateur',
+    statuts: ['auto-entrepreneur', 'sarl'],
+    slug: 'comparateur/auto-entrepreneur-vs-sarl',
+    titre_seo: 'Auto-entrepreneur ou SARL : simulateur comparatif 2026',
+    h1: 'Auto-entrepreneur ou SARL : quel statut choisir ?',
+    desc: "Comparez charges, revenu net et responsabilité entre auto-entrepreneur et SARL selon votre chiffre d'affaires — pertinent dès que vous vous associez.",
+    ca_defaut: 70000,
+    params_defaut: { type_activite: 'prestations_services_bnc', charges_exploitation: 10000, remuneration_gerant: 28000, dividendes_verses: 15000, tmi: 0.30 },
+    faq: [
+      ["Pourquoi comparer auto-entrepreneur et SARL alors que l'un est individuel ?", "La question se pose typiquement quand un auto-entrepreneur s'associe avec quelqu'un d'autre — le régime micro ne permet pas plusieurs associés, la SARL devient alors l'alternative naturelle (ou la SAS, voir le comparateur SAS vs SARL)."],
+      ["À partir de quel CA la SARL devient-elle plus intéressante ?", "Cela dépend fortement du régime social retenu pour le ou les gérants (majoritaire TNS ou minoritaire assimilé salarié) — voir le seuil de bascule calculé ci-dessus pour vos hypothèses."]
+    ],
+    liens_internes: ['/charges/auto-entrepreneur', '/charges/sarl', '/comparateur/sas-vs-sarl']
+  },
+  {
+    type: 'comparateur',
+    statuts: ['entreprise-individuelle', 'eurl'],
+    slug: 'comparateur/entreprise-individuelle-vs-eurl',
+    titre_seo: 'Entreprise individuelle (EI) ou EURL : comparateur 2026',
+    h1: 'Entreprise individuelle (EI) ou EURL : quel statut choisir ?',
+    desc: "Comparez régime social, fiscalité et protection du patrimoine entre entreprise individuelle et EURL selon votre chiffre d'affaires.",
+    ca_defaut: 70000,
+    params_defaut: { charges_exploitation: 12000, remuneration_gerant: 30000, dividendes_verses: 10000, tmi: 0.30 },
+    faq: [
+      ["EI ou EURL, la protection du patrimoine est-elle différente ?", "Depuis le 15 mai 2022, l'EI protège déjà le patrimoine personnel par défaut (avec les mêmes exceptions bancaires qu'en EURL) — la différence principale entre les deux statuts est donc surtout fiscale et sociale, pas patrimoniale."],
+      ["Pourquoi passer d'EI à EURL ?", "Principalement pour opter pour l'IS et lisser la fiscalité (taux réduit à 15% jusqu'à 42 500€ de bénéfice), ou pour préparer une association future (transformation en SARL) sans changer de forme juridique."]
+    ],
+    liens_internes: ['/charges/entreprise-individuelle', '/charges/eurl', '/simulateur/eurl']
   },
   {
     type: 'comparateur',
@@ -294,6 +385,101 @@ const PAGES = [
     liens_internes: ['/comparateur/auto-entrepreneur-vs-eurl', '/charges/eurl']
   },
   {
+    type: 'migration',
+    from: 'auto-entrepreneur',
+    to: 'entreprise-individuelle',
+    slug: 'migration/auto-entrepreneur-vers-ei',
+    titre_seo: "Passer d'auto-entrepreneur à entreprise individuelle (EI) : guide 2026",
+    h1: "Comment passer d'auto-entrepreneur à entreprise individuelle (régime réel) ?",
+    desc: "Étapes pour basculer du régime micro au régime réel en entreprise individuelle, avec simulation de l'impact sur le revenu net.",
+    ca_defaut: 60000,
+    params_defaut: { type_activite: 'prestations_services_bnc', charges_reelles: 20000, tmi: 0.30 },
+    etapes: [
+      "Vérifier que les charges réelles dépassent l'abattement forfaitaire du régime micro (34% en BNC, 50% en BIC services) — sinon le passage n'est pas avantageux",
+      "Opter pour le régime réel simplifié ou normal auprès du service des impôts des entreprises",
+      "Mettre en place une comptabilité complète (recettes/dépenses ou comptabilité d'engagement selon le régime)",
+      "Conserver tous les justificatifs de charges déductibles",
+      "Déclarer le résultat réel (bénéfice ou déficit) sur la déclaration de revenus, plus la liasse fiscale si régime normal"
+    ],
+    faq: [
+      ["Cette bascule change-t-elle le statut juridique ?", "Non — il ne s'agit pas de créer une nouvelle structure, seulement de changer de régime fiscal (micro → réel) au sein de la même entreprise individuelle. Pas d'immatriculation supplémentaire nécessaire."],
+      ["Peut-on revenir au régime micro ensuite ?", "Oui, sous conditions de seuils de CA et de délai, en formulant une nouvelle option auprès de l'administration fiscale."]
+    ],
+    liens_internes: ['/comparateur/auto-entrepreneur-vs-entreprise-individuelle', '/charges/entreprise-individuelle']
+  },
+  {
+    type: 'migration',
+    from: 'entreprise-individuelle',
+    to: 'eurl',
+    slug: 'migration/ei-vers-eurl',
+    titre_seo: "Passer d'entreprise individuelle (EI) à EURL : guide et simulation 2026",
+    h1: "Comment passer d'entreprise individuelle à EURL ?",
+    desc: "Étapes pour transformer une entreprise individuelle en EURL (mise en société), avec simulation de l'impact sur le revenu net.",
+    ca_defaut: 70000,
+    params_defaut: { charges_exploitation: 12000, remuneration_gerant: 30000, dividendes_verses: 10000, tmi: 0.30 },
+    etapes: [
+      "Évaluer l'entreprise individuelle (fonds de commerce, clientèle, matériel) pour l'apporter ou le vendre à la future EURL",
+      "Rédiger les statuts de l'EURL et constituer le capital social (1€ minimum, ou apport du fonds évalué)",
+      "Déposer le capital social et publier une annonce légale",
+      "Immatriculer l'EURL au guichet unique (RCS)",
+      "Cesser l'entreprise individuelle et transférer contrats, bail commercial et salariés le cas échéant",
+      "Choisir le régime fiscal de l'EURL (IR par défaut ou option IS)"
+    ],
+    faq: [
+      ["Cette transformation a-t-elle un coût fiscal ?", "L'apport du fonds de commerce à la société peut générer une plus-value imposable — un accompagnement par un expert-comptable ou un notaire est fortement recommandé pour optimiser cette étape."],
+      ["Pourquoi passer en société plutôt que rester en EI ?", "Principalement pour opter à l'IS et lisser la fiscalité, ou pour préparer une association future (transformation ultérieure en SARL) sans changer de nouveau de forme juridique."]
+    ],
+    liens_internes: ['/comparateur/entreprise-individuelle-vs-eurl', '/charges/eurl']
+  },
+  {
+    type: 'migration',
+    from: 'eurl',
+    to: 'sasu',
+    slug: 'migration/eurl-vers-sasu',
+    titre_seo: "Passer d'EURL à SASU : guide et simulation 2026",
+    h1: "Comment passer d'EURL à SASU ?",
+    desc: "Étapes pour transformer une EURL en SASU, avec simulation de l'impact du changement de régime social du dirigeant sur le revenu net.",
+    ca_defaut: 90000,
+    params_defaut: { charges_exploitation: 12000, remuneration_gerant: 32000, dividendes_verses: 18000, tmi: 0.30 },
+    etapes: [
+      "Faire évaluer la transformation par un expert-comptable ou un commissaire à la transformation (obligatoire au-delà de certains seuils)",
+      "Décider de la transformation en assemblée générale extraordinaire (décision de l'associé unique)",
+      "Rédiger les nouveaux statuts de SASU et nommer le président",
+      "Publier une annonce légale de transformation",
+      "Déposer le dossier de transformation au guichet unique (RCS) — pas de nouvelle immatriculation, la personnalité morale continue",
+      "Anticiper le changement de régime social du dirigeant (TNS → assimilé salarié) auprès de l'URSSAF"
+    ],
+    faq: [
+      ["La transformation EURL → SASU crée-t-elle une nouvelle société ?", "Non — la personnalité morale de la société est conservée, seule la forme juridique change. Les contrats en cours restent valables sans re-signature."],
+      ["Pourquoi passer d'EURL à SASU ?", "Principalement pour la meilleure protection sociale du régime assimilé salarié, ou pour préparer l'entrée d'investisseurs (la SASU peut ensuite devenir SAS en accueillant un deuxième associé)."]
+    ],
+    liens_internes: ['/comparateur/eurl-vs-sasu', '/charges/sasu']
+  },
+  {
+    type: 'migration',
+    from: 'sasu',
+    to: 'sas',
+    slug: 'migration/sasu-vers-sas',
+    titre_seo: "Passer de SASU à SAS : guide et simulation 2026",
+    h1: "Comment passer de SASU à SAS ?",
+    desc: "Étapes pour transformer une SASU en SAS lors de l'entrée d'un nouvel associé, avec simulation de l'impact sur le revenu net du président.",
+    ca_defaut: 100000,
+    params_defaut: { charges_exploitation: 15000, remuneration_gerant: 35000, dividendes_verses: 20000, tmi: 0.30 },
+    etapes: [
+      "Négocier les conditions d'entrée du ou des nouveaux associés (valorisation, répartition du capital, pacte d'actionnaires)",
+      "Décider de l'augmentation de capital ou de la cession de titres en assemblée (décision du président/associé unique avant transformation)",
+      "Mettre à jour les statuts pour refléter la pluralité d'associés — la SAS reste juridiquement la continuité de la SASU",
+      "Publier une annonce légale de modification si nécessaire",
+      "Déposer la modification au guichet unique (RCS) — pas de nouvelle immatriculation",
+      "Formaliser un pacte d'actionnaires pour encadrer gouvernance, sortie et clauses de préemption"
+    ],
+    faq: [
+      ["Faut-il recréer la société en passant de SASU à SAS ?", "Non — c'est une simple évolution du nombre d'associés au sein de la même personne morale, pas une transformation de forme juridique comme EURL → SASU. Le régime fiscal et social du président reste inchangé."],
+      ["Le calcul de rémunération du président change-t-il ?", "Non — le régime assimilé salarié et la fiscalité des dividendes du président restent identiques qu'il y ait un ou plusieurs associés. Voir le simulateur SAS pour vérifier."]
+    ],
+    liens_internes: ['/simulateur/sas', '/comparateur/sas-vs-sarl']
+  },
+  {
     type: 'comparateur_metier',
     metier: 'consultant',
     statuts: ['auto-entrepreneur', 'sasu'],
@@ -320,6 +506,105 @@ const PAGES = [
       ["Quel statut pour un développeur freelance à haut CA ?", "Au-delà du plafond auto-entrepreneur (83 600 €, seuil 2026) ou pour déduire du matériel/formation en charges réelles, l'EURL ou la SASU deviennent pertinentes selon la préférence de régime social."]
     ],
     liens_internes: ['/comparateur/auto-entrepreneur-vs-eurl', '/simulateur/eurl']
+  },
+  {
+    type: 'comparateur_metier',
+    metier: 'infirmier-liberal',
+    statuts: ['auto-entrepreneur', 'eurl'],
+    slug: 'metier/infirmier-liberal-auto-entrepreneur-vs-eurl',
+    titre_seo: 'Auto-entrepreneur ou EURL pour un infirmier libéral ?',
+    h1: 'Infirmier libéral : auto-entrepreneur ou EURL ?',
+    desc: "Comparaison auto-entrepreneur vs EURL pré-remplie avec un CA type d'infirmier libéral.",
+    params_defaut: { type_activite: 'prestations_services_bnc', charges_exploitation: 6500, remuneration_gerant: 32000, dividendes_verses: 12000, tmi: 0.30 },
+    faq: [
+      ["Un infirmier libéral peut-il rester auto-entrepreneur ?", "Oui sous le plafond de CA (83 600 € en prestations de services, seuil 2026), mais beaucoup de professionnels de santé libéraux dépassent ce seuil rapidement, ce qui rend l'EURL ou la SELARL pertinentes."]
+    ],
+    liens_internes: ['/comparateur/auto-entrepreneur-vs-eurl', '/simulateur/eurl']
+  },
+  {
+    type: 'comparateur_metier',
+    metier: 'vtc',
+    statuts: ['auto-entrepreneur', 'eurl'],
+    slug: 'metier/vtc-auto-entrepreneur-vs-eurl',
+    titre_seo: 'Auto-entrepreneur ou EURL pour un chauffeur VTC ?',
+    h1: 'Chauffeur VTC : auto-entrepreneur ou EURL ?',
+    desc: "Comparaison auto-entrepreneur vs EURL pré-remplie avec un CA type de chauffeur VTC, charges de véhicule incluses.",
+    params_defaut: { type_activite: 'prestations_services_bic', charges_exploitation: 10000, remuneration_gerant: 22000, dividendes_verses: 8000, tmi: 0.11 },
+    faq: [
+      ["Pourquoi les charges réelles comptent-elles particulièrement pour un VTC ?", "Carburant, entretien, assurance et amortissement du véhicule sont souvent élevés — au-delà de l'abattement forfaitaire micro (50% en BIC services), le régime réel (EI ou EURL) devient rapidement plus avantageux."]
+    ],
+    liens_internes: ['/comparateur/auto-entrepreneur-vs-eurl', '/charges/entreprise-individuelle']
+  },
+  {
+    type: 'comparateur_metier',
+    metier: 'e-commercant',
+    statuts: ['auto-entrepreneur', 'sasu'],
+    slug: 'metier/e-commercant-auto-entrepreneur-vs-sasu',
+    titre_seo: 'Auto-entrepreneur ou SASU pour un e-commerçant ?',
+    h1: 'E-commerçant : auto-entrepreneur ou SASU ?',
+    desc: "Comparaison auto-entrepreneur vs SASU pré-remplie avec un CA type de vente en ligne (vente de marchandises).",
+    params_defaut: { type_activite: 'vente_marchandises', charges_exploitation: 45000, remuneration_gerant: 28000, dividendes_verses: 12000, tmi: 0.30 },
+    faq: [
+      ["Le plafond auto-entrepreneur est-il vite atteint en e-commerce ?", "Le plafond vente de marchandises (203 100 €, seuil 2026) est plus élevé qu'en prestations de services, mais la marge nette étant souvent faible, beaucoup de e-commerçants basculent en société pour déduire leurs charges réelles (achats, publicité, logistique) plutôt que de subir l'abattement forfaitaire de 71%."]
+    ],
+    liens_internes: ['/comparateur/auto-entrepreneur-vs-sasu', '/simulateur/sasu']
+  },
+  {
+    type: 'comparateur_metier',
+    metier: 'formateur',
+    statuts: ['auto-entrepreneur', 'sasu'],
+    slug: 'metier/formateur-auto-entrepreneur-vs-sasu',
+    titre_seo: 'Auto-entrepreneur ou SASU pour un formateur indépendant ?',
+    h1: 'Formateur indépendant : auto-entrepreneur ou SASU ?',
+    desc: "Comparaison auto-entrepreneur vs SASU pré-remplie avec un CA type de formateur/consultant en formation.",
+    params_defaut: { type_activite: 'prestations_services_bnc', charges_exploitation: 4000, remuneration_gerant: 25000, dividendes_verses: 12000, tmi: 0.30 },
+    faq: [
+      ["Quel statut pour un formateur qui travaille avec des organismes de formation ?", "L'auto-entrepreneur convient en phase de démarrage (peu de charges, CA modéré), la SASU devient pertinente en approchant le plafond de CA ou pour donner une image plus institutionnelle vis-à-vis de grands comptes."]
+    ],
+    liens_internes: ['/comparateur/auto-entrepreneur-vs-sasu', '/simulateur/sasu']
+  },
+  {
+    type: 'arbitrage',
+    statut: 'sasu',
+    slug: 'arbitrage/sasu-remuneration-vs-dividendes',
+    titre_seo: 'Salaire ou dividendes en SASU 2026 : simulateur d\'arbitrage optimal',
+    h1: 'SASU : salaire ou dividendes, quelle répartition optimale ?',
+    desc: "Trouvez la répartition rémunération/dividendes qui maximise votre revenu net en SASU, avec la flat tax à 31,4% en 2026.",
+    ca_defaut: 100000,
+    faq: [
+      ["Faut-il tout prendre en dividendes en SASU ?", "Rarement optimal — au-delà d'un certain montant, l'IS puis la flat tax de 31,4% sur dividendes finissent par coûter plus cher qu'une rémunération raisonnable, en plus de ne créer aucun droit à la retraite. Le simulateur teste toutes les répartitions pour trouver l'optimum."],
+      ["La hausse de la flat tax en 2026 change-t-elle la donne ?", "Oui — passée de 30% à 31,4% (CSG portée à 18,6%), elle rééquilibre légèrement l'arbitrage en faveur d'un mix salaire/dividendes plutôt que du tout-dividendes par rapport aux années précédentes."],
+      ["Le résultat optimal dépend-il de ma TMI ?", "Oui fortement — plus votre taux marginal d'imposition est élevé, plus les dividendes (taxés à taux fixe 31,4%) deviennent avantageux par rapport à un salaire supplémentaire taxé au barème progressif."]
+    ],
+    liens_internes: ['/simulateur/sasu', '/comparateur/eurl-vs-sasu', '/arbitrage/sarl-remuneration-vs-dividendes']
+  },
+  {
+    type: 'arbitrage',
+    statut: 'sarl',
+    slug: 'arbitrage/sarl-remuneration-vs-dividendes',
+    titre_seo: 'Salaire ou dividendes en SARL 2026 : simulateur d\'arbitrage optimal',
+    h1: 'SARL : salaire ou dividendes, quelle répartition optimale ?',
+    desc: "Trouvez la répartition rémunération/dividendes qui maximise le revenu net du gérant en SARL, selon le régime TNS ou assimilé salarié.",
+    ca_defaut: 100000,
+    faq: [
+      ["L'arbitrage salaire/dividendes est-il différent pour un gérant majoritaire ?", "Oui — au-delà de 10% du capital social, la part de dividendes versée à un gérant majoritaire est soumise aux cotisations TNS comme un salaire, ce qui réduit fortement l'intérêt des dividendes par rapport à une SASU."],
+      ["Pourquoi le calcul ici suppose-t-il un gérant minoritaire ?", "Ce simulateur applique le taux assimilé salarié par défaut sur la rémunération, cohérent avec le moteur de calcul du site — pour un gérant majoritaire (régime TNS), utilisez le simulateur SARL dédié qui permet d'ajuster ce paramètre."]
+    ],
+    liens_internes: ['/simulateur/sarl', '/comparateur/sasu-vs-sarl', '/arbitrage/sasu-remuneration-vs-dividendes']
+  },
+  {
+    type: 'arbitrage',
+    statut: 'sas',
+    slug: 'arbitrage/sas-remuneration-vs-dividendes',
+    titre_seo: 'Salaire ou dividendes en SAS 2026 : simulateur d\'arbitrage optimal',
+    h1: 'SAS : salaire ou dividendes, quelle répartition optimale pour le président ?',
+    desc: "Trouvez la répartition rémunération/dividendes qui maximise le revenu net du président de SAS, avec la flat tax à 31,4% en 2026.",
+    ca_defaut: 120000,
+    faq: [
+      ["Le calcul est-il différent entre SAS et SASU ?", "Non — le régime social du président (assimilé salarié) et la fiscalité des dividendes sont identiques, que la société ait un ou plusieurs associés. Seule la répartition du capital entre associés change, pas l'arbitrage individuel du président."],
+      ["Et pour les autres associés non-dirigeants ?", "Ce simulateur porte sur la rémunération/dividendes du président uniquement — les dividendes versés aux autres associés suivent la même fiscalité (flat tax 31,4%) mais ne génèrent aucune cotisation sociale, n'étant pas liés à un mandat social rémunéré."]
+    ],
+    liens_internes: ['/simulateur/sas', '/comparateur/sas-vs-sarl', '/arbitrage/sasu-remuneration-vs-dividendes']
   }
 ];
 
@@ -327,6 +612,18 @@ const PAGES = [
 function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 function eur(n) { return Math.round(n).toLocaleString('fr-FR') + ' €'; }
 function pct(n) { return (n * 100).toFixed(1).replace('.', ',') + ' %'; }
+
+// Grille de liens internes — commune à tous les types de page (même 9-item link-grid
+// répété sur chaque page, pattern usgoldpricepergram.com). Le quiz est ajouté d'office
+// sur toute page qui ne le référence pas déjà, pour garantir un maillage top-of-funnel.
+function linkGridBlock(liensInternes) {
+  const hubs = ['/quel-statut-choisir/'];
+  const all = [...liensInternes, ...hubs.filter(h => !liensInternes.includes(h))];
+  return `
+  <div class="link-grid">
+    ${all.map(l => `<a class="link-card" href="${l}/">${l.split('/').filter(Boolean).pop().replace(/-/g, ' ')}</a>`).join('')}
+  </div>`;
+}
 
 function faqBlock(faq) {
   return `
@@ -400,6 +697,24 @@ function formuleLinesFor(statut) {
   return lignes;
 }
 
+// Bloc avantages/inconvenients optionnel — cfg.avantages/cfg.inconvenients sont des
+// tableaux de strings définis par page dans PAGES[] (pas de retype dans statuts.json,
+// ce sont des jugements éditoriaux, pas des données réglementaires).
+function avantagesInconvenientsBlock(cfg) {
+  if (!cfg.avantages && !cfg.inconvenients) return '';
+  const col = (titre, items, cls) => !items ? '' : `
+    <div class="ai-col ${cls}">
+      <h3 class="sub">${esc(titre)}</h3>
+      <ul>${items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>
+    </div>`;
+  return `
+  <h2 class="st">Avantages &amp; inconvénients</h2>
+  <div class="ai-grid">
+    ${col('✓ Avantages', cfg.avantages, 'ai-pro')}
+    ${col('✗ Inconvénients', cfg.inconvenients, 'ai-con')}
+  </div>`;
+}
+
 function sourcesForStatuts(statutIds) {
   const S = STATUTS_DATA.sources;
   const cles = new Set(['bareme_ir']);
@@ -430,7 +745,7 @@ function sourcesForStatuts(statutIds) {
     is_taux_reduit_conditions: 'Conditions du taux réduit d\'IS (15%) — BOFiP',
     flat_tax_dividendes: 'Prélèvement forfaitaire unique (PFU) sur dividendes — impots.gouv.fr',
     gerant_sarl: 'Régime social du gérant de SARL — service-public.fr',
-    president_sasu: 'Régime social du président de SASU — service-public.fr'
+    president_sasu: 'Régime social assimilé salarié du président (SAS/SASU) — service-public.fr'
   };
   return [...cles].filter(k => S[k]).map(k => ({ label: labels[k] || k, url: S[k] }));
 }
@@ -551,6 +866,13 @@ p { color:#2c3844; margin-bottom:14px; line-height:1.75; }
 .data-table td { padding:10px 14px; border-bottom:1px solid var(--border); }
 .data-table tr:nth-child(even) td { background:#f2f6f9; }
 .hl { font-weight:700; color:var(--brand-dark); }
+.ai-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:0 0 20px; }
+@media (max-width:580px){ .ai-grid{ grid-template-columns:1fr; } }
+.ai-col { border-radius:10px; padding:18px 20px; }
+.ai-col.ai-pro { background:#e6f6f0; }
+.ai-col.ai-con { background:#fdeeee; }
+.ai-col h3 { margin-top:0; }
+.ai-col ul { padding-left:18px; font-size:.95rem; line-height:1.7; }
 .link-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:10px; margin:18px 0; }
 .link-card { display:block; background:#fff; border:1px solid var(--border); border-radius:8px; padding:12px 14px; text-decoration:none; color:var(--text); font-size:.98rem; font-weight:600; }
 .link-card:hover { border-color:var(--brand); color:var(--brand-dark); }
@@ -722,7 +1044,7 @@ ${JSON.stringify({ '@context': 'https://schema.org', '@graph': [...jsonld, GESMI
 <body>
 ${body}
 <footer><div class="container">
-  <div class="disc">Simulateur à titre indicatif, basé sur des taux ${STATUTS_DATA.version} — ne remplace pas l'avis d'un expert-comptable ou d'un avocat. ${STATUTS_DATA.avertissement}</div>
+  <div class="disc">Simulateur à titre indicatif, basé sur des taux ${STATUTS_DATA.version} — ne remplace pas l'avis d'un expert-comptable ou d'un avocat. ${STATUTS_DATA.avertissement} Dernière mise à jour des données et calculs : ${TODAY}.</div>
   <p><a href="/">Comparateur de statuts juridiques</a></p>
   <p style="font-size:.72rem;margin-top:8px;">Comparateur de statuts juridiques fait partie de Gesmine-Invest Limited, société immatriculée au Royaume-Uni sous le numéro 14120136, siège social Hardy House, 269 Poynders Gardens, Londres, Royaume-Uni, SW4 8PQ.</p>
 </div></footer>
@@ -839,12 +1161,11 @@ function renderSimulateur(cfg) {
 <div class="container content">
   <a class="back-link" href="/">← Tous les statuts</a>
   ${formatStatutFacts(statut)}
+  ${avantagesInconvenientsBlock(cfg)}
   ${formulesEtSourcesBlock([cfg.statut])}
   ${faqBlock(cfg.faq)}
   ${eeatBlock()}
-  <div class="link-grid">
-    ${cfg.liens_internes.map(l => `<a class="link-card" href="${l}/">${l.split('/').filter(Boolean).pop().replace(/-/g, ' ')}</a>`).join('')}
-  </div>
+  ${linkGridBlock(cfg.liens_internes)}
 </div>`;
   return pageShell({ title: cfg.titre_seo, desc: cfg.desc, canonical, jsonld, body });
 }
@@ -945,9 +1266,7 @@ function renderComparateur(cfg) {
   ${formulesEtSourcesBlock([idA, idB])}
   ${faqBlock(cfg.faq)}
   ${eeatBlock()}
-  <div class="link-grid">
-    ${cfg.liens_internes.map(l => `<a class="link-card" href="${l}/">${l.split('/').filter(Boolean).pop().replace(/-/g, ' ')}</a>`).join('')}
-  </div>
+  ${linkGridBlock(cfg.liens_internes)}
 </div>`;
   return pageShell({ title: cfg.titre_seo, desc: cfg.desc, canonical, jsonld, body });
 }
@@ -972,9 +1291,7 @@ function renderCharges(cfg) {
   ${formulesEtSourcesBlock([cfg.statut])}
   ${faqBlock(cfg.faq)}
   ${eeatBlock()}
-  <div class="link-grid">
-    ${cfg.liens_internes.map(l => `<a class="link-card" href="${l}/">${l.split('/').filter(Boolean).pop().replace(/-/g, ' ')}</a>`).join('')}
-  </div>
+  ${linkGridBlock(cfg.liens_internes)}
 </div>`;
   return pageShell({ title: cfg.titre_seo, desc: cfg.desc, canonical, jsonld, body });
 }
@@ -1009,9 +1326,7 @@ function renderMigration(cfg) {
   ${formulesEtSourcesBlock([cfg.from, cfg.to])}
   ${faqBlock(cfg.faq)}
   ${eeatBlock()}
-  <div class="link-grid">
-    ${cfg.liens_internes.map(l => `<a class="link-card" href="${l}/">${l.split('/').filter(Boolean).pop().replace(/-/g, ' ')}</a>`).join('')}
-  </div>
+  ${linkGridBlock(cfg.liens_internes)}
 </div>`;
   return pageShell({ title: cfg.titre_seo, desc: cfg.desc, canonical, jsonld, body });
 }
@@ -1047,9 +1362,104 @@ function renderComparateurMetier(cfg) {
   ${formulesEtSourcesBlock([idA, idB])}
   ${faqBlock(cfg.faq)}
   ${eeatBlock()}
-  <div class="link-grid">
-    ${cfg.liens_internes.map(l => `<a class="link-card" href="${l}/">${l.split('/').filter(Boolean).pop().replace(/-/g, ' ')}</a>`).join('')}
+  ${linkGridBlock(cfg.liens_internes)}
+</div>`;
+  return pageShell({ title: cfg.titre_seo, desc: cfg.desc, canonical, jsonld, body });
+}
+
+// ── Widget arbitrage — balaye le split rémunération/dividendes via
+// optimiserSplitRemunerationDividendes() (déjà présente dans calc-engine.js, pas de
+// nouvelle logique de calcul: seule la restitution visuelle/HTML est nouvelle). ──
+function arbitrageWidget(cfg) {
+  const statutId = cfg.statut;
+  const nom = STATUTS_DATA.statuts[statutId].nom_court || STATUTS_DATA.statuts[statutId].nom;
+  const charges_defaut = cfg.charges_defaut != null ? cfg.charges_defaut : Math.round(cfg.ca_defaut * 0.1 / 1000) * 1000;
+  const PAGE = { statutId, ca_defaut: cfg.ca_defaut, charges_defaut, nom };
+
+  return `
+  <div class="tool-card">
+    <div class="form-grid">
+      <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca" min="0" step="1000" value="${cfg.ca_defaut}"></div>
+      <div class="form-group"><label>Charges d'exploitation (€/an)</label><input type="number" id="charges" min="0" step="1000" value="${charges_defaut}"></div>
+      <div class="form-group full"><label>Taux marginal d'imposition (TMI)</label><select id="tmi">
+        <option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option>
+      </select></div>
+    </div>
+    <button class="calc-btn" onclick="calculate()">Trouver la répartition optimale →</button>
+    <div class="result" id="result">
+      <div class="result-hero">
+        <div class="rl">Répartition optimale — revenu net max</div>
+        <div class="ra" id="r-net"></div>
+      </div>
+      <div class="result-grid">
+        <div class="r-stat"><div class="sv" id="r-remu"></div><div class="sl">Rémunération optimale</div></div>
+        <div class="r-stat"><div class="sv" id="r-div"></div><div class="sl">Dividendes optimaux</div></div>
+        <div class="r-stat"><div class="sv" id="r-part"></div><div class="sl">Part rémunération / budget</div></div>
+      </div>
+      <h3 class="sub" style="margin-top:22px;">Revenu net selon la part de rémunération</h3>
+      <svg id="chart" viewBox="0 0 600 220" style="width:100%;height:auto;background:#fff;border:1px solid var(--border);border-radius:8px;">
+        <polyline id="chart-line" fill="none" stroke="#1a4d7a" stroke-width="2.5"></polyline>
+        <circle id="chart-best" r="5" fill="#1a7a5c"></circle>
+      </svg>
+      <p style="font-size:.82rem;color:var(--muted);margin-top:8px;">Point vert = répartition optimale. Chaque point du budget distribuable (CA − charges) est testé en rémunération, le solde étant versé en dividendes.</p>
+    </div>
   </div>
+  <script>
+  const PAGE = ${JSON.stringify(PAGE)};
+  ${CALC_ENGINE_CLIENT_SOURCE}
+  const STATUTS_DATA = ${JSON.stringify(STATUTS_DATA)};
+  function eur(n){ return Math.round(n).toLocaleString('fr-FR')+' €'; }
+  function pct(n){ return (n*100).toFixed(1).replace('.',',')+' %'; }
+  function calculate(){
+    const ca = parseFloat(document.getElementById('ca').value)||0;
+    const charges_exploitation = parseFloat(document.getElementById('charges').value)||0;
+    const tmi = parseFloat(document.getElementById('tmi').value);
+    const budget = Math.max(0, ca - charges_exploitation);
+    const pas = Math.max(1000, Math.round(budget / 40 / 1000) * 1000);
+    const { meilleur, points } = optimiserSplitRemunerationDividendes(PAGE.statutId, { ca, charges_exploitation, tmi }, STATUTS_DATA, { pas });
+    document.getElementById('r-net').textContent = eur(meilleur.revenu_net_total_foyer);
+    document.getElementById('r-remu').textContent = eur(meilleur.remuneration);
+    document.getElementById('r-div').textContent = eur(Math.max(0, budget - meilleur.remuneration));
+    document.getElementById('r-part').textContent = budget > 0 ? pct(meilleur.remuneration / budget) : '—';
+    if (points.length > 1) {
+      const xs = points.map(p => p.remuneration);
+      const ys = points.map(p => p.revenu_net_total_foyer);
+      const xMin = Math.min(...xs), xMax = Math.max(...xs) || 1;
+      const yMin = Math.min(...ys), yMax = Math.max(...ys) || 1;
+      const sx = x => 10 + (x - xMin) / (xMax - xMin || 1) * 580;
+      const sy = y => 210 - (y - yMin) / (yMax - yMin || 1) * 200;
+      document.getElementById('chart-line').setAttribute('points', points.map(p => sx(p.remuneration) + ',' + sy(p.revenu_net_total_foyer)).join(' '));
+      document.getElementById('chart-best').setAttribute('cx', sx(meilleur.remuneration));
+      document.getElementById('chart-best').setAttribute('cy', sy(meilleur.revenu_net_total_foyer));
+    }
+    document.getElementById('result').style.display='block';
+    document.getElementById('result').scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+  function toggleFaq(b){ b.classList.toggle('open'); b.nextElementSibling.classList.toggle('open'); }
+  <\/script>`;
+}
+
+function renderArbitrage(cfg) {
+  const statut = STATUTS_DATA.statuts[cfg.statut];
+  const canonical = `${SITE_URL}/${cfg.slug}/`;
+  const jsonld = [webAppJsonLd(cfg.h1, canonical), faqJsonLd(cfg.faq)];
+  const body = `
+<header><div class="container">
+  <h1>${esc(cfg.h1)}</h1>
+  <p>${esc(cfg.desc)}</p>
+</div></header>
+<div class="container tool-wrapper">
+  ${arbitrageWidget(cfg)}
+</div>
+<div class="container content">
+  <a class="back-link" href="/">← Tous les statuts</a>
+  <h2 class="st">Pourquoi arbitrer entre rémunération et dividendes ?</h2>
+  <p>En ${esc(statut.nom_court || statut.nom)}, chaque euro versé en rémunération au dirigeant supporte des cotisations sociales (${pct(statut.taux_charges_president_salaire || statut.taux_cotisations_tns_estime || 0.65)} environ) mais ouvre des droits sociaux (retraite, maladie). Chaque euro versé en dividendes évite ces cotisations mais passe par l'impôt sur les sociétés puis la flat tax de ${pct(STATUTS_DATA.constantes_communes.flat_tax_dividendes)} — et ne crée aucun droit social. Le simulateur ci-dessus teste toutes les répartitions possibles du budget distribuable (CA − charges d'exploitation) et identifie celle qui maximise le revenu net du foyer, à taux marginal d'imposition constant.</p>
+  ${formatStatutFacts(statut)}
+  ${formulesEtSourcesBlock([cfg.statut])}
+  ${faqBlock(cfg.faq)}
+  ${eeatBlock()}
+  ${linkGridBlock(cfg.liens_internes)}
 </div>`;
   return pageShell({ title: cfg.titre_seo, desc: cfg.desc, canonical, jsonld, body });
 }
@@ -1058,7 +1468,9 @@ function renderComparateurMetier(cfg) {
 // EMITTERS
 // ═════════════════════════════════════════════════════════════
 const OUT = __dirname;
-const urls = ['/'];
+// '/' et '/quel-statut-choisir/' sont écrites à la main (pas dans PAGES[]) mais doivent
+// figurer dans le sitemap au même titre que les pages générées.
+const urls = ['/', '/quel-statut-choisir/'];
 function emit(relDir, html) {
   const dir = path.join(OUT, relDir);
   fs.mkdirSync(dir, { recursive: true });
@@ -1071,7 +1483,8 @@ const renderers = {
   comparateur: renderComparateur,
   charges: renderCharges,
   migration: renderMigration,
-  comparateur_metier: renderComparateurMetier
+  comparateur_metier: renderComparateurMetier,
+  arbitrage: renderArbitrage
 };
 
 PAGES.forEach(cfg => {
