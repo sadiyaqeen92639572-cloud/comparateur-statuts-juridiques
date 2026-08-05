@@ -53,6 +53,22 @@
       "@type": "Answer",
       "text": "Oui, même protection par défaut que l'auto-entrepreneur depuis le 15 mai 2022, avec les mêmes exceptions (fraude, manquement grave, renonciation à la demande d'un créancier)."
      }
+    },
+    {
+     "@type": "Question",
+     "name": "Comment calculer les charges sociales d'une entreprise individuelle ?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Les cotisations sociales TNS d'une EI au régime réel se calculent sur le bénéfice (chiffre d'affaires moins charges réelles déductibles), pas sur le chiffre d'affaires brut. Ce simulateur applique un taux estimé de 45% du bénéfice, cohérent avec les taux moyens URSSAF pour un TNS au régime réel (maladie, retraite de base et complémentaire, invalidité-décès, allocations familiales, CSG-CRDS). Le taux réel varie selon le niveau de revenu (dégressivité sur les tranches PASS) — ce simulateur donne une estimation, pas le calcul exact au barème progressif URSSAF."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Comment est calculé l'impôt sur le revenu en entreprise individuelle ?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "L'EI relève par défaut de l'impôt sur le revenu (IR) dans la catégorie BIC ou BNC selon l'activité, sur la base du revenu imposable = bénéfice moins cotisations sociales. Ce montant est ensuite taxé au barème progressif de l'IR, selon votre tranche marginale d'imposition (TMI) et l'ensemble de vos revenus du foyer fiscal. Ce simulateur applique directement votre TMI au revenu imposable pour donner une estimation rapide — le calcul officiel utilise le barème complet par tranche (0%, 11%, 30%, 41%, 45%), pas seulement le taux marginal."
+     }
     }
    ]
   },
@@ -563,7 +579,9 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
   <h2 class="st">Questions fréquentes</h2>
   <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Quelle différence entre auto-entrepreneur et entreprise individuelle ?</button><div class="faq-a">L'EI au régime réel déduit les charges réelles (pas un abattement forfaitaire) et n'a pas de plafond de chiffre d'affaires — pertinent quand les charges réelles dépassent l'abattement forfaitaire du régime micro.</div></div>
   <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Mon patrimoine personnel est-il protégé en EI ?</button><div class="faq-a">Oui, même protection par défaut que l'auto-entrepreneur depuis le 15 mai 2022, avec les mêmes exceptions (fraude, manquement grave, renonciation à la demande d'un créancier).</div></div>
-  
+  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Comment calculer les charges sociales d'une entreprise individuelle ?</button><div class="faq-a">Les cotisations sociales TNS d'une EI au régime réel se calculent sur le bénéfice (chiffre d'affaires moins charges réelles déductibles), pas sur le chiffre d'affaires brut. Ce simulateur applique un taux estimé de 45% du bénéfice, cohérent avec les taux moyens URSSAF pour un TNS au régime réel (maladie, retraite de base et complémentaire, invalidité-décès, allocations familiales, CSG-CRDS). Le taux réel varie selon le niveau de revenu (dégressivité sur les tranches PASS) — ce simulateur donne une estimation, pas le calcul exact au barème progressif URSSAF.</div></div>
+  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Comment est calculé l'impôt sur le revenu en entreprise individuelle ?</button><div class="faq-a">L'EI relève par défaut de l'impôt sur le revenu (IR) dans la catégorie BIC ou BNC selon l'activité, sur la base du revenu imposable = bénéfice moins cotisations sociales. Ce montant est ensuite taxé au barème progressif de l'IR, selon votre tranche marginale d'imposition (TMI) et l'ensemble de vos revenus du foyer fiscal. Ce simulateur applique directement votre TMI au revenu imposable pour donner une estimation rapide — le calcul officiel utilise le barème complet par tranche (0%, 11%, 30%, 41%, 45%), pas seulement le taux marginal.</div></div>
+
   <div class="eeat-section">
     <h2 class="eeat-title">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--brand);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
