@@ -64,6 +64,8 @@ const PAGES = [
     titre_seo: 'Simulateur entreprise individuelle (EI) 2026 : charges et revenu net',
     h1: 'Simulateur entreprise individuelle (EI) 2026',
     desc: "Calculez vos cotisations sociales, votre impôt sur le revenu et votre revenu net en entreprise individuelle au régime réel selon votre chiffre d'affaires et vos charges.",
+    note_titre: "Charges sociales et impôt sur le revenu en entreprise individuelle",
+    note_html: "En entreprise individuelle au régime réel, vos <strong>charges sociales</strong> (URSSAF) sont calculées sur votre bénéfice — chiffre d'affaires moins charges déductibles réelles — puis votre <strong>impôt sur le revenu</strong> s'applique sur ce même bénéfice net de charges, selon le barème progressif. Le simulateur ci-dessus calcule les deux automatiquement à partir de votre chiffre d'affaires et de vos charges.",
     ca_defaut: 60000,
     faq: [
       ["Quelle différence entre auto-entrepreneur et entreprise individuelle ?", "L'EI au régime réel déduit les charges réelles (pas un abattement forfaitaire) et n'a pas de plafond de chiffre d'affaires — pertinent quand les charges réelles dépassent l'abattement forfaitaire du régime micro."],
@@ -700,6 +702,16 @@ function formuleLinesFor(statut) {
 // Bloc avantages/inconvenients optionnel — cfg.avantages/cfg.inconvenients sont des
 // tableaux de strings définis par page dans PAGES[] (pas de retype dans statuts.json,
 // ce sont des jugements éditoriaux, pas des données réglementaires).
+// Bloc H2 optionnel, propre à une seule page (cfg.note_titre/cfg.note_html dans PAGES[]) —
+// pas un bloc partagé comme avantagesInconvenientsBlock/formulesEtSourcesBlock, pour ne pas
+// impacter les autres pages simulateur.
+function extraNoteBlock(cfg) {
+  if (!cfg.note_titre) return '';
+  return `
+  <h2 class="st">${esc(cfg.note_titre)}</h2>
+  <p>${cfg.note_html}</p>`;
+}
+
 function avantagesInconvenientsBlock(cfg) {
   if (!cfg.avantages && !cfg.inconvenients) return '';
   const col = (titre, items, cls) => !items ? '' : `
@@ -1161,6 +1173,7 @@ function renderSimulateur(cfg) {
 <div class="container content">
   <a class="back-link" href="/">← Tous les statuts</a>
   ${formatStatutFacts(statut)}
+  ${extraNoteBlock(cfg)}
   ${avantagesInconvenientsBlock(cfg)}
   ${formulesEtSourcesBlock([cfg.statut])}
   ${faqBlock(cfg.faq)}
