@@ -689,6 +689,15 @@ function formuleLinesFor(statut) {
     lignes.push('revenu_imposable = bénéfice − cotisations_sociales');
     lignes.push('impôt = revenu_imposable × TMI');
     lignes.push('revenu_net = bénéfice − cotisations_sociales − impôt');
+  } else if (statut.regime_social_president === 'assimile_salarie' || statut.regime_social_gerant_minoritaire === 'assimile_salarie') {
+    lignes.push('rémunération_dirigeant saisie = BRUT annuel (avant charges)');
+    lignes.push('cotisations_patronales = rémunération_dirigeant × ~42.5% (coût entreprise, s\'ajoute au brut)');
+    lignes.push('cotisations_salariales = rémunération_dirigeant × ~21% (déduite du brut pour obtenir le net)');
+    lignes.push('bénéfice_avant_IS = CA − charges_exploitation − rémunération_dirigeant − cotisations_patronales');
+    lignes.push('IS = bénéfice×15% (jusqu\'à 42 500€) + (bénéfice−42 500€)×25% au-delà');
+    lignes.push('rémunération_nette = rémunération_dirigeant − cotisations_salariales');
+    lignes.push('dividendes_nets = dividendes_versés × (1 − 31,4%)  (flat tax / PFU)');
+    lignes.push('revenu_net_foyer = rémunération_nette − impôt(TMI) + dividendes_nets');
   } else {
     lignes.push('bénéfice_avant_IS = CA − charges_exploitation − rémunération_dirigeant − cotisations_sociales_dirigeant');
     lignes.push('IS = bénéfice×15% (jusqu\'à 42 500€) + (bénéfice−42 500€)×25% au-delà');
@@ -1086,8 +1095,11 @@ function simulateurWidget(cfg, statutId) {
         <option value="prestations_services_bnc">Prestations de services (BNC)</option>
       </select></div>` : '';
 
+  const statutRef = STATUTS_DATA.statuts[statutId];
+  const estAssimileSalarieRef = statutRef.regime_social_president === 'assimile_salarie' || statutRef.regime_social_gerant_minoritaire === 'assimile_salarie';
+  const remunerationLabel = estAssimileSalarieRef ? 'Rémunération brute dirigeant (€/an)' : 'Rémunération dirigeant (€/an)';
   const societeFields = !isIndividuel
-    ? `<div class="form-group"><label>Rémunération dirigeant (€/an)</label><input type="number" id="remuneration" min="0" step="1000" value="${remuneration_defaut}"></div>
+    ? `<div class="form-group"><label>${remunerationLabel}</label><input type="number" id="remuneration" min="0" step="1000" value="${remuneration_defaut}"></div>
       <div class="form-group"><label>Charges d'exploitation (€/an)</label><input type="number" id="charges" min="0" step="1000" value="${charges_defaut}"></div>
       <div class="form-group full"><label>Dividendes versés (€/an)</label><input type="number" id="dividendes" min="0" step="1000" value="${dividendes_defaut}"></div>` : '';
 

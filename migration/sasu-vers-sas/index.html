@@ -316,17 +316,17 @@ footer a { color:#dbe8f2; }
   </tbody></table>
   <h2 class="st">Impact estimé sur le revenu net (exemple à 100 000 € de CA)</h2>
   <table class="data-table"><thead><tr><th>Statut</th><th>Revenu net estimé</th></tr></thead><tbody>
-    <tr><td>SASU (avant)</td><td class="hl">22 295 €</td></tr>
-    <tr><td>SAS (après)</td><td class="hl">22 295 €</td></tr>
+    <tr><td>SASU (avant)</td><td class="hl">33 075 €</td></tr>
+    <tr><td>SAS (après)</td><td class="hl">33 075 €</td></tr>
   </tbody></table>
   <p style="font-size:.88rem;color:var(--muted);">Estimation à titre d'exemple, hypothèses de rémunération/dividendes fixées ci-dessus — utilisez le <a href="/comparateur/sasu-vs-sas/">comparateur SASU vs SAS</a> pour ajuster à votre situation.</p>
   
   <h2 class="st">Formules de calcul &amp; sources officielles</h2>
   <div class="method">
     <h3 class="sub">SASU</h3>
-    <div class="code">bénéfice_avant_IS = CA − charges_exploitation − rémunération_dirigeant − cotisations_sociales_dirigeant<br>IS = bénéfice×15% (jusqu'à 42 500€) + (bénéfice−42 500€)×25% au-delà<br>rémunération_nette = rémunération_dirigeant − cotisations_sociales_dirigeant<br>dividendes_nets = dividendes_versés × (1 − 31,4%)  (flat tax / PFU)<br>revenu_net_foyer = rémunération_nette − impôt(TMI) + dividendes_nets</div><h3 class="sub">SAS</h3>
-    <div class="code">bénéfice_avant_IS = CA − charges_exploitation − rémunération_dirigeant − cotisations_sociales_dirigeant<br>IS = bénéfice×15% (jusqu'à 42 500€) + (bénéfice−42 500€)×25% au-delà<br>rémunération_nette = rémunération_dirigeant − cotisations_sociales_dirigeant<br>dividendes_nets = dividendes_versés × (1 − 31,4%)  (flat tax / PFU)<br>revenu_net_foyer = rémunération_nette − impôt(TMI) + dividendes_nets</div>
-    <p style="font-size:.88rem;color:var(--muted);margin:14px 0 6px;">Formules appliquées de façon déterministe à partir de <code>data/statuts.json</code> (2026-01) — approximations pédagogiques, pas un calcul officiel URSSAF/impots.gouv.fr au barème exact par tranche.</p>
+    <div class="code">rémunération_dirigeant saisie = BRUT annuel (avant charges)<br>cotisations_patronales = rémunération_dirigeant × ~42.5% (coût entreprise, s'ajoute au brut)<br>cotisations_salariales = rémunération_dirigeant × ~21% (déduite du brut pour obtenir le net)<br>bénéfice_avant_IS = CA − charges_exploitation − rémunération_dirigeant − cotisations_patronales<br>IS = bénéfice×15% (jusqu'à 42 500€) + (bénéfice−42 500€)×25% au-delà<br>rémunération_nette = rémunération_dirigeant − cotisations_salariales<br>dividendes_nets = dividendes_versés × (1 − 31,4%)  (flat tax / PFU)<br>revenu_net_foyer = rémunération_nette − impôt(TMI) + dividendes_nets</div><h3 class="sub">SAS</h3>
+    <div class="code">rémunération_dirigeant saisie = BRUT annuel (avant charges)<br>cotisations_patronales = rémunération_dirigeant × ~42.5% (coût entreprise, s'ajoute au brut)<br>cotisations_salariales = rémunération_dirigeant × ~21% (déduite du brut pour obtenir le net)<br>bénéfice_avant_IS = CA − charges_exploitation − rémunération_dirigeant − cotisations_patronales<br>IS = bénéfice×15% (jusqu'à 42 500€) + (bénéfice−42 500€)×25% au-delà<br>rémunération_nette = rémunération_dirigeant − cotisations_salariales<br>dividendes_nets = dividendes_versés × (1 − 31,4%)  (flat tax / PFU)<br>revenu_net_foyer = rémunération_nette − impôt(TMI) + dividendes_nets</div>
+    <p style="font-size:.88rem;color:var(--muted);margin:14px 0 6px;">Formules appliquées de façon déterministe à partir de <code>data/statuts.json</code> (2026-08) — approximations pédagogiques, pas un calcul officiel URSSAF/impots.gouv.fr au barème exact par tranche.</p>
     <h3 class="sub">Sources officielles</h3>
     <ul style="padding-left:18px;font-size:.98rem;">
       <li><a href="https://www.service-public.gouv.fr/particuliers/vosdroits/F1419" target="_blank" rel="noopener nofollow">Barème progressif de l'impôt sur le revenu — service-public.fr</a></li><li><a href="https://bofip.impots.gouv.fr/bofip/2065-PGP.html/identifiant=BOI-IS-LIQ-20-20-20230621" target="_blank" rel="noopener nofollow">Taux de l'impôt sur les sociétés — BOFiP</a></li><li><a href="https://bofip.impots.gouv.fr/bofip/2062-PGP.html/identifiant=BOI-IS-LIQ-20-10-20230621" target="_blank" rel="noopener nofollow">Conditions du taux réduit d'IS (15%) — BOFiP</a></li><li><a href="https://www.impots.gouv.fr/international-particulier/mes-dividendes" target="_blank" rel="noopener nofollow">Prélèvement forfaitaire unique (PFU) sur dividendes — impots.gouv.fr</a></li><li><a href="https://entreprendre.service-public.gouv.fr/vosdroits/F36240" target="_blank" rel="noopener nofollow">Régime social assimilé salarié du président (SAS/SASU) — service-public.fr</a></li>
@@ -394,7 +394,7 @@ footer a { color:#dbe8f2; }
   </div>
 </div>
 <footer><div class="container">
-  <div class="disc">Simulateur à titre indicatif, basé sur des taux 2026-01 — ne remplace pas l'avis d'un expert-comptable ou d'un avocat. Taux et seuils à faire valider par un expert-comptable avant publication. Voir plan de build — étape 1. Dernière mise à jour des données et calculs : 2026-08-15.</div>
+  <div class="disc">Simulateur à titre indicatif, basé sur des taux 2026-08 — ne remplace pas l'avis d'un expert-comptable ou d'un avocat. Estimations indicatives basées sur les taux et seuils 2026 publiés (voir sources ci-dessous) — ne remplacent pas l'avis d'un expert-comptable pour une situation réelle. Dernière mise à jour des données et calculs : 2026-08-18.</div>
   <p><a href="/">Comparateur de statuts juridiques</a></p>
   <p style="font-size:.72rem;margin-top:8px;">Comparateur de statuts juridiques fait partie de Gesmine-Invest Limited, société immatriculée au Royaume-Uni sous le numéro 14120136, siège social Hardy House, 269 Poynders Gardens, Londres, Royaume-Uni, SW4 8PQ.</p>
 </div></footer>
