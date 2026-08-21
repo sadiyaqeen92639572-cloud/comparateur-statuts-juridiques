@@ -841,18 +841,30 @@ function calculerSociete(statut, params, constantes) {
   const estAssimileSalarie = statut.regime_social_president === "assimile_salarie"
     || statut.regime_social_gerant_minoritaire === "assimile_salarie" && params.gerant_minoritaire;
 
-  const tauxChargesSalarie = statut.taux_charges_president_salaire
-    || statut.taux_charges_gerant_minoritaire_salaire
-    || 0.65;
   const tauxChargesTns = statut.taux_cotisations_tns_estime || 0.45;
 
-  const cotisations_sociales_gerant = estAssimileSalarie
-    ? remuneration_gerant * tauxChargesSalarie
+  // Assimilé salarié : patronale (~42.5% du brut) = coût entreprise ajouté, salariale (~21% du
+  // brut) = déduite du brut pour le net. Deux bases distinctes sur le même brut — ne jamais
+  // soustraire le taux combiné (65%) une seule fois pour les deux usages (bug corrigé, cf.
+  // lib/calc-engine.js:92-95 pour le même garde-fou).
+  const tauxChargesPatronales = statut.taux_charges_patronales_president
+    || statut.taux_charges_patronales_gerant_minoritaire
+    || 0.425;
+  const tauxChargesSalariales = statut.taux_charges_salariales_president
+    || statut.taux_charges_salariales_gerant_minoritaire
+    || 0.21;
+
+  const cotisations_patronales_gerant = estAssimileSalarie ? remuneration_gerant * tauxChargesPatronales : 0;
+  const cotisations_salariales_gerant = estAssimileSalarie
+    ? remuneration_gerant * tauxChargesSalariales
     : remuneration_gerant * tauxChargesTns;
+  const cotisations_sociales_gerant = estAssimileSalarie
+    ? cotisations_patronales_gerant + cotisations_salariales_gerant
+    : cotisations_salariales_gerant;
 
-  const remuneration_nette_sociale = remuneration_gerant - cotisations_sociales_gerant;
+  const remuneration_nette_sociale = remuneration_gerant - cotisations_salariales_gerant;
 
-  const benefice_avant_is = ca - charges_exploitation - remuneration_gerant - cotisations_sociales_gerant;
+  const benefice_avant_is = ca - charges_exploitation - remuneration_gerant - cotisations_patronales_gerant;
   const is_du = calculIS(benefice_avant_is, constantes);
   const benefice_apres_is = Math.max(0, benefice_avant_is) - is_du;
 
