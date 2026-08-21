@@ -721,7 +721,7 @@ function formatStatutFacts(statut) {
     rows.push(['Taux de frais de gestion (défaut)', pct(statut.taux_frais_gestion_defaut)]);
     rows.push(['Charges patronales (estimées)', pct(statut.taux_charges_patronales_portage)]);
     rows.push(['Charges salariales (estimées)', pct(statut.taux_charges_salariales_portage)]);
-    rows.push(['Réserve financière obligatoire', pct(statut.taux_reserve_financiere_defaut) + ' du salaire de base (récupérable)']);
+    rows.push(['Réserve financière obligatoire (CDI)', pct(statut.taux_reserve_financiere_defaut) + ' du salaire de base (récupérable) — en CDD, indemnité de précarité distincte, non calculée ici']);
     return `
     <h2 class="st">Chiffres clés — ${esc(statut.nom)}</h2>
     <table class="data-table"><thead><tr><th>Donnée</th><th>Valeur</th></tr></thead><tbody>
@@ -767,7 +767,7 @@ function formuleLinesFor(statut) {
     lignes.push('frais_gestion = CA_facturé × taux_frais_gestion (négociable selon CA, voir tableau comparatif)');
     lignes.push('budget_salarial = CA_facturé − frais_gestion');
     lignes.push('salaire_brut = budget_salarial ÷ (1 + taux_charges_patronales)  (dérivé, pas un input libre)');
-    lignes.push('réserve_financière = salaire_brut × 10%  (provisionnée, restituée en fin de mission — pas perdue)');
+    lignes.push('réserve_financière = salaire_brut × 10%  (CDI uniquement — provisionnée, restituée en fin de mission, pas perdue ; en CDD, indemnité de précarité distincte, non calculée ici)');
     lignes.push('salaire_net_avant_impôt = salaire_brut − (salaire_brut × taux_charges_salariales)');
     lignes.push('net_versé_immédiat = salaire_net_avant_impôt − réserve_financière  (= net avant impôt sur le revenu)');
     lignes.push('impôt_revenu = net_versé_immédiat × TMI');
@@ -1316,7 +1316,7 @@ function simulateurWidgetPortage(cfg) {
       <td>${esc(e.nom)}</td>
       <td class="hl">${pct(e.taux_gestion)}</td>
       <td id="cmp-net-${slug}">—</td>
-      <td style="font-size:.82rem;color:var(--muted);">${esc(e.taux_gestion_note || '')}<br>Barème public au ${esc(e.date_maj)}${e.negociable_selon_ca ? ', négociable selon CA' : ''} — <a href="${esc(e.source_url)}" rel="nofollow noopener" target="_blank">source</a></td>
+      <td style="font-size:.82rem;color:var(--muted);">${esc(e.taux_gestion_note || '')}<br>Prix commercial (pas un taux réglementé), relevé le ${esc(e.date_maj)}${e.negociable_selon_ca ? ', négociable selon CA' : ''} — <a href="${esc(e.source_url)}" rel="nofollow noopener" target="_blank">source</a></td>
     </tr>`;
   }).join('');
 
