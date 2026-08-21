@@ -607,6 +607,77 @@ const PAGES = [
       ["Et pour les autres associés non-dirigeants ?", "Ce simulateur porte sur la rémunération/dividendes du président uniquement — les dividendes versés aux autres associés suivent la même fiscalité (flat tax 31,4%) mais ne génèrent aucune cotisation sociale, n'étant pas liés à un mandat social rémunéré."]
     ],
     liens_internes: ['/simulateur/sas', '/comparateur/sas-vs-sarl', '/arbitrage/sasu-remuneration-vs-dividendes']
+  },
+  {
+    type: 'simulateur_portage',
+    statut: 'portage-salarial',
+    slug: 'simulateur/portage-salarial',
+    titre_seo: 'Simulateur portage salarial 2026 : net réel en poche, sans email',
+    h1: 'Simulateur portage salarial 2026',
+    desc: "Calculez votre salaire net réel en poche en portage salarial à partir de votre TJM et vos jours travaillés — résultat immédiat, sans capture d'email, avec comparaison des taux de gestion publics des principales sociétés de portage.",
+    tjm_defaut: 500,
+    jours_defaut: 18,
+    faq: [
+      ["Le taux de gestion affiché est-il le taux réel que je paierai ?", "Les taux publiés par les sociétés de portage sont des taux d'appel, souvent négociables selon votre chiffre d'affaires prévisionnel et votre ancienneté. Utilisez le champ \"taux de gestion\" du simulateur pour tester votre propre taux négocié — le tableau de comparaison, lui, garde les taux publics de chaque société pour rester une base de comparaison neutre."],
+      ["La réserve financière est-elle perdue ?", "Non — la convention collective du portage salarial (IDCC 3219) impose une réserve financière égale à 10% du salaire de base en CDI. Elle est provisionnée à chaque bulletin de paie puis restituée en fin de mission ou de contrat, ou en cas de période sans activité. Elle n'apparaît pas dans le \"net versé immédiat\" mais est bien à vous."],
+      ["Pourquoi le résultat est-il affiché avant impôt sur le revenu ?", "Pour rester comparable aux simulateurs des sociétés de portage, qui n'intègrent pas votre situation fiscale personnelle. L'impôt sur le revenu estimé selon votre TMI est affiché séparément, avec le net après impôt correspondant."]
+    ],
+    avantages: ["Régime général de la sécurité sociale, y compris l'assurance chômage (contrairement au président de SASU)", "Aucune création de société, aucune comptabilité à gérer soi-même", "Bulletin de paie classique, facilite les démarches (prêt immobilier, etc.)", "Réserve financière obligatoire qui sécurise les périodes sans mission"],
+    inconvenients: ["Charges sociales les plus élevées de toutes les formes d'activité indépendante (~45-50% du CA facturé)", "Frais de gestion en plus des charges sociales, prélevés avant même le calcul du salaire", "Nécessite un TJM suffisamment élevé pour rester rentable face aux charges cumulées", "Pas de possibilité d'optimisation rémunération/dividendes comme en société"],
+    liens_internes: ['/comparateur/auto-entrepreneur-vs-portage-salarial', '/comparateur/portage-salarial-vs-sasu', '/migration/auto-entrepreneur-vers-portage-salarial']
+  },
+  {
+    type: 'comparateur',
+    statuts: ['auto-entrepreneur', 'portage-salarial'],
+    slug: 'comparateur/auto-entrepreneur-vs-portage-salarial',
+    titre_seo: 'Auto-entrepreneur ou portage salarial 2026 : comparateur',
+    h1: 'Auto-entrepreneur ou portage salarial : lequel choisir ?',
+    desc: "Comparez le revenu net entre auto-entrepreneur (régime micro-fiscal) et portage salarial (salariat via une société tierce) à chiffre d'affaires identique.",
+    ca_defaut: 60000,
+    params_defaut: { type_activite: 'prestations_services_bnc', tmi: 0.30 },
+    faq: [
+      ["Pourquoi le portage salarial coûte-t-il plus cher que l'auto-entreprise ?", "L'auto-entrepreneur paie des cotisations sociales à taux réduit (régime micro, environ 22% du CA en prestations de services) mais n'a aucune assurance chômage et une couverture sociale plus limitée. Le portage salarial applique un régime de salariat classique (charges patronales + salariales, ~45-50% du CA cumulé) en échange d'une protection sociale complète, chômage compris."],
+      ["Le plafond de CA de l'auto-entreprise force-t-il à changer de statut ?", "Au-delà du plafond micro-fiscal (voir le simulateur auto-entrepreneur), il faut basculer vers l'EI au régime réel, une société, ou le portage salarial — ce dernier n'a aucun plafond de chiffre d'affaires."]
+    ],
+    liens_internes: ['/simulateur/auto-entrepreneur', '/simulateur/portage-salarial', '/migration/auto-entrepreneur-vers-portage-salarial']
+  },
+  {
+    type: 'comparateur',
+    statuts: ['portage-salarial', 'sasu'],
+    slug: 'comparateur/portage-salarial-vs-sasu',
+    titre_seo: 'Portage salarial ou SASU 2026 : comparateur de revenu net',
+    h1: 'Portage salarial ou SASU : lequel rapporte le plus ?',
+    desc: "Comparez le revenu net entre portage salarial (salariat via une société tierce, sans création d'entreprise) et SASU (société avec IS et flat tax sur dividendes) à chiffre d'affaires identique.",
+    ca_defaut: 90000,
+    params_defaut: { remuneration_gerant: 45000, charges_exploitation: 9000, dividendes_verses: 15000, tmi: 0.30 },
+    faq: [
+      ["Le portage salarial a-t-il un avantage que la SASU n'a pas ?", "Oui : l'assurance chômage. Le président de SASU, bien qu'assimilé salarié, n'y a pas droit sauf cumul avec un contrat de travail distinct — le salarié porté si, comme tout salarié classique."],
+      ["Pourquoi créer une SASU si le portage salarial est plus simple administrativement ?", "La SASU permet d'arbitrer rémunération/dividendes (les dividendes évitent les charges sociales, voir le simulateur d'arbitrage SASU) et n'a pas de frais de gestion prélevés en amont — à CA élevé et gérable en discipline de rémunération, elle dégage souvent un revenu net supérieur au portage."]
+    ],
+    liens_internes: ['/simulateur/portage-salarial', '/simulateur/sasu', '/arbitrage/sasu-remuneration-vs-dividendes']
+  },
+  {
+    type: 'migration',
+    from: 'auto-entrepreneur',
+    to: 'portage-salarial',
+    slug: 'migration/auto-entrepreneur-vers-portage-salarial',
+    titre_seo: "Passer d'auto-entrepreneur à portage salarial : guide 2026",
+    h1: "Comment passer d'auto-entrepreneur à portage salarial ?",
+    desc: "Étapes pour basculer d'une activité d'auto-entrepreneur vers le portage salarial, avec simulation de l'impact sur le revenu net.",
+    ca_defaut: 60000,
+    params_defaut: { type_activite: 'prestations_services_bnc', tmi: 0.30 },
+    etapes: [
+      "Choisir une société de portage salarial (comparer les taux de gestion — voir le simulateur dédié)",
+      "Signer le contrat d'adhésion et le contrat de travail (CDD ou CDI de portage) avec la société choisie",
+      "Cesser l'activité d'auto-entrepreneur (déclaration de cessation auprès du guichet unique) une fois le premier contrat de prestation sécurisé",
+      "Faire signer les contrats de prestation par vos clients au nom de la société de portage (facturation via elle)",
+      "Transmettre vos comptes-rendus d'activité mensuels à la société de portage pour déclencher la paie"
+    ],
+    faq: [
+      ["Dois-je clôturer mon auto-entreprise avant de signer avec une société de portage ?", "Non — beaucoup de sociétés de portage recommandent de sécuriser d'abord une mission, puis de cesser l'auto-entreprise une fois le contrat de travail en portage effectif, pour éviter toute rupture de facturation."],
+      ["Est-ce réversible si le portage ne convient pas ?", "Oui, plus simplement que pour une société : il suffit de ne pas renouveler le contrat de mission et de redevenir auto-entrepreneur (ou un autre statut) sans formalité de dissolution."]
+    ],
+    liens_internes: ['/comparateur/auto-entrepreneur-vs-portage-salarial', '/simulateur/portage-salarial']
   }
 ];
 
@@ -645,6 +716,19 @@ function webAppJsonLd(name, url) {
 // doit lire la même source que le calcul, sinon on retombe dans le piège 3-copies de pension-alimentaire-belgique).
 function formatStatutFacts(statut) {
   const rows = [];
+  if (statut.categorie === 'portage_salarial') {
+    rows.push(['Statut', 'Salarié en portage (CDD/CDI de mission)']);
+    rows.push(['Taux de frais de gestion (défaut)', pct(statut.taux_frais_gestion_defaut)]);
+    rows.push(['Charges patronales (estimées)', pct(statut.taux_charges_patronales_portage)]);
+    rows.push(['Charges salariales (estimées)', pct(statut.taux_charges_salariales_portage)]);
+    rows.push(['Réserve financière obligatoire', pct(statut.taux_reserve_financiere_defaut) + ' du salaire de base (récupérable)']);
+    return `
+    <h2 class="st">Chiffres clés — ${esc(statut.nom)}</h2>
+    <table class="data-table"><thead><tr><th>Donnée</th><th>Valeur</th></tr></thead><tbody>
+      ${rows.map(r => `<tr><td>${esc(r[0])}</td><td class="hl">${r[1]}</td></tr>`).join('')}
+    </tbody></table>
+    <p style="font-size:.88rem;color:var(--muted);">Données ${STATUTS_DATA.version} — taux publics relevés le ${statut.comparaison_entreprises_portage?.[0]?.date_maj || STATUTS_DATA.version}, négociables selon CA. À titre indicatif, vérifiées par un professionnel avant toute décision. Source structurée : <code>data/statuts.json</code>.</p>`;
+  }
   rows.push(['Catégorie', statut.categorie === 'individuel' ? 'Entreprise individuelle' : 'Société']);
   if (statut.regime_fiscal) rows.push(['Régime fiscal', statut.regime_fiscal]);
   if (statut.regime_fiscal_defaut) rows.push(['Régime fiscal par défaut', statut.regime_fiscal_defaut]);
@@ -678,6 +762,18 @@ function formatStatutFacts(statut) {
 // une seule source, pas de 3e copie manuelle comme dans pension-alimentaire-belgique).
 function formuleLinesFor(statut) {
   const lignes = [];
+  if (statut.categorie === 'portage_salarial') {
+    lignes.push('CA_facturé = TJM × jours travaillés (par mois)');
+    lignes.push('frais_gestion = CA_facturé × taux_frais_gestion (négociable selon CA, voir tableau comparatif)');
+    lignes.push('budget_salarial = CA_facturé − frais_gestion');
+    lignes.push('salaire_brut = budget_salarial ÷ (1 + taux_charges_patronales)  (dérivé, pas un input libre)');
+    lignes.push('réserve_financière = salaire_brut × 10%  (provisionnée, restituée en fin de mission — pas perdue)');
+    lignes.push('salaire_net_avant_impôt = salaire_brut − (salaire_brut × taux_charges_salariales)');
+    lignes.push('net_versé_immédiat = salaire_net_avant_impôt − réserve_financière  (= net avant impôt sur le revenu)');
+    lignes.push('impôt_revenu = net_versé_immédiat × TMI');
+    lignes.push('net_réel_en_poche = net_versé_immédiat − impôt_revenu');
+    return lignes;
+  }
   if (statut.regime_fiscal === 'micro-fiscal') {
     lignes.push('cotisations_sociales = CA × taux_cotisations (selon activité)');
     lignes.push('revenu_imposable = CA × (1 − abattement_forfaitaire)');
@@ -752,9 +848,15 @@ function sourcesForStatuts(statutIds) {
     }
     if (s.regime_social_gerant_majoritaire || s.regime_social_gerant) cles.add('gerant_sarl');
     if (s.regime_social_president === 'assimile_salarie') cles.add('president_sasu');
+    if (s.categorie === 'portage_salarial') {
+      cles.add('convention_collective_portage'); cles.add('reserve_financiere_portage'); cles.add('charges_patronales_portage');
+    }
   });
   const labels = {
     bareme_ir: 'Barème progressif de l\'impôt sur le revenu — service-public.fr',
+    convention_collective_portage: 'Convention collective du portage salarial (IDCC 3219) — code.travail.gouv.fr',
+    reserve_financiere_portage: 'Réserve financière en portage salarial — ABC Portage',
+    charges_patronales_portage: 'Charges patronales en portage salarial — ITG',
     urssaf_taux_micro: 'Taux de cotisations micro-entrepreneur — URSSAF',
     plafonds_ca_micro: 'Plafonds de chiffre d\'affaires micro-entrepreneur — impots.gouv.fr',
     abattement_forfaitaire: 'Abattement forfaitaire micro-fiscal — service-public.fr',
@@ -1195,6 +1297,124 @@ function renderSimulateur(cfg) {
   return pageShell({ title: cfg.titre_seo, desc: cfg.desc, canonical, jsonld, body });
 }
 
+// ── Widget simulateur portage salarial — sibling de simulateurWidget, pas une branche:
+// champs TJM×jours (pas CA), pas de remuneration/charges/dividendes, résultat avant IR pour
+// rester comparable aux 7 simulateurs concurrents (voir plan de build, section "hero avant
+// IR"), + tableau de comparaison inter-sociétés recalculé côté client à chaque changement de
+// TJM/jours. Zéro capture email — c'est tout le point du différenciateur. ──
+function simulateurWidgetPortage(cfg) {
+  const statut = STATUTS_DATA.statuts['portage-salarial'];
+  const PAGE = {
+    tjm_defaut: cfg.tjm_defaut,
+    jours_defaut: cfg.jours_defaut,
+    fraisGestion_defaut: statut.taux_frais_gestion_defaut
+  };
+
+  const comparaisonRows = (statut.comparaison_entreprises_portage || []).map((e, i) => {
+    const slug = e.nom.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    return `<tr>
+      <td>${esc(e.nom)}</td>
+      <td class="hl">${pct(e.taux_gestion)}</td>
+      <td id="cmp-net-${slug}">—</td>
+      <td style="font-size:.82rem;color:var(--muted);">${esc(e.taux_gestion_note || '')}<br>Barème public au ${esc(e.date_maj)}${e.negociable_selon_ca ? ', négociable selon CA' : ''} — <a href="${esc(e.source_url)}" rel="nofollow noopener" target="_blank">source</a></td>
+    </tr>`;
+  }).join('');
+
+  return `
+  <div class="tool-card">
+    <div class="form-grid">
+      <div class="form-group"><label>TJM — Taux journalier moyen (€)</label><input type="number" id="tjm" min="0" step="10" value="${cfg.tjm_defaut}"></div>
+      <div class="form-group"><label>Jours travaillés (par mois)</label><input type="number" id="jours" min="0" max="25" step="1" value="${cfg.jours_defaut}"></div>
+      <div class="form-group"><label>Taux de gestion (votre société, %)</label><input type="number" id="fraisGestion" min="0" max="100" step="0.1" value="${(statut.taux_frais_gestion_defaut * 100).toFixed(1)}"></div>
+      <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi">
+        <option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option>
+      </select></div>
+    </div>
+    <button class="calc-btn" onclick="calculate()">Calculer mon salaire net →</button>
+    <div class="result" id="result">
+      <div class="result-hero">
+        <div class="rl">Net mensuel avant impôt sur le revenu</div>
+        <div class="ra" id="r-net"></div>
+      </div>
+      <div class="result-grid">
+        <div class="r-stat"><div class="sv" id="r-cotis"></div><div class="sl">Cotisations patronales + salariales</div></div>
+        <div class="r-stat"><div class="sv" id="r-reserve"></div><div class="sl">Réserve financière (récupérable)</div></div>
+        <div class="r-stat"><div class="sv" id="r-total-reserve"></div><div class="sl">Total mensuel réserve incluse</div></div>
+        <div class="r-stat"><div class="sv" id="r-impot"></div><div class="sl">Impôt sur le revenu estimé (TMI)</div></div>
+        <div class="r-stat"><div class="sv" id="r-net-apres-ir"></div><div class="sl">Net après impôt sur le revenu</div></div>
+        <div class="r-stat"><div class="sv" id="r-taux"></div><div class="sl">Taux de charges global</div></div>
+      </div>
+      <p id="r-avertissement-brut-bas" style="display:none;font-size:.85rem;color:var(--muted);margin-top:1rem;">⚠️ Estimation valable au-delà d'un salaire brut mensuel d'environ 2 000€ — en dessous, la réduction générale de cotisations patronales change le calcul réel. Contactez une société de portage pour un devis précis.</p>
+      <h3 class="sub" style="margin-top:1.5rem;">Comparaison des sociétés de portage (même TJM, même nombre de jours)</h3>
+      <div style="overflow-x:auto;">
+        <table class="data-table"><thead><tr><th>Société</th><th>Taux de gestion</th><th>Net mensuel avant IR</th><th>Détail</th></tr></thead>
+        <tbody>${comparaisonRows}</tbody></table>
+      </div>
+      <p style="font-size:.82rem;color:var(--muted);">Taux de gestion publics relevés, à titre indicatif — toujours négociables selon votre chiffre d'affaires prévisionnel. Aucun email ni téléphone requis pour voir ce résultat.</p>
+    </div>
+  </div>
+  <script>
+  const PAGE = ${JSON.stringify(PAGE)};
+  ${CALC_ENGINE_CLIENT_SOURCE}
+  const STATUTS_DATA = ${JSON.stringify(STATUTS_DATA)};
+  function eur(n){ return Math.round(n).toLocaleString('fr-FR')+' €'; }
+  function pct(n){ return (n*100).toFixed(1).replace('.',',')+' %'; }
+  function calculate(){
+    const tjm = parseFloat(document.getElementById('tjm').value)||0;
+    const jours = parseFloat(document.getElementById('jours').value)||0;
+    const fraisGestionPct = parseFloat(document.getElementById('fraisGestion').value)||0;
+    const tmi = parseFloat(document.getElementById('tmi').value);
+    const statut = STATUTS_DATA.statuts['portage-salarial'];
+    const params = { tjm, jours, taux_frais_gestion_override: fraisGestionPct/100, tmi };
+    const res = calculerPortageSalarial(statut, params);
+    document.getElementById('r-net').textContent = eur(res.net_verse_immediat);
+    document.getElementById('r-cotis').textContent = eur(res.cotisations_patronales + res.cotisations_salariales);
+    document.getElementById('r-reserve').textContent = eur(res.reserve_financiere);
+    document.getElementById('r-total-reserve').textContent = eur(res.net_total_reserve_incluse);
+    document.getElementById('r-impot').textContent = eur(res.impot_revenu);
+    document.getElementById('r-net-apres-ir').textContent = eur(res.net_reel_en_poche);
+    document.getElementById('r-taux').textContent = pct(res.taux_charges_global);
+    document.getElementById('r-avertissement-brut-bas').style.display = res.salaire_brut < 2000 ? 'block' : 'none';
+    (statut.comparaison_entreprises_portage||[]).forEach(function(e){
+      const slug = e.nom.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+      const cell = document.getElementById('cmp-net-'+slug);
+      if (!cell) return;
+      const resCmp = calculerPortageSalarial(statut, { tjm, jours, taux_frais_gestion_override: e.taux_gestion, tmi });
+      cell.textContent = eur(resCmp.net_verse_immediat);
+    });
+    document.getElementById('result').style.display='block';
+    document.getElementById('result').scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+  function toggleFaq(b){ b.classList.toggle('open'); b.nextElementSibling.classList.toggle('open'); }
+  window.addEventListener('DOMContentLoaded', calculate);
+  <\/script>`;
+}
+
+function renderSimulateurPortage(cfg) {
+  const statut = STATUTS_DATA.statuts[cfg.statut];
+  const canonical = `${SITE_URL}/${cfg.slug}/`;
+  const jsonld = [webAppJsonLd(cfg.h1, canonical), faqJsonLd(cfg.faq)];
+  const body = `
+<header><div class="container">
+  <h1>${esc(cfg.h1)}</h1>
+  <p>${esc(cfg.desc)}</p>
+</div></header>
+<div class="container tool-wrapper">
+  ${simulateurWidgetPortage(cfg)}
+</div>
+<div class="container content">
+  <a class="back-link" href="/">← Tous les statuts</a>
+  ${formatStatutFacts(statut)}
+  ${extraNoteBlock(cfg)}
+  ${avantagesInconvenientsBlock(cfg)}
+  ${formulesEtSourcesBlock([cfg.statut])}
+  ${faqBlock(cfg.faq)}
+  ${eeatBlock()}
+  ${linkGridBlock(cfg.liens_internes)}
+</div>`;
+  return pageShell({ title: cfg.titre_seo, desc: cfg.desc, canonical, jsonld, body });
+}
+
 // ── Widget comparateur — deux colonnes de résultats + seuil de bascule (contenu
 // différenciant calculé, pas thin content — voir avis Gemini dans le plan). ──
 function comparateurWidget(cfg) {
@@ -1505,6 +1725,7 @@ function emit(relDir, html) {
 
 const renderers = {
   simulateur: renderSimulateur,
+  simulateur_portage: renderSimulateurPortage,
   comparateur: renderComparateur,
   charges: renderCharges,
   migration: renderMigration,

@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Auto-entrepreneur ou SARL : simulateur comparatif 2026</title>
-<meta name="description" content="Comparez charges, revenu net et responsabilité entre auto-entrepreneur et SARL selon votre chiffre d'affaires — pertinent dès que vous vous associez.">
+<title>Portage salarial ou SASU 2026 : comparateur de revenu net</title>
+<meta name="description" content="Comparez le revenu net entre portage salarial (salariat via une société tierce, sans création d'entreprise) et SASU (société avec IS et flat tax sur dividendes) à chiffre d'affaires identique.">
 
-<link rel="canonical" href="https://calculateur-statuts-juridiques.fr/comparateur/auto-entrepreneur-vs-sarl/">
+<link rel="canonical" href="https://calculateur-statuts-juridiques.fr/comparateur/portage-salarial-vs-sasu/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.png" type="image/png">
-<meta property="og:title" content="Auto-entrepreneur ou SARL : simulateur comparatif 2026">
-<meta property="og:description" content="Comparez charges, revenu net et responsabilité entre auto-entrepreneur et SARL selon votre chiffre d'affaires — pertinent dès que vous vous associez.">
+<meta property="og:title" content="Portage salarial ou SASU 2026 : comparateur de revenu net">
+<meta property="og:description" content="Comparez le revenu net entre portage salarial (salariat via une société tierce, sans création d'entreprise) et SASU (société avec IS et flat tax sur dividendes) à chiffre d'affaires identique.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://calculateur-statuts-juridiques.fr/comparateur/auto-entrepreneur-vs-sarl/">
+<meta property="og:url" content="https://calculateur-statuts-juridiques.fr/comparateur/portage-salarial-vs-sasu/">
 <meta property="og:image" content="https://calculateur-statuts-juridiques.fr/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,8 +24,8 @@
  "@graph": [
   {
    "@type": "WebApplication",
-   "name": "Auto-entrepreneur ou SARL : quel statut choisir ?",
-   "url": "https://calculateur-statuts-juridiques.fr/comparateur/auto-entrepreneur-vs-sarl/",
+   "name": "Portage salarial ou SASU : lequel rapporte le plus ?",
+   "url": "https://calculateur-statuts-juridiques.fr/comparateur/portage-salarial-vs-sasu/",
    "applicationCategory": "FinanceApplication",
    "operatingSystem": "Any",
    "inLanguage": "fr",
@@ -40,18 +40,18 @@
    "mainEntity": [
     {
      "@type": "Question",
-     "name": "Pourquoi comparer auto-entrepreneur et SARL alors que l'un est individuel ?",
+     "name": "Le portage salarial a-t-il un avantage que la SASU n'a pas ?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "La question se pose typiquement quand un auto-entrepreneur s'associe avec quelqu'un d'autre — le régime micro ne permet pas plusieurs associés, la SARL devient alors l'alternative naturelle (ou la SAS, voir le comparateur SAS vs SARL)."
+      "text": "Oui : l'assurance chômage. Le président de SASU, bien qu'assimilé salarié, n'y a pas droit sauf cumul avec un contrat de travail distinct — le salarié porté si, comme tout salarié classique."
      }
     },
     {
      "@type": "Question",
-     "name": "À partir de quel CA la SARL devient-elle plus intéressante ?",
+     "name": "Pourquoi créer une SASU si le portage salarial est plus simple administrativement ?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Cela dépend fortement du régime social retenu pour le ou les gérants (majoritaire TNS ou minoritaire assimilé salarié) — voir le seuil de bascule calculé ci-dessus pour vos hypothèses."
+      "text": "La SASU permet d'arbitrer rémunération/dividendes (les dividendes évitent les charges sociales, voir le simulateur d'arbitrage SASU) et n'a pas de frais de gestion prélevés en amont — à CA élevé et gérable en discipline de rémunération, elle dégage souvent un revenu net supérieur au portage."
      }
     }
    ]
@@ -269,22 +269,18 @@ footer a { color:#dbe8f2; }
 <body>
 
 <header><div class="container">
-  <h1>Auto-entrepreneur ou SARL : quel statut choisir ?</h1>
-  <p>Comparez charges, revenu net et responsabilité entre auto-entrepreneur et SARL selon votre chiffre d'affaires — pertinent dès que vous vous associez.</p>
+  <h1>Portage salarial ou SASU : lequel rapporte le plus ?</h1>
+  <p>Comparez le revenu net entre portage salarial (salariat via une société tierce, sans création d'entreprise) et SASU (société avec IS et flat tax sur dividendes) à chiffre d'affaires identique.</p>
 </div></header>
 <div class="container tool-wrapper">
   
   <div class="tool-card">
     <div class="form-grid">
-      <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca" min="0" step="1000" value="70000"></div>
+      <div class="form-group"><label>Chiffre d'affaires annuel (€)</label><input type="number" id="ca" min="0" step="1000" value="90000"></div>
       <div class="form-group"><label>Taux marginal d'imposition (TMI)</label><select id="tmi">
         <option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option>
       </select></div>
-      <div class="form-group full"><label>Type d'activité (statut micro)</label><select id="typeActivite">
-        <option value="vente_marchandises">Vente de marchandises</option>
-        <option value="prestations_services_bic">Prestations de services (BIC)</option>
-        <option value="prestations_services_bnc" selected>Prestations de services (BNC)</option>
-      </select></div>
+      
     </div>
     <button class="calc-btn" onclick="calculate()">Comparer les deux statuts →</button>
     <div class="result" id="result">
@@ -294,13 +290,13 @@ footer a { color:#dbe8f2; }
         <div class="rs" id="r-seuil-sub"></div>
       </div>
       <div class="result-grid" style="grid-template-columns:1fr 1fr;">
-        <div class="r-stat"><div class="sv" id="r-net-a"></div><div class="sl">Revenu net — Auto-entrepreneur</div></div>
-        <div class="r-stat"><div class="sv" id="r-net-b"></div><div class="sl">Revenu net — SARL</div></div>
+        <div class="r-stat"><div class="sv" id="r-net-a"></div><div class="sl">Revenu net — Portage salarial</div></div>
+        <div class="r-stat"><div class="sv" id="r-net-b"></div><div class="sl">Revenu net — SASU</div></div>
       </div>
     </div>
   </div>
   <script>
-  const PAGE = {"idA":"auto-entrepreneur","idB":"sarl","ca_defaut":70000,"params_defaut":{"type_activite":"prestations_services_bnc","charges_exploitation":10000,"remuneration_gerant":28000,"dividendes_verses":15000,"tmi":0.3},"nomA":"Auto-entrepreneur","nomB":"SARL"};
+  const PAGE = {"idA":"portage-salarial","idB":"sasu","ca_defaut":90000,"params_defaut":{"remuneration_gerant":45000,"charges_exploitation":9000,"dividendes_verses":15000,"tmi":0.3},"nomA":"Portage salarial","nomB":"SASU"};
   /*
  * Moteur de calcul pur — aucune ref DOM, aucun accès fichier.
  * Utilisé (a) côté build par generate-pages.js via require(), (b) inliné
@@ -636,15 +632,15 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
 <div class="container content">
   <a class="back-link" href="/">← Tous les statuts</a>
   <h2 class="st">Seuil de bascule</h2>
-  <p>À hypothèses constantes (rémunération, charges et dividendes fixés comme ci-dessus), le statut le plus avantageux bascule autour d'un chiffre d'affaires de <strong>19 739 €</strong>. Ajustez les paramètres du simulateur pour votre situation réelle.</p>
+  <p>À hypothèses constantes (rémunération, charges et dividendes fixés comme ci-dessus), le statut le plus avantageux bascule autour d'un chiffre d'affaires de <strong>110 486 €</strong>. Ajustez les paramètres du simulateur pour votre situation réelle.</p>
   
-  <h2 class="st">Chiffres clés — Auto-entrepreneur (micro-entreprise)</h2>
-  <table class="data-table"><thead><tr><th>Donnée</th><th>Valeur</th></tr></thead><tbody>
-    <tr><td>Catégorie</td><td class="hl">Entreprise individuelle</td></tr><tr><td>Régime fiscal</td><td class="hl">micro-fiscal</td></tr><tr><td>Régime social</td><td class="hl">micro-social</td></tr><tr><td>Plafond CA — vente marchandises</td><td class="hl">203 100 €</td></tr><tr><td>Plafond CA — prestations services bic</td><td class="hl">83 600 €</td></tr><tr><td>Plafond CA — prestations services bnc</td><td class="hl">83 600 €</td></tr><tr><td>Cotisations sociales — vente marchandises</td><td class="hl">12,3 %</td></tr><tr><td>Cotisations sociales — prestations services bic</td><td class="hl">21,2 %</td></tr><tr><td>Cotisations sociales — prestations services bnc</td><td class="hl">25,6 %</td></tr><tr><td>Responsabilité</td><td class="hl">Patrimoine personnel protégé par défaut</td></tr><tr><td>⚠️ À noter</td><td class="hl">À mentionner explicitement dans le texte visible (pas seulement dans les données): les banques exigent quasi-systématiquement la renonciation à cette protection pour accorder un crédit professionnel — cas d'usage le plus fréquent en pratique.</td></tr><tr><td>Coût de création moyen</td><td class="hl">0 €</td></tr>
-  </tbody></table>
-  <p style="font-size:.88rem;color:var(--muted);">Données 2026-08 — à titre indicatif, vérifiées par un professionnel avant toute décision. Source structurée : <code>data/statuts.json</code>.</p>
+    <h2 class="st">Chiffres clés — Portage salarial</h2>
+    <table class="data-table"><thead><tr><th>Donnée</th><th>Valeur</th></tr></thead><tbody>
+      <tr><td>Statut</td><td class="hl">Salarié en portage (CDD/CDI de mission)</td></tr><tr><td>Taux de frais de gestion (défaut)</td><td class="hl">5,0 %</td></tr><tr><td>Charges patronales (estimées)</td><td class="hl">42,0 %</td></tr><tr><td>Charges salariales (estimées)</td><td class="hl">22,0 %</td></tr><tr><td>Réserve financière obligatoire</td><td class="hl">10,0 % du salaire de base (récupérable)</td></tr>
+    </tbody></table>
+    <p style="font-size:.88rem;color:var(--muted);">Données 2026-08 — taux publics relevés le 2026-08-20, négociables selon CA. À titre indicatif, vérifiées par un professionnel avant toute décision. Source structurée : <code>data/statuts.json</code>.</p>
   
-  <h2 class="st">Chiffres clés — Société à Responsabilité Limitée</h2>
+  <h2 class="st">Chiffres clés — Société par Actions Simplifiée Unipersonnelle</h2>
   <table class="data-table"><thead><tr><th>Donnée</th><th>Valeur</th></tr></thead><tbody>
     <tr><td>Catégorie</td><td class="hl">Société</td></tr><tr><td>Régime fiscal par défaut</td><td class="hl">IS</td></tr><tr><td>Responsabilité</td><td class="hl">Responsabilité limitée aux apports</td></tr><tr><td>Coût de création moyen</td><td class="hl">250 €</td></tr>
   </tbody></table>
@@ -652,19 +648,19 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
   
   <h2 class="st">Formules de calcul &amp; sources officielles</h2>
   <div class="method">
-    <h3 class="sub">Auto-entrepreneur</h3>
-    <div class="code">cotisations_sociales = CA × taux_cotisations (selon activité)<br>revenu_imposable = CA × (1 − abattement_forfaitaire)<br>impôt = revenu_imposable × TMI  (ou CA × taux_versement_libératoire si option VLF)<br>revenu_net = CA − cotisations_sociales − impôt</div><h3 class="sub">SARL</h3>
+    <h3 class="sub">Portage salarial</h3>
+    <div class="code">CA_facturé = TJM × jours travaillés (par mois)<br>frais_gestion = CA_facturé × taux_frais_gestion (négociable selon CA, voir tableau comparatif)<br>budget_salarial = CA_facturé − frais_gestion<br>salaire_brut = budget_salarial ÷ (1 + taux_charges_patronales)  (dérivé, pas un input libre)<br>réserve_financière = salaire_brut × 10%  (provisionnée, restituée en fin de mission — pas perdue)<br>salaire_net_avant_impôt = salaire_brut − (salaire_brut × taux_charges_salariales)<br>net_versé_immédiat = salaire_net_avant_impôt − réserve_financière  (= net avant impôt sur le revenu)<br>impôt_revenu = net_versé_immédiat × TMI<br>net_réel_en_poche = net_versé_immédiat − impôt_revenu</div><h3 class="sub">SASU</h3>
     <div class="code">rémunération_dirigeant saisie = BRUT annuel (avant charges)<br>cotisations_patronales = rémunération_dirigeant × ~42.5% (coût entreprise, s'ajoute au brut)<br>cotisations_salariales = rémunération_dirigeant × ~21% (déduite du brut pour obtenir le net)<br>bénéfice_avant_IS = CA − charges_exploitation − rémunération_dirigeant − cotisations_patronales<br>IS = bénéfice×15% (jusqu'à 42 500€) + (bénéfice−42 500€)×25% au-delà<br>rémunération_nette = rémunération_dirigeant − cotisations_salariales<br>dividendes_nets = dividendes_versés × (1 − 31,4%)  (flat tax / PFU)<br>revenu_net_foyer = rémunération_nette − impôt(TMI) + dividendes_nets</div>
     <p style="font-size:.88rem;color:var(--muted);margin:14px 0 6px;">Formules appliquées de façon déterministe à partir de <code>data/statuts.json</code> (2026-08) — approximations pédagogiques, pas un calcul officiel URSSAF/impots.gouv.fr au barème exact par tranche.</p>
     <h3 class="sub">Sources officielles</h3>
     <ul style="padding-left:18px;font-size:.98rem;">
-      <li><a href="https://www.service-public.gouv.fr/particuliers/vosdroits/F1419" target="_blank" rel="noopener nofollow">Barème progressif de l'impôt sur le revenu — service-public.fr</a></li><li><a href="https://www.urssaf.fr/accueil/actualites/taux-cotisations-autoentrepeneur.html" target="_blank" rel="noopener nofollow">Taux de cotisations micro-entrepreneur — URSSAF</a></li><li><a href="https://www.impots.gouv.fr/professionnel/questions/pour-rester-micro-entrepreneur-quel-montant-de-chiffre-daffaires-ou-de" target="_blank" rel="noopener nofollow">Plafonds de chiffre d'affaires micro-entrepreneur — impots.gouv.fr</a></li><li><a href="https://entreprendre.service-public.gouv.fr/vosdroits/F23267" target="_blank" rel="noopener nofollow">Abattement forfaitaire micro-fiscal — service-public.fr</a></li><li><a href="https://www.impots.gouv.fr/professionnel/questions/en-tant-que-micro-entrepreneur-sous-quelles-conditions-puis-je-opter-pour-l" target="_blank" rel="noopener nofollow">Versement libératoire de l'impôt sur le revenu — impots.gouv.fr</a></li><li><a href="https://entreprendre.service-public.gouv.fr/vosdroits/F21746" target="_blank" rel="noopener nofollow">Franchise en base de TVA — service-public.fr</a></li><li><a href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000045167536" target="_blank" rel="noopener nofollow">Loi n° 2022-172 du 14 février 2022 — Légifrance</a></li><li><a href="https://entreprendre.service-public.gouv.fr/vosdroits/F36354" target="_blank" rel="noopener nofollow">Protection du patrimoine personnel de l'entrepreneur individuel — service-public.fr</a></li><li><a href="https://bofip.impots.gouv.fr/bofip/2065-PGP.html/identifiant=BOI-IS-LIQ-20-20-20230621" target="_blank" rel="noopener nofollow">Taux de l'impôt sur les sociétés — BOFiP</a></li><li><a href="https://bofip.impots.gouv.fr/bofip/2062-PGP.html/identifiant=BOI-IS-LIQ-20-10-20230621" target="_blank" rel="noopener nofollow">Conditions du taux réduit d'IS (15%) — BOFiP</a></li><li><a href="https://www.impots.gouv.fr/international-particulier/mes-dividendes" target="_blank" rel="noopener nofollow">Prélèvement forfaitaire unique (PFU) sur dividendes — impots.gouv.fr</a></li><li><a href="https://entreprendre.service-public.gouv.fr/vosdroits/F36235" target="_blank" rel="noopener nofollow">Régime social du gérant de SARL — service-public.fr</a></li>
+      <li><a href="https://www.service-public.gouv.fr/particuliers/vosdroits/F1419" target="_blank" rel="noopener nofollow">Barème progressif de l'impôt sur le revenu — service-public.fr</a></li><li><a href="https://code.travail.gouv.fr/convention-collective/3219-branche-des-salaries-en-portage-salarial" target="_blank" rel="noopener nofollow">Convention collective du portage salarial (IDCC 3219) — code.travail.gouv.fr</a></li><li><a href="https://www.abcportage.fr/portage-salarial/guide-du-portage/reglementation/la-reserve-financiere-en-portage-salarial/" target="_blank" rel="noopener nofollow">Réserve financière en portage salarial — ABC Portage</a></li><li><a href="https://www.itg.fr/portage-salarial/guide/questions-reponses/charges-patronales-en-portage" target="_blank" rel="noopener nofollow">Charges patronales en portage salarial — ITG</a></li><li><a href="https://bofip.impots.gouv.fr/bofip/2065-PGP.html/identifiant=BOI-IS-LIQ-20-20-20230621" target="_blank" rel="noopener nofollow">Taux de l'impôt sur les sociétés — BOFiP</a></li><li><a href="https://bofip.impots.gouv.fr/bofip/2062-PGP.html/identifiant=BOI-IS-LIQ-20-10-20230621" target="_blank" rel="noopener nofollow">Conditions du taux réduit d'IS (15%) — BOFiP</a></li><li><a href="https://www.impots.gouv.fr/international-particulier/mes-dividendes" target="_blank" rel="noopener nofollow">Prélèvement forfaitaire unique (PFU) sur dividendes — impots.gouv.fr</a></li><li><a href="https://entreprendre.service-public.gouv.fr/vosdroits/F36240" target="_blank" rel="noopener nofollow">Régime social assimilé salarié du président (SAS/SASU) — service-public.fr</a></li>
     </ul>
   </div>
   
   <h2 class="st">Questions fréquentes</h2>
-  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Pourquoi comparer auto-entrepreneur et SARL alors que l'un est individuel ?</button><div class="faq-a">La question se pose typiquement quand un auto-entrepreneur s'associe avec quelqu'un d'autre — le régime micro ne permet pas plusieurs associés, la SARL devient alors l'alternative naturelle (ou la SAS, voir le comparateur SAS vs SARL).</div></div>
-  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">À partir de quel CA la SARL devient-elle plus intéressante ?</button><div class="faq-a">Cela dépend fortement du régime social retenu pour le ou les gérants (majoritaire TNS ou minoritaire assimilé salarié) — voir le seuil de bascule calculé ci-dessus pour vos hypothèses.</div></div>
+  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Le portage salarial a-t-il un avantage que la SASU n'a pas ?</button><div class="faq-a">Oui : l'assurance chômage. Le président de SASU, bien qu'assimilé salarié, n'y a pas droit sauf cumul avec un contrat de travail distinct — le salarié porté si, comme tout salarié classique.</div></div>
+  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Pourquoi créer une SASU si le portage salarial est plus simple administrativement ?</button><div class="faq-a">La SASU permet d'arbitrer rémunération/dividendes (les dividendes évitent les charges sociales, voir le simulateur d'arbitrage SASU) et n'a pas de frais de gestion prélevés en amont — à CA élevé et gérable en discipline de rémunération, elle dégage souvent un revenu net supérieur au portage.</div></div>
   
   <div class="eeat-section">
     <h2 class="eeat-title">
@@ -719,7 +715,7 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
   </div>
   
   <div class="link-grid">
-    <a class="link-card" href="/charges/auto-entrepreneur/">auto entrepreneur</a><a class="link-card" href="/charges/sarl/">sarl</a><a class="link-card" href="/comparateur/sas-vs-sarl/">sas vs sarl</a><a class="link-card" href="/quel-statut-choisir//">quel statut choisir</a>
+    <a class="link-card" href="/simulateur/portage-salarial/">portage salarial</a><a class="link-card" href="/simulateur/sasu/">sasu</a><a class="link-card" href="/arbitrage/sasu-remuneration-vs-dividendes/">sasu remuneration vs dividendes</a><a class="link-card" href="/quel-statut-choisir//">quel statut choisir</a>
   </div>
 </div>
 <footer><div class="container">

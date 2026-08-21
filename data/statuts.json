@@ -14,7 +14,10 @@
     "gerant_sarl": "https://entreprendre.service-public.gouv.fr/vosdroits/F36235",
     "president_sasu": "https://entreprendre.service-public.gouv.fr/vosdroits/F36240",
     "franchise_tva": "https://entreprendre.service-public.gouv.fr/vosdroits/F21746",
-    "bareme_ir": "https://www.service-public.gouv.fr/particuliers/vosdroits/F1419"
+    "bareme_ir": "https://www.service-public.gouv.fr/particuliers/vosdroits/F1419",
+    "convention_collective_portage": "https://code.travail.gouv.fr/convention-collective/3219-branche-des-salaries-en-portage-salarial",
+    "reserve_financiere_portage": "https://www.abcportage.fr/portage-salarial/guide-du-portage/reglementation/la-reserve-financiere-en-portage-salarial/",
+    "charges_patronales_portage": "https://www.itg.fr/portage-salarial/guide/questions-reponses/charges-patronales-en-portage"
   },
   "constantes_communes": {
     "flat_tax_dividendes": 0.314,
@@ -154,6 +157,30 @@
       "cout_creation_moyen": 250,
       "comptabilite_obligatoire": "reelle_complete",
       "capital_social_minimum": 1
+    },
+    "portage-salarial": {
+      "nom": "Portage salarial",
+      "nom_court": "Portage salarial",
+      "categorie": "portage_salarial",
+      "taux_frais_gestion_defaut": 0.05,
+      "taux_frais_gestion_note": "Médiane des taux publics de 7 sociétés de portage relevés le 2026-08-20 (ITG ~8% dégressif, ABC Portage à partir de 5%, Success Portage 5-7%, Cadres en Mission jusqu'à 7% dégressif à 5%, Innoven Portage 4% fixe, Coq Portage 5% plafonné 700€/mois, Portad 4% fixe) — voir comparaison_entreprises_portage pour le détail par société. Taux d'appel, négociable selon CA.",
+      "taux_charges_patronales_portage": 0.42,
+      "taux_charges_salariales_portage": 0.22,
+      "taux_reserve_financiere_defaut": 0.10,
+      "taux_reserve_financiere_note": "10% du salaire de base perçu sur la dernière mission (CDI), imposé par la convention collective du portage salarial (IDCC 3219) — provisionné à chaque bulletin de paie, restitué en fin de contrat ou en cas de difficulté, pas perdu.",
+      "jours_facturables_an_defaut": 216,
+      "jours_facturables_an_note": "Approximation MVP (~18 jours/mois × 12) utilisée uniquement pour convertir un CA annuel en TJM équivalent dans les pages comparateur/migration — n'est jamais utilisée par le simulateur dédié, qui prend TJM et jours/mois en saisie directe.",
+      "cout_creation_moyen": 0,
+      "comptabilite_obligatoire": "geree_par_la_societe_de_portage",
+      "comparaison_entreprises_portage": [
+        { "nom": "ITG", "taux_gestion": 0.08, "taux_gestion_note": "Dégressif 6-10% selon CA cumulé (8% dès 60k€, 6% au-delà de 120k€)", "source_url": "https://www.itg.fr/portage-salarial/guide/comment-optimiser-salaire-portage-salarial/frais-de-gestion", "date_maj": "2026-08-20", "negociable_selon_ca": true },
+        { "nom": "ABC Portage", "taux_gestion": 0.05, "taux_gestion_note": "À partir de 5%, variable selon activité", "source_url": "https://www.abcportage.fr/portage-salarial/simulation-revenus/guide/frais-gestion-portage-salarial/", "date_maj": "2026-08-20", "negociable_selon_ca": true },
+        { "nom": "Success Portage", "taux_gestion": 0.06, "taux_gestion_note": "3 formules, 5 à 7% selon niveau d'accompagnement", "source_url": "https://successportage.fr/salaire/", "date_maj": "2026-08-20", "negociable_selon_ca": true },
+        { "nom": "Cadres en Mission", "taux_gestion": 0.07, "taux_gestion_note": "Maximum 7%, dégressif jusqu'à 5% selon CA cumulé (jamais remis à zéro)", "source_url": "https://www.cadresenmission.com/portage-salarial/salarie-porte/remuneration/frais-de-gestion/", "date_maj": "2026-08-20", "negociable_selon_ca": true },
+        { "nom": "Innoven Portage", "taux_gestion": 0.04, "taux_gestion_note": "Taux fixe annoncé, sans palier dégressif", "source_url": "https://www.innovenportage.fr/", "date_maj": "2026-08-20", "negociable_selon_ca": false },
+        { "nom": "Coq Portage", "taux_gestion": 0.05, "taux_gestion_note": "5% plafonné à 700€/mois (+1% avance optionnelle si pas de paiement comptant client)", "source_url": "https://www.coqportage.fr/portage-salarial/calcul-tjm/", "date_maj": "2026-08-20", "negociable_selon_ca": false },
+        { "nom": "Portad", "taux_gestion": 0.04, "taux_gestion_note": "Commission fixe annoncée, incluant l'avance de trésorerie", "source_url": "https://portad.fr/tarif/", "date_maj": "2026-08-20", "negociable_selon_ca": false }
+      ]
     }
   }
 }

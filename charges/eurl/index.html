@@ -301,6 +301,13 @@ footer a { color:#dbe8f2; }
  * (voir plan de build, étape 2): calcul de l'IR simplifié via TMI marginal plutôt que
  * barème progressif complet par tranche; cotisations société traitées en taux moyen
  * plutôt qu'en barème réel (PASS, tranches TNS, etc.).
+ *
+ * Portage salarial (calculerPortageSalarial): taux_charges_patronales_portage traité
+ * comme constante (~42%) — approximation valable pour TJM 400-700€ (largement au-dessus
+ * du seuil de réduction générale ex-Fillon ~1,6 SMIC). Sous ce seuil de brut, la réduction
+ * générale de cotisations patronales change le calcul réel — voir avertissement affiché
+ * dans le widget (generate-pages.js) en dessous d'un salaire brut mensuel bas. Pas de
+ * barème par tranches (PASS, AGIRC-ARRCO) implémenté en v1.
  */
 
 function appliquerTmi(revenuImposable, tmi) {
@@ -423,11 +430,89 @@ function calculerSociete(statut, params, constantes) {
   };
 }
 
+// Portage salarial n'est pas un statut individuel/société : pas de forme sociale, pas de
+// capital, pas d'arbitrage rémunération/dividendes. Toute la marge de la société de portage
+// est le frais_gestion, prélevé en amont -- le salaire_brut est DÉRIVÉ (reverse-solve), pas
+// un input libre comme remuneration_gerant en société. Voir plan de build pour le détail de
+// l'ordre des opérations et pourquoi il ne faut pas réutiliser calculerSociete() ici.
+function calculerPortageSalarial(statut, params) {
+  let { tjm, jours, taux_frais_gestion_override, tmi = 0.30, ca } = params;
+  if (tjm == null && ca != null) {
+    // Adaptation pour réutilisation par comparateur/migration, qui raisonnent en CA annuel
+    // (pas en TJM×jours) -- convertit le CA annuel en TJM équivalent sur une base standard
+    // de jours facturables/AN (pas /mois: jours ici doit rester la base ANNUELLE complète
+    // pour que ca_facture = tjm*jours retombe exactement sur le CA annuel d'entrée, sinon
+    // tous les montants dérivés seraient mensuels alors que les autres statuts raisonnent en
+    // annuel -- silencieusement 12x trop bas). Le simulateur dédié (TJM/jours saisis
+    // directement, jours = jours/MOIS) n'emprunte jamais cette branche.
+    const joursFacturablesAn = statut.jours_facturables_an_defaut || 216;
+    jours = joursFacturablesAn;
+    tjm = ca / joursFacturablesAn;
+  }
+  tjm = tjm || 0;
+  jours = jours || 0;
+
+  const ca_facture = tjm * jours;
+
+  const taux_frais_gestion = taux_frais_gestion_override ?? statut.taux_frais_gestion_defaut ?? 0.05;
+  const frais_gestion = ca_facture * taux_frais_gestion;
+
+  const budget_salarial = ca_facture - frais_gestion;
+
+  const taux_patronales = statut.taux_charges_patronales_portage || 0.42;
+  // DIVISER pour isoler le brut à partir du budget total (brut + patronales) -- ne pas
+  // multiplier budget_salarial par taux_patronales, ce serait appliquer le taux à la
+  // mauvaise base (même piège que le warning ci-dessus sur calculerSociete).
+  const salaire_brut = budget_salarial / (1 + taux_patronales);
+  const cotisations_patronales = budget_salarial - salaire_brut;
+
+  const taux_reserve = statut.taux_reserve_financiere_defaut || 0.10;
+  const reserve_financiere = salaire_brut * taux_reserve; // provisionnée, PAS perdue -- restituable en fin de mission
+
+  const taux_salariales = statut.taux_charges_salariales_portage || 0.22;
+  const cotisations_salariales = salaire_brut * taux_salariales;
+  const salaire_net_avant_impot = salaire_brut - cotisations_salariales;
+
+  // Net avant impôt sur le revenu -- c'est ce chiffre qui va dans le hero du widget, pour
+  // rester comparable terme à terme aux simulateurs concurrents (qui n'intègrent pas la
+  // situation fiscale personnelle de l'utilisateur). Voir plan de build, section "hero avant IR".
+  const net_verse_immediat = salaire_net_avant_impot - reserve_financiere;
+
+  const impot_revenu = appliquerTmi(net_verse_immediat, tmi);
+  const net_reel_en_poche = net_verse_immediat - impot_revenu;
+
+  // Deux taux distincts, volontairement séparés (même logique que le hero avant IR) : les
+  // charges de portage (gestion+patronales+salariales+réserve) sont structurelles et
+  // comparables entre sociétés, l'IR dépend de la situation fiscale personnelle -- les
+  // mélanger dans un seul taux rendrait "taux_charges_global" faussement élevé et
+  // incohérent avec les chiffres "40-60% de net" publiés par les sociétés de portage
+  // elles-mêmes (qui n'intègrent jamais l'IR personnel).
+  const taux_charges_global = ca_facture > 0 ? 1 - (net_verse_immediat / ca_facture) : 0; // avant IR
+  const taux_prelevement_global = ca_facture > 0 ? 1 - (net_reel_en_poche / ca_facture) : 0; // après IR, cohérent avec les autres statuts
+
+  return {
+    ca_facture,
+    frais_gestion,
+    salaire_brut,
+    cotisations_patronales,
+    cotisations_salariales,
+    reserve_financiere,
+    salaire_net_avant_impot,
+    net_verse_immediat,
+    impot_revenu,
+    net_reel_en_poche,
+    taux_charges_global,
+    net_total_reserve_incluse: net_verse_immediat + reserve_financiere,
+    taux_prelevement_global,
+    revenu_net_apres_impot: net_reel_en_poche
+  };
+}
+
 function calculerStatut(statutId, params, statutsData) {
   const statut = statutsData.statuts[statutId];
   if (!statut) throw new Error(`Statut inconnu: ${statutId}`);
-  const resultat = statut.categorie === "individuel"
-    ? calculerIndividuel(statut, params)
+  const resultat = statut.categorie === "individuel" ? calculerIndividuel(statut, params)
+    : statut.categorie === "portage_salarial" ? calculerPortageSalarial(statut, params)
     : calculerSociete(statut, params, statutsData.constantes_communes);
   return { ...resultat, revenu_net_apres_impot: resultat.revenu_net_apres_impot ?? resultat.revenu_net_total_foyer };
 }
@@ -456,7 +541,15 @@ function findSeuilBascule(idA, idB, baseParams, statutsData, opts = {}) {
   const deltaLo = deltaAt(idA, idB, lo, baseParams, statutsData);
   const deltaHi = deltaAt(idA, idB, hi, baseParams, statutsData);
 
-  if (Math.sign(deltaLo) === Math.sign(deltaHi)) {
+  // CA=0 est une égalité dégénérée pour la quasi-totalité des paires de statuts (les deux
+  // valent structurellement 0 à CA nul) -- Math.sign(0) ne doit jamais être traité comme un
+  // signe réel, sinon une "bascule" fantôme est détectée à quelques euros de CA (bug trouvé
+  // lors de l'intégration du portage salarial ; reproductible aussi sur des paires déjà en
+  // prod, ex: auto-entrepreneur vs SASU).
+  const signeLo = deltaLo === 0 ? Math.sign(deltaHi) : Math.sign(deltaLo);
+  const signeHi = Math.sign(deltaHi);
+
+  if (signeLo === signeHi) {
     // Pas de croisement détecté dans l'intervalle — dominance monotone (ou absence de test fin,
     // voir testMonotonicite() pour vérifier avant de généraliser sur une nouvelle paire).
     return null;
@@ -465,7 +558,7 @@ function findSeuilBascule(idA, idB, baseParams, statutsData, opts = {}) {
   while (hi - lo > tol) {
     const mid = (lo + hi) / 2;
     const deltaMid = deltaAt(idA, idB, mid, baseParams, statutsData);
-    if (Math.sign(deltaMid) === Math.sign(deltaLo)) {
+    if (Math.sign(deltaMid) === signeLo) {
       lo = mid;
     } else {
       hi = mid;
@@ -507,7 +600,7 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
 }
 
 
-  const STATUTS_DATA = {"version":"2026-08","avertissement":"Estimations indicatives basées sur les taux et seuils 2026 publiés (voir sources ci-dessous) — ne remplacent pas l'avis d'un expert-comptable pour une situation réelle.","sources":{"urssaf_taux_micro":"https://www.urssaf.fr/accueil/actualites/taux-cotisations-autoentrepeneur.html","plafonds_ca_micro":"https://www.impots.gouv.fr/professionnel/questions/pour-rester-micro-entrepreneur-quel-montant-de-chiffre-daffaires-ou-de","abattement_forfaitaire":"https://entreprendre.service-public.gouv.fr/vosdroits/F23267","versement_liberatoire":"https://www.impots.gouv.fr/professionnel/questions/en-tant-que-micro-entrepreneur-sous-quelles-conditions-puis-je-opter-pour-l","loi_patrimoine_ei":"https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000045167536","loi_patrimoine_ei_explication":"https://entreprendre.service-public.gouv.fr/vosdroits/F36354","is_taux":"https://bofip.impots.gouv.fr/bofip/2065-PGP.html/identifiant=BOI-IS-LIQ-20-20-20230621","is_taux_reduit_conditions":"https://bofip.impots.gouv.fr/bofip/2062-PGP.html/identifiant=BOI-IS-LIQ-20-10-20230621","flat_tax_dividendes":"https://www.impots.gouv.fr/international-particulier/mes-dividendes","gerant_sarl":"https://entreprendre.service-public.gouv.fr/vosdroits/F36235","president_sasu":"https://entreprendre.service-public.gouv.fr/vosdroits/F36240","franchise_tva":"https://entreprendre.service-public.gouv.fr/vosdroits/F21746","bareme_ir":"https://www.service-public.gouv.fr/particuliers/vosdroits/F1419"},"constantes_communes":{"flat_tax_dividendes":0.314,"flat_tax_dividendes_detail":{"prelevements_sociaux":0.186,"ir_forfaitaire":0.128},"flat_tax_dividendes_note":"31,4% depuis le 1er janvier 2026 (hausse CSG 17,2%→18,6%). Le taux 30% (17,2%+12,8%) ne s'applique plus qu'à l'assurance-vie, au PEL/CEL, au PEP et aux plus-values immobilières — pas aux dividendes de société.","is_taux_normal":0.25,"is_taux_reduit":{"taux":0.15,"seuil_benefice":42500,"conditions":"CA < 10M€, capital entièrement libéré, détenu à 75% min par personnes physiques"},"tmi_bareme_indicatif":[0,0.11,0.3,0.41,0.45]},"statuts":{"auto-entrepreneur":{"nom":"Auto-entrepreneur (micro-entreprise)","nom_court":"Auto-entrepreneur","categorie":"individuel","regime_fiscal":"micro-fiscal","regime_social":"micro-social","seuils_ca":{"vente_marchandises":203100,"prestations_services_bic":83600,"prestations_services_bnc":83600},"taux_cotisations_sociales":{"vente_marchandises":0.123,"prestations_services_bic":0.212,"prestations_services_bnc":0.256},"abattement_forfaitaire":{"vente_marchandises":0.71,"prestations_services_bic":0.5,"prestations_services_bnc":0.34},"versement_liberatoire_taux":{"vente_marchandises":0.01,"prestations_services_bic":0.017,"prestations_services_bnc":0.022},"versement_liberatoire_possible":true,"versement_liberatoire_condition_rfr":"revenu fiscal de référence N-2 sous seuil par part","tva_franchise_base":true,"tva_franchise_seuils":{"services":37500,"tolerance_services":41250,"biens":85000,"tolerance_biens":93500},"tva_franchise_note":"Seuils inchangés en 2026 malgré deux tentatives de réforme (PLF2025 puis PLF2026) vers un seuil unique — la première a été abrogée par la loi n°2025-1044 du 3 novembre 2025 (\"loi Midy\"), la seconde retirée du PLF2026.","responsabilite":"patrimoine_personnel_protege_par_defaut","responsabilite_exceptions":["fraude_fiscale_ou_sociale","manquement_grave_aux_obligations","renonciation_explicite_a_la_demande_d_un_creancier","dettes_nees_avant_15_05_2022"],"responsabilite_note_contenu_visible":"À mentionner explicitement dans le texte visible (pas seulement dans les données): les banques exigent quasi-systématiquement la renonciation à cette protection pour accorder un crédit professionnel — cas d'usage le plus fréquent en pratique.","protection_sociale":"SSI (aligné régime général depuis 2020)","cout_creation_moyen":0,"comptabilite_obligatoire":"simplifiee"},"entreprise-individuelle":{"nom":"Entreprise individuelle (régime réel)","nom_court":"EI","categorie":"individuel","regime_fiscal":"IR (BIC/BNC réel), option IS possible depuis 2022","regime_social":"TNS","seuils_ca":null,"taux_cotisations_sociales_estime":0.3,"responsabilite":"patrimoine_personnel_protege_par_defaut","responsabilite_exceptions":["fraude_fiscale_ou_sociale","manquement_grave_aux_obligations","renonciation_explicite_a_la_demande_d_un_creancier","dettes_nees_avant_15_05_2022"],"responsabilite_note_contenu_visible":"Même nuance que auto-entrepreneur: renonciation quasi-systématique exigée par les banques pour un prêt pro.","protection_sociale":"SSI","cout_creation_moyen":0,"comptabilite_obligatoire":"reelle"},"eurl":{"nom":"Entreprise Unipersonnelle à Responsabilité Limitée","nom_court":"EURL","categorie":"societe","regime_fiscal_defaut":"IR","regime_fiscal_options":["IR","IS"],"regime_social_gerant":"TNS","taux_cotisations_tns_estime":0.45,"responsabilite":"limitee_aux_apports","protection_sociale":"SSI","cout_creation_moyen":250,"comptabilite_obligatoire":"reelle_complete","capital_social_minimum":1},"sasu":{"nom":"Société par Actions Simplifiée Unipersonnelle","nom_court":"SASU","categorie":"societe","regime_fiscal_defaut":"IS","regime_fiscal_options":["IS","IR (5 ans max, conditions)"],"regime_social_president":"assimile_salarie","taux_charges_president_salaire":0.65,"taux_charges_patronales_president":0.425,"taux_charges_salariales_president":0.21,"taux_charges_president_note":"0.65 = coût total combiné (patronale+salariale) en % du BRUT, source LegalPlace/Keobiz 2026. Split : patronale ~42.5% du brut (charge entreprise, ajoutée au coût), salariale ~21% du brut (déduite pour obtenir le net).","responsabilite":"limitee_aux_apports","protection_sociale":"Régime général (hors assurance chômage)","cout_creation_moyen":250,"comptabilite_obligatoire":"reelle_complete","capital_social_minimum":1},"sas":{"nom":"Société par Actions Simplifiée","nom_court":"SAS","categorie":"societe","associes_min":2,"regime_fiscal_defaut":"IS","regime_fiscal_options":["IS","IR (5 ans max, conditions)"],"regime_social_president":"assimile_salarie","taux_charges_president_salaire":0.65,"taux_charges_patronales_president":0.425,"taux_charges_salariales_president":0.21,"taux_charges_president_note":"0.65 = coût total combiné (patronale+salariale) en % du BRUT, source LegalPlace/Keobiz 2026. Split : patronale ~42.5% du brut (charge entreprise, ajoutée au coût), salariale ~21% du brut (déduite pour obtenir le net).","responsabilite":"limitee_aux_apports","protection_sociale":"Régime général (hors assurance chômage)","cout_creation_moyen":250,"comptabilite_obligatoire":"reelle_complete","capital_social_minimum":1},"sarl":{"nom":"Société à Responsabilité Limitée","nom_court":"SARL","categorie":"societe","associes_min":2,"regime_fiscal_defaut":"IS","regime_fiscal_options":["IS","IR (5 ans max, conditions)"],"regime_social_gerant_majoritaire":"TNS","regime_social_gerant_minoritaire":"assimile_salarie","taux_cotisations_tns_estime":0.45,"taux_charges_gerant_minoritaire_salaire":0.65,"taux_charges_patronales_gerant_minoritaire":0.425,"taux_charges_salariales_gerant_minoritaire":0.21,"responsabilite":"limitee_aux_apports","cout_creation_moyen":250,"comptabilite_obligatoire":"reelle_complete","capital_social_minimum":1}}};
+  const STATUTS_DATA = {"version":"2026-08","avertissement":"Estimations indicatives basées sur les taux et seuils 2026 publiés (voir sources ci-dessous) — ne remplacent pas l'avis d'un expert-comptable pour une situation réelle.","sources":{"urssaf_taux_micro":"https://www.urssaf.fr/accueil/actualites/taux-cotisations-autoentrepeneur.html","plafonds_ca_micro":"https://www.impots.gouv.fr/professionnel/questions/pour-rester-micro-entrepreneur-quel-montant-de-chiffre-daffaires-ou-de","abattement_forfaitaire":"https://entreprendre.service-public.gouv.fr/vosdroits/F23267","versement_liberatoire":"https://www.impots.gouv.fr/professionnel/questions/en-tant-que-micro-entrepreneur-sous-quelles-conditions-puis-je-opter-pour-l","loi_patrimoine_ei":"https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000045167536","loi_patrimoine_ei_explication":"https://entreprendre.service-public.gouv.fr/vosdroits/F36354","is_taux":"https://bofip.impots.gouv.fr/bofip/2065-PGP.html/identifiant=BOI-IS-LIQ-20-20-20230621","is_taux_reduit_conditions":"https://bofip.impots.gouv.fr/bofip/2062-PGP.html/identifiant=BOI-IS-LIQ-20-10-20230621","flat_tax_dividendes":"https://www.impots.gouv.fr/international-particulier/mes-dividendes","gerant_sarl":"https://entreprendre.service-public.gouv.fr/vosdroits/F36235","president_sasu":"https://entreprendre.service-public.gouv.fr/vosdroits/F36240","franchise_tva":"https://entreprendre.service-public.gouv.fr/vosdroits/F21746","bareme_ir":"https://www.service-public.gouv.fr/particuliers/vosdroits/F1419","convention_collective_portage":"https://code.travail.gouv.fr/convention-collective/3219-branche-des-salaries-en-portage-salarial","reserve_financiere_portage":"https://www.abcportage.fr/portage-salarial/guide-du-portage/reglementation/la-reserve-financiere-en-portage-salarial/","charges_patronales_portage":"https://www.itg.fr/portage-salarial/guide/questions-reponses/charges-patronales-en-portage"},"constantes_communes":{"flat_tax_dividendes":0.314,"flat_tax_dividendes_detail":{"prelevements_sociaux":0.186,"ir_forfaitaire":0.128},"flat_tax_dividendes_note":"31,4% depuis le 1er janvier 2026 (hausse CSG 17,2%→18,6%). Le taux 30% (17,2%+12,8%) ne s'applique plus qu'à l'assurance-vie, au PEL/CEL, au PEP et aux plus-values immobilières — pas aux dividendes de société.","is_taux_normal":0.25,"is_taux_reduit":{"taux":0.15,"seuil_benefice":42500,"conditions":"CA < 10M€, capital entièrement libéré, détenu à 75% min par personnes physiques"},"tmi_bareme_indicatif":[0,0.11,0.3,0.41,0.45]},"statuts":{"auto-entrepreneur":{"nom":"Auto-entrepreneur (micro-entreprise)","nom_court":"Auto-entrepreneur","categorie":"individuel","regime_fiscal":"micro-fiscal","regime_social":"micro-social","seuils_ca":{"vente_marchandises":203100,"prestations_services_bic":83600,"prestations_services_bnc":83600},"taux_cotisations_sociales":{"vente_marchandises":0.123,"prestations_services_bic":0.212,"prestations_services_bnc":0.256},"abattement_forfaitaire":{"vente_marchandises":0.71,"prestations_services_bic":0.5,"prestations_services_bnc":0.34},"versement_liberatoire_taux":{"vente_marchandises":0.01,"prestations_services_bic":0.017,"prestations_services_bnc":0.022},"versement_liberatoire_possible":true,"versement_liberatoire_condition_rfr":"revenu fiscal de référence N-2 sous seuil par part","tva_franchise_base":true,"tva_franchise_seuils":{"services":37500,"tolerance_services":41250,"biens":85000,"tolerance_biens":93500},"tva_franchise_note":"Seuils inchangés en 2026 malgré deux tentatives de réforme (PLF2025 puis PLF2026) vers un seuil unique — la première a été abrogée par la loi n°2025-1044 du 3 novembre 2025 (\"loi Midy\"), la seconde retirée du PLF2026.","responsabilite":"patrimoine_personnel_protege_par_defaut","responsabilite_exceptions":["fraude_fiscale_ou_sociale","manquement_grave_aux_obligations","renonciation_explicite_a_la_demande_d_un_creancier","dettes_nees_avant_15_05_2022"],"responsabilite_note_contenu_visible":"À mentionner explicitement dans le texte visible (pas seulement dans les données): les banques exigent quasi-systématiquement la renonciation à cette protection pour accorder un crédit professionnel — cas d'usage le plus fréquent en pratique.","protection_sociale":"SSI (aligné régime général depuis 2020)","cout_creation_moyen":0,"comptabilite_obligatoire":"simplifiee"},"entreprise-individuelle":{"nom":"Entreprise individuelle (régime réel)","nom_court":"EI","categorie":"individuel","regime_fiscal":"IR (BIC/BNC réel), option IS possible depuis 2022","regime_social":"TNS","seuils_ca":null,"taux_cotisations_sociales_estime":0.3,"responsabilite":"patrimoine_personnel_protege_par_defaut","responsabilite_exceptions":["fraude_fiscale_ou_sociale","manquement_grave_aux_obligations","renonciation_explicite_a_la_demande_d_un_creancier","dettes_nees_avant_15_05_2022"],"responsabilite_note_contenu_visible":"Même nuance que auto-entrepreneur: renonciation quasi-systématique exigée par les banques pour un prêt pro.","protection_sociale":"SSI","cout_creation_moyen":0,"comptabilite_obligatoire":"reelle"},"eurl":{"nom":"Entreprise Unipersonnelle à Responsabilité Limitée","nom_court":"EURL","categorie":"societe","regime_fiscal_defaut":"IR","regime_fiscal_options":["IR","IS"],"regime_social_gerant":"TNS","taux_cotisations_tns_estime":0.45,"responsabilite":"limitee_aux_apports","protection_sociale":"SSI","cout_creation_moyen":250,"comptabilite_obligatoire":"reelle_complete","capital_social_minimum":1},"sasu":{"nom":"Société par Actions Simplifiée Unipersonnelle","nom_court":"SASU","categorie":"societe","regime_fiscal_defaut":"IS","regime_fiscal_options":["IS","IR (5 ans max, conditions)"],"regime_social_president":"assimile_salarie","taux_charges_president_salaire":0.65,"taux_charges_patronales_president":0.425,"taux_charges_salariales_president":0.21,"taux_charges_president_note":"0.65 = coût total combiné (patronale+salariale) en % du BRUT, source LegalPlace/Keobiz 2026. Split : patronale ~42.5% du brut (charge entreprise, ajoutée au coût), salariale ~21% du brut (déduite pour obtenir le net).","responsabilite":"limitee_aux_apports","protection_sociale":"Régime général (hors assurance chômage)","cout_creation_moyen":250,"comptabilite_obligatoire":"reelle_complete","capital_social_minimum":1},"sas":{"nom":"Société par Actions Simplifiée","nom_court":"SAS","categorie":"societe","associes_min":2,"regime_fiscal_defaut":"IS","regime_fiscal_options":["IS","IR (5 ans max, conditions)"],"regime_social_president":"assimile_salarie","taux_charges_president_salaire":0.65,"taux_charges_patronales_president":0.425,"taux_charges_salariales_president":0.21,"taux_charges_president_note":"0.65 = coût total combiné (patronale+salariale) en % du BRUT, source LegalPlace/Keobiz 2026. Split : patronale ~42.5% du brut (charge entreprise, ajoutée au coût), salariale ~21% du brut (déduite pour obtenir le net).","responsabilite":"limitee_aux_apports","protection_sociale":"Régime général (hors assurance chômage)","cout_creation_moyen":250,"comptabilite_obligatoire":"reelle_complete","capital_social_minimum":1},"sarl":{"nom":"Société à Responsabilité Limitée","nom_court":"SARL","categorie":"societe","associes_min":2,"regime_fiscal_defaut":"IS","regime_fiscal_options":["IS","IR (5 ans max, conditions)"],"regime_social_gerant_majoritaire":"TNS","regime_social_gerant_minoritaire":"assimile_salarie","taux_cotisations_tns_estime":0.45,"taux_charges_gerant_minoritaire_salaire":0.65,"taux_charges_patronales_gerant_minoritaire":0.425,"taux_charges_salariales_gerant_minoritaire":0.21,"responsabilite":"limitee_aux_apports","cout_creation_moyen":250,"comptabilite_obligatoire":"reelle_complete","capital_social_minimum":1},"portage-salarial":{"nom":"Portage salarial","nom_court":"Portage salarial","categorie":"portage_salarial","taux_frais_gestion_defaut":0.05,"taux_frais_gestion_note":"Médiane des taux publics de 7 sociétés de portage relevés le 2026-08-20 (ITG ~8% dégressif, ABC Portage à partir de 5%, Success Portage 5-7%, Cadres en Mission jusqu'à 7% dégressif à 5%, Innoven Portage 4% fixe, Coq Portage 5% plafonné 700€/mois, Portad 4% fixe) — voir comparaison_entreprises_portage pour le détail par société. Taux d'appel, négociable selon CA.","taux_charges_patronales_portage":0.42,"taux_charges_salariales_portage":0.22,"taux_reserve_financiere_defaut":0.1,"taux_reserve_financiere_note":"10% du salaire de base perçu sur la dernière mission (CDI), imposé par la convention collective du portage salarial (IDCC 3219) — provisionné à chaque bulletin de paie, restitué en fin de contrat ou en cas de difficulté, pas perdu.","jours_facturables_an_defaut":216,"jours_facturables_an_note":"Approximation MVP (~18 jours/mois × 12) utilisée uniquement pour convertir un CA annuel en TJM équivalent dans les pages comparateur/migration — n'est jamais utilisée par le simulateur dédié, qui prend TJM et jours/mois en saisie directe.","cout_creation_moyen":0,"comptabilite_obligatoire":"geree_par_la_societe_de_portage","comparaison_entreprises_portage":[{"nom":"ITG","taux_gestion":0.08,"taux_gestion_note":"Dégressif 6-10% selon CA cumulé (8% dès 60k€, 6% au-delà de 120k€)","source_url":"https://www.itg.fr/portage-salarial/guide/comment-optimiser-salaire-portage-salarial/frais-de-gestion","date_maj":"2026-08-20","negociable_selon_ca":true},{"nom":"ABC Portage","taux_gestion":0.05,"taux_gestion_note":"À partir de 5%, variable selon activité","source_url":"https://www.abcportage.fr/portage-salarial/simulation-revenus/guide/frais-gestion-portage-salarial/","date_maj":"2026-08-20","negociable_selon_ca":true},{"nom":"Success Portage","taux_gestion":0.06,"taux_gestion_note":"3 formules, 5 à 7% selon niveau d'accompagnement","source_url":"https://successportage.fr/salaire/","date_maj":"2026-08-20","negociable_selon_ca":true},{"nom":"Cadres en Mission","taux_gestion":0.07,"taux_gestion_note":"Maximum 7%, dégressif jusqu'à 5% selon CA cumulé (jamais remis à zéro)","source_url":"https://www.cadresenmission.com/portage-salarial/salarie-porte/remuneration/frais-de-gestion/","date_maj":"2026-08-20","negociable_selon_ca":true},{"nom":"Innoven Portage","taux_gestion":0.04,"taux_gestion_note":"Taux fixe annoncé, sans palier dégressif","source_url":"https://www.innovenportage.fr/","date_maj":"2026-08-20","negociable_selon_ca":false},{"nom":"Coq Portage","taux_gestion":0.05,"taux_gestion_note":"5% plafonné à 700€/mois (+1% avance optionnelle si pas de paiement comptant client)","source_url":"https://www.coqportage.fr/portage-salarial/calcul-tjm/","date_maj":"2026-08-20","negociable_selon_ca":false},{"nom":"Portad","taux_gestion":0.04,"taux_gestion_note":"Commission fixe annoncée, incluant l'avance de trésorerie","source_url":"https://portad.fr/tarif/","date_maj":"2026-08-20","negociable_selon_ca":false}]}}};
   function eur(n){ return Math.round(n).toLocaleString('fr-FR')+' €'; }
   function pct(n){ return (n*100).toFixed(1).replace('.',',')+' %'; }
   function calculate(){
@@ -616,7 +709,7 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
   </div>
 </div>
 <footer><div class="container">
-  <div class="disc">Simulateur à titre indicatif, basé sur des taux 2026-08 — ne remplace pas l'avis d'un expert-comptable ou d'un avocat. Estimations indicatives basées sur les taux et seuils 2026 publiés (voir sources ci-dessous) — ne remplacent pas l'avis d'un expert-comptable pour une situation réelle. Dernière mise à jour des données et calculs : 2026-08-18.</div>
+  <div class="disc">Simulateur à titre indicatif, basé sur des taux 2026-08 — ne remplace pas l'avis d'un expert-comptable ou d'un avocat. Estimations indicatives basées sur les taux et seuils 2026 publiés (voir sources ci-dessous) — ne remplacent pas l'avis d'un expert-comptable pour une situation réelle. Dernière mise à jour des données et calculs : 2026-08-20.</div>
   <p><a href="/">Comparateur de statuts juridiques</a></p>
   <p style="font-size:.72rem;margin-top:8px;">Comparateur de statuts juridiques fait partie de Gesmine-Invest Limited, société immatriculée au Royaume-Uni sous le numéro 14120136, siège social Hardy House, 269 Poynders Gardens, Londres, Royaume-Uni, SW4 8PQ.</p>
 </div></footer>
