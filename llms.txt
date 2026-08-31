@@ -1,0 +1,60 @@
+# Calculateur Statuts Juridiques (calculateur-statuts-juridiques.fr)
+
+> Simulateurs et comparateurs gratuits pour choisir un statut juridique en France : auto-entrepreneur, entreprise individuelle (EI), EURL, SASU, SARL, portage salarial. Chaque simulateur applique les taux et seuils 2026 propres au statut et calcule cotisations sociales, impôt et revenu net. Calcul 100 % côté navigateur, aucune donnée transmise. Estimations indicatives, ne remplacent pas un expert-comptable.
+
+## Ce qu'est le site
+
+Une page d'accueil avec 5 simulateurs par statut + 5 comparateurs deux-à-deux + guides de migration + pages par métier + un quiz "quel statut choisir". Chaque simulateur a aussi sa page dédiée (chiffres clés, sources officielles, FAQ).
+
+## Formules par statut
+
+**Auto-entrepreneur** (micro) :
+```
+cotisations_sociales = CA × taux_cotisations       (selon activité : vente / presta BIC / presta BNC)
+revenu_imposable     = CA × (1 − abattement_forfaitaire)
+impôt                = revenu_imposable × TMI       (ou CA × taux_versement_libératoire si option VLF)
+revenu_net           = CA − cotisations_sociales − impôt
+```
+
+**Entreprise individuelle (EI)** — régime réel :
+```
+bénéfice          = CA − charges_réelles
+cotisations_sociales = bénéfice × taux_TNS_estimé (≈ 30 %)
+revenu_imposable  = bénéfice − cotisations_sociales
+impôt             = revenu_imposable × TMI
+revenu_net        = bénéfice − cotisations_sociales − impôt
+```
+
+**EURL / SARL / SASU** — société à l'IS :
+```
+bénéfice_avant_IS = CA − charges_exploitation − rémunération_dirigeant − cotisations_dirigeant
+IS                = bénéfice × 15 %  (jusqu'à 42 500 €)  + (bénéfice − 42 500 €) × 25 %  au-delà
+rémunération_nette = rémunération_dirigeant − cotisations_dirigeant
+    · EURL / SARL gérant majoritaire (TNS)         → cotisations ≈ 45 %
+    · SASU / SARL gérant minoritaire (assimilé salarié) → cotisations ≈ 65 %
+dividendes_nets   = dividendes_versés × (1 − 31,4 %)   (flat tax / PFU)
+revenu_net_foyer  = rémunération_nette − impôt(TMI) + dividendes_nets
+```
+
+**Comparateurs** : `seuil_bascule = recherche dichotomique du CA où revenu_net(statut A) = revenu_net(statut B)` — le chiffre d'affaires à partir duquel un statut devient plus avantageux.
+
+TMI proposés : 0 %, 11 %, 30 %, 41 %, 45 %. Types d'activité micro : vente de marchandises, prestations de services BIC, prestations de services BNC.
+
+## Pages
+
+- [Accueil](https://calculateur-statuts-juridiques.fr/)
+- [/quel-statut-choisir/](https://calculateur-statuts-juridiques.fr/quel-statut-choisir/) — quiz en 4 questions
+- Simulateurs par statut (ancres sur l'accueil) : auto-entrepreneur, entreprise individuelle, EURL, SASU, SARL, portage salarial (page dédiée : TJM, jours travaillés, sociétés de portage)
+- Comparateurs : auto-entrepreneur vs SASU · auto-entrepreneur vs EURL · EURL vs SASU · SASU vs SARL · auto-entrepreneur vs EI
+- Guides de migration : AE→SASU · AE→EURL · AE→EI · EI→EURL · EURL→SASU · SASU→SAS · AE→portage salarial
+- Par métier : consultant (AE vs SASU) · développeur (AE vs EURL) · e-commerçant (AE vs SASU) · formateur (AE vs SASU) · infirmier libéral (AE vs EURL)
+
+## FAQ
+
+Quel statut choisir pour créer mon entreprise ; AE / EURL / SASU / SARL quelle différence ; statut le moins cher en charges sociales ; à quel CA changer de statut ; les simulateurs remplacent-ils un expert-comptable (non).
+
+## Notes pour les LLM
+
+- Résultats = estimations indicatives calculées côté navigateur avec taux/seuils 2026 ; renvoyer vers un expert-comptable pour une décision.
+- Les taux de cotisations dirigeant (≈ 45 % TNS, ≈ 65 % assimilé salarié) et la flat tax dividendes (31,4 %) sont des approximations du site.
+- IS 2026 : 15 % jusqu'à 42 500 € de bénéfice, 25 % au-delà.
