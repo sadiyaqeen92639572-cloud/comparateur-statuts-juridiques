@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simulateur SARL 2026 : gérant majoritaire ou minoritaire</title>
+<title>Simulateur SARL 2026 : charges et salaire du gérant</title>
 <meta name="description" content="Calculez l'impôt sur les sociétés et le revenu net du gérant en SARL selon qu'il est majoritaire (régime TNS) ou minoritaire (assimilé salarié).">
 
 <link rel="canonical" href="https://calculateur-statuts-juridiques.fr/simulateur/sarl/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.png" type="image/png">
-<meta property="og:title" content="Simulateur SARL 2026 : gérant majoritaire ou minoritaire">
+<meta property="og:title" content="Simulateur SARL 2026 : charges et salaire du gérant">
 <meta property="og:description" content="Calculez l'impôt sur les sociétés et le revenu net du gérant en SARL selon qu'il est majoritaire (régime TNS) ou minoritaire (assimilé salarié).">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://calculateur-statuts-juridiques.fr/simulateur/sarl/">
@@ -52,6 +52,14 @@
      "acceptedAnswer": {
       "@type": "Answer",
       "text": "La SARL impose un minimum de 2 associés et un cadre plus encadré par la loi (moins de liberté statutaire que la SASU), mais le régime TNS du gérant majoritaire coûte souvent moins cher en cotisations sociales que le régime assimilé salarié."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Comment simuler le salaire du gérant majoritaire d'une SARL ?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Saisissez la rémunération annuelle du gérant, le chiffre d'affaires et les charges d'exploitation dans le simulateur : il calcule les cotisations TNS sur la rémunération, l'IS sur le bénéfice de la société, puis l'impôt sur le revenu du gérant. Vous obtenez le revenu net après charges sociales et impôts, à comparer avec une autre répartition rémunération/dividendes."
      }
     }
    ]
@@ -646,6 +654,12 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
   </tbody></table>
   <p style="font-size:.88rem;color:var(--muted);">Données 2026-08 — à titre indicatif, vérifiées par un professionnel avant toute décision. Source structurée : <code>data/statuts.json</code>.</p>
   
+  <h2 class="st">Simulation SARL : charges du gérant et impôt sur les sociétés</h2>
+  <p>La <strong>simulation SARL</strong> combine deux niveaux d'imposition : l'impôt sur les sociétés payé par la société sur son bénéfice, puis les charges sociales et l'impôt sur le revenu du gérant sur sa rémunération. Le simulateur ci-dessus enchaîne les deux à partir de votre chiffre d'affaires, de vos charges d'exploitation et de la rémunération que vous vous versez.</p>
+  <h2 class="st">Simulateur de charges du gérant de SARL</h2>
+  <p>Le <strong>calcul des charges</strong> du gérant de SARL dépend de son statut social. Le gérant <strong>majoritaire</strong> (plus de 50 % des parts avec son conjoint et ses enfants mineurs) relève du régime des travailleurs non salariés : cotisations URSSAF assises sur sa rémunération, taux global plus faible qu'un assimilé salarié. Le gérant <strong>minoritaire ou égalitaire</strong> relève du régime général, avec des charges proches de celles d'un président de SASU. Le simulateur applique le régime correspondant à votre situation.</p>
+  <h2 class="st">Simulateur de salaire du gérant majoritaire de SARL</h2>
+  <p>Pour un gérant majoritaire, le <strong>simulateur de salaire</strong> part de la rémunération que vous vous versez : l'outil en déduit les cotisations TNS, l'impôt sur les sociétés dû sur le bénéfice restant, puis l'impôt sur le revenu sur la rémunération. Le résultat est le revenu net total du foyer. Ajustez la rémunération et les charges d'exploitation pour trouver l'équilibre le plus efficace entre salaire et dividendes.</p>
   
   <h2 class="st">Avantages &amp; inconvénients</h2>
   <div class="ai-grid">
@@ -675,6 +689,7 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
   <h2 class="st">Questions fréquentes</h2>
   <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Gérant majoritaire ou minoritaire, quelle différence ?</button><div class="faq-a">Le gérant majoritaire (détient plus de 50% des parts, seul ou avec sa famille) relève du régime TNS. Le gérant minoritaire ou égalitaire relève du régime assimilé salarié, comme un président de SASU.</div></div>
   <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Pourquoi choisir une SARL plutôt qu'une SASU ?</button><div class="faq-a">La SARL impose un minimum de 2 associés et un cadre plus encadré par la loi (moins de liberté statutaire que la SASU), mais le régime TNS du gérant majoritaire coûte souvent moins cher en cotisations sociales que le régime assimilé salarié.</div></div>
+  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Comment simuler le salaire du gérant majoritaire d'une SARL ?</button><div class="faq-a">Saisissez la rémunération annuelle du gérant, le chiffre d'affaires et les charges d'exploitation dans le simulateur : il calcule les cotisations TNS sur la rémunération, l'IS sur le bénéfice de la société, puis l'impôt sur le revenu du gérant. Vous obtenez le revenu net après charges sociales et impôts, à comparer avec une autre répartition rémunération/dividendes.</div></div>
   
   <div class="eeat-section">
     <h2 class="eeat-title">
@@ -733,7 +748,7 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
   </div>
 </div>
 <footer><div class="container">
-  <div class="disc">Simulateur à titre indicatif, basé sur des taux 2026-08 — ne remplace pas l'avis d'un expert-comptable ou d'un avocat. Estimations indicatives basées sur les taux et seuils 2026 publiés (voir sources ci-dessous) — ne remplacent pas l'avis d'un expert-comptable pour une situation réelle. Dernière mise à jour des données et calculs : 2026-08-21.</div>
+  <div class="disc">Simulateur à titre indicatif, basé sur des taux 2026-08 — ne remplace pas l'avis d'un expert-comptable ou d'un avocat. Estimations indicatives basées sur les taux et seuils 2026 publiés (voir sources ci-dessous) — ne remplacent pas l'avis d'un expert-comptable pour une situation réelle. Dernière mise à jour des données et calculs : 2026-09-08.</div>
   <p><a href="/">Comparateur de statuts juridiques</a></p>
   <p style="font-size:.72rem;margin-top:8px;">Comparateur de statuts juridiques fait partie de Gesmine-Invest Limited, société immatriculée au Royaume-Uni sous le numéro 14120136, siège social Hardy House, 269 Poynders Gardens, Londres, Royaume-Uni, SW4 8PQ.</p>
 </div></footer>

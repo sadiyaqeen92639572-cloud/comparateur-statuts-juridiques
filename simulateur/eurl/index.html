@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simulateur EURL 2026 : IS, rémunération gérant, revenu net</title>
+<title>Simulateur EURL 2026 : salaire du gérant, charges TNS et IS</title>
 <meta name="description" content="Calculez l'impôt sur les sociétés, les cotisations TNS du gérant et le revenu net total en EURL selon votre chiffre d'affaires et votre rémunération.">
 
 <link rel="canonical" href="https://calculateur-statuts-juridiques.fr/simulateur/eurl/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.png" type="image/png">
-<meta property="og:title" content="Simulateur EURL 2026 : IS, rémunération gérant, revenu net">
+<meta property="og:title" content="Simulateur EURL 2026 : salaire du gérant, charges TNS et IS">
 <meta property="og:description" content="Calculez l'impôt sur les sociétés, les cotisations TNS du gérant et le revenu net total en EURL selon votre chiffre d'affaires et votre rémunération.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://calculateur-statuts-juridiques.fr/simulateur/eurl/">
@@ -52,6 +52,14 @@
      "acceptedAnswer": {
       "@type": "Answer",
       "text": "Le gérant associé unique relève du régime TNS (travailleur non salarié), avec des cotisations sociales calculées sur sa rémunération."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Comment simuler la rémunération nette du gérant d'une EURL ?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Entrez le chiffre d'affaires, les charges d'exploitation et la rémunération annuelle du gérant : le simulateur déduit les cotisations TNS, calcule l'impôt sur les sociétés sur le bénéfice restant et l'impôt sur le revenu du gérant, puis affiche le revenu net total. Comparez plusieurs niveaux de rémunération pour optimiser le partage entre salaire et dividendes."
      }
     }
    ]
@@ -646,6 +654,12 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
   </tbody></table>
   <p style="font-size:.88rem;color:var(--muted);">Données 2026-08 — à titre indicatif, vérifiées par un professionnel avant toute décision. Source structurée : <code>data/statuts.json</code>.</p>
   
+  <h2 class="st">Simulation EURL : rémunération du gérant, charges TNS et IS</h2>
+  <p>La <strong>simulation EURL</strong> enchaîne l'impôt sur les sociétés payé sur le bénéfice de la société et les cotisations TNS du gérant sur sa rémunération, puis l'impôt sur le revenu. Le simulateur ci-dessus calcule l'ensemble à partir de votre chiffre d'affaires, de vos charges et de la rémunération que vous vous versez.</p>
+  <h2 class="st">Simulateur de salaire du gérant d'EURL</h2>
+  <p>Le <strong>simulateur de salaire</strong> du gérant d'EURL part du montant que vous vous versez et en déduit les cotisations sociales TNS, pour obtenir le revenu net imposable du gérant. Faites varier la rémunération pour voir son effet sur le revenu net total et sur l'impôt sur les sociétés dû sur le bénéfice non distribué.</p>
+  <h2 class="st">Calcul des charges TNS et de l'impôt en EURL</h2>
+  <p>Le <strong>calcul des charges</strong> en EURL à l'IS distingue les cotisations du gérant, assises sur sa seule rémunération et non sur le bénéfice de la société, et l'impôt sur les sociétés au taux réduit sur les premiers bénéfices puis au taux normal au-delà. L'outil applique ces règles automatiquement, ainsi que l'imposition des dividendes éventuels.</p>
   
   <h2 class="st">Avantages &amp; inconvénients</h2>
   <div class="ai-grid">
@@ -675,6 +689,7 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
   <h2 class="st">Questions fréquentes</h2>
   <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">EURL à l'IR ou à l'IS ?</button><div class="faq-a">Par défaut à l'IR (comme une EI), mais l'option IS est possible et souvent plus avantageuse au-delà d'un certain niveau de bénéfice grâce au taux réduit à 15% jusqu'à 42 500 €.</div></div>
   <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Quel régime social pour le gérant d'EURL ?</button><div class="faq-a">Le gérant associé unique relève du régime TNS (travailleur non salarié), avec des cotisations sociales calculées sur sa rémunération.</div></div>
+  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Comment simuler la rémunération nette du gérant d'une EURL ?</button><div class="faq-a">Entrez le chiffre d'affaires, les charges d'exploitation et la rémunération annuelle du gérant : le simulateur déduit les cotisations TNS, calcule l'impôt sur les sociétés sur le bénéfice restant et l'impôt sur le revenu du gérant, puis affiche le revenu net total. Comparez plusieurs niveaux de rémunération pour optimiser le partage entre salaire et dividendes.</div></div>
   
   <div class="eeat-section">
     <h2 class="eeat-title">
@@ -729,11 +744,11 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
   </div>
   
   <div class="link-grid">
-    <a class="link-card" href="/simulateur/sasu/">sasu</a><a class="link-card" href="/comparateur/eurl-vs-sasu/">eurl vs sasu</a><a class="link-card" href="/charges/eurl/">eurl</a><a class="link-card" href="/quel-statut-choisir//">quel statut choisir</a>
+    <a class="link-card" href="/simulateur/sasu/">sasu</a><a class="link-card" href="/simulateur/sarl/">sarl</a><a class="link-card" href="/comparateur/eurl-vs-sasu/">eurl vs sasu</a><a class="link-card" href="/charges/eurl/">eurl</a><a class="link-card" href="/quel-statut-choisir//">quel statut choisir</a>
   </div>
 </div>
 <footer><div class="container">
-  <div class="disc">Simulateur à titre indicatif, basé sur des taux 2026-08 — ne remplace pas l'avis d'un expert-comptable ou d'un avocat. Estimations indicatives basées sur les taux et seuils 2026 publiés (voir sources ci-dessous) — ne remplacent pas l'avis d'un expert-comptable pour une situation réelle. Dernière mise à jour des données et calculs : 2026-08-21.</div>
+  <div class="disc">Simulateur à titre indicatif, basé sur des taux 2026-08 — ne remplace pas l'avis d'un expert-comptable ou d'un avocat. Estimations indicatives basées sur les taux et seuils 2026 publiés (voir sources ci-dessous) — ne remplacent pas l'avis d'un expert-comptable pour une situation réelle. Dernière mise à jour des données et calculs : 2026-09-08.</div>
   <p><a href="/">Comparateur de statuts juridiques</a></p>
   <p style="font-size:.72rem;margin-top:8px;">Comparateur de statuts juridiques fait partie de Gesmine-Invest Limited, société immatriculée au Royaume-Uni sous le numéro 14120136, siège social Hardy House, 269 Poynders Gardens, Londres, Royaume-Uni, SW4 8PQ.</p>
 </div></footer>

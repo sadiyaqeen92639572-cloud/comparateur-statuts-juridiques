@@ -53,6 +53,22 @@
       "@type": "Answer",
       "text": "Oui, même protection par défaut que l'auto-entrepreneur depuis le 15 mai 2022, avec les mêmes exceptions (fraude, manquement grave, renonciation à la demande d'un créancier)."
      }
+    },
+    {
+     "@type": "Question",
+     "name": "Comment simuler ses charges sociales en entreprise individuelle ?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Indiquez votre chiffre d'affaires encaissé et vos charges professionnelles déductibles dans le simulateur ci-dessus : il calcule le bénéfice, puis les cotisations sociales TNS (URSSAF) assises sur ce bénéfice, et enfin l'impôt sur le revenu correspondant. La simulation des charges sociales reste indicative — les taux varient selon l'activité (BIC ou BNC) et l'année d'installation."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "« Simulateur EI » ou « simulation entreprise individuelle » : c'est le même outil ?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Oui. Qu'on cherche un « simulateur EI », une « simulation entreprise individuelle » ou un « calcul de charges et d'impôt en EI », le besoin est le même : estimer le revenu net après cotisations sociales et impôt sur le revenu à partir du chiffre d'affaires. L'outil de cette page couvre l'entreprise individuelle au régime réel."
+     }
     }
    ]
   },
@@ -644,8 +660,12 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
   </tbody></table>
   <p style="font-size:.88rem;color:var(--muted);">Données 2026-08 — à titre indicatif, vérifiées par un professionnel avant toute décision. Source structurée : <code>data/statuts.json</code>.</p>
   
-  <h2 class="st">Charges sociales et impôt sur le revenu en entreprise individuelle</h2>
+  <h2 class="st">Comprendre le calcul du revenu net en entreprise individuelle</h2>
   <p>En entreprise individuelle au régime réel, vos <strong>charges sociales</strong> (URSSAF) sont calculées sur votre bénéfice — chiffre d'affaires moins charges déductibles réelles — puis votre <strong>impôt sur le revenu</strong> s'applique sur ce même bénéfice net de charges, selon le barème progressif. Le simulateur ci-dessus calcule les deux automatiquement à partir de votre chiffre d'affaires et de vos charges.</p>
+  <h2 class="st">Simulateur de charges sociales en entreprise individuelle</h2>
+  <p>Ce <strong>simulateur de charges sociales</strong> en entreprise individuelle estime les cotisations URSSAF du travailleur non salarié à partir de votre bénéfice réel. Le calcul des charges couvre la maladie-maternité, la retraite de base et complémentaire, l'invalidité-décès, les allocations familiales et la CSG-CRDS. La base est le bénéfice (chiffre d'affaires encaissé moins charges professionnelles déductibles), pas le chiffre d'affaires brut. Renseignez votre CA et vos charges dans l'outil ci-dessus pour obtenir le montant estimé.</p>
+  <h2 class="st">Calcul de l'impôt sur le revenu et de la rémunération nette en EI</h2>
+  <p>Une fois les charges sociales déduites, le <strong>calcul de l'impôt sur le revenu</strong> en EI porte sur ce même bénéfice net, intégré à votre foyer fiscal selon le barème progressif et votre taux marginal. La rémunération nette correspond au bénéfice moins les cotisations sociales moins l'impôt : c'est le revenu réellement disponible que le simulateur d'impôt en entreprise individuelle affiche en résultat. Pour situer ce résultat par rapport au régime micro, voir aussi notre <a href="/comparateur/auto-entrepreneur-vs-entreprise-individuelle/">comparateur auto-entrepreneur ou entreprise individuelle</a>.</p>
   
   <h2 class="st">Avantages &amp; inconvénients</h2>
   <div class="ai-grid">
@@ -675,6 +695,8 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
   <h2 class="st">Questions fréquentes</h2>
   <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Quelle différence entre auto-entrepreneur et entreprise individuelle ?</button><div class="faq-a">L'EI au régime réel déduit les charges réelles (pas un abattement forfaitaire) et n'a pas de plafond de chiffre d'affaires — pertinent quand les charges réelles dépassent l'abattement forfaitaire du régime micro.</div></div>
   <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Mon patrimoine personnel est-il protégé en EI ?</button><div class="faq-a">Oui, même protection par défaut que l'auto-entrepreneur depuis le 15 mai 2022, avec les mêmes exceptions (fraude, manquement grave, renonciation à la demande d'un créancier).</div></div>
+  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Comment simuler ses charges sociales en entreprise individuelle ?</button><div class="faq-a">Indiquez votre chiffre d'affaires encaissé et vos charges professionnelles déductibles dans le simulateur ci-dessus : il calcule le bénéfice, puis les cotisations sociales TNS (URSSAF) assises sur ce bénéfice, et enfin l'impôt sur le revenu correspondant. La simulation des charges sociales reste indicative — les taux varient selon l'activité (BIC ou BNC) et l'année d'installation.</div></div>
+  <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">« Simulateur EI » ou « simulation entreprise individuelle » : c'est le même outil ?</button><div class="faq-a">Oui. Qu'on cherche un « simulateur EI », une « simulation entreprise individuelle » ou un « calcul de charges et d'impôt en EI », le besoin est le même : estimer le revenu net après cotisations sociales et impôt sur le revenu à partir du chiffre d'affaires. L'outil de cette page couvre l'entreprise individuelle au régime réel.</div></div>
   
   <div class="eeat-section">
     <h2 class="eeat-title">
@@ -729,11 +751,11 @@ function optimiserSplitRemunerationDividendes(statutId, params, statutsData, opt
   </div>
   
   <div class="link-grid">
-    <a class="link-card" href="/simulateur/auto-entrepreneur/">auto entrepreneur</a><a class="link-card" href="/charges/entreprise-individuelle/">entreprise individuelle</a><a class="link-card" href="/quel-statut-choisir//">quel statut choisir</a>
+    <a class="link-card" href="/simulateur/auto-entrepreneur/">auto entrepreneur</a><a class="link-card" href="/charges/entreprise-individuelle/">entreprise individuelle</a><a class="link-card" href="/comparateur/auto-entrepreneur-vs-entreprise-individuelle/">auto entrepreneur vs entreprise individuelle</a><a class="link-card" href="/quel-statut-choisir//">quel statut choisir</a>
   </div>
 </div>
 <footer><div class="container">
-  <div class="disc">Simulateur à titre indicatif, basé sur des taux 2026-08 — ne remplace pas l'avis d'un expert-comptable ou d'un avocat. Estimations indicatives basées sur les taux et seuils 2026 publiés (voir sources ci-dessous) — ne remplacent pas l'avis d'un expert-comptable pour une situation réelle. Dernière mise à jour des données et calculs : 2026-08-21.</div>
+  <div class="disc">Simulateur à titre indicatif, basé sur des taux 2026-08 — ne remplace pas l'avis d'un expert-comptable ou d'un avocat. Estimations indicatives basées sur les taux et seuils 2026 publiés (voir sources ci-dessous) — ne remplacent pas l'avis d'un expert-comptable pour une situation réelle. Dernière mise à jour des données et calculs : 2026-09-08.</div>
   <p><a href="/">Comparateur de statuts juridiques</a></p>
   <p style="font-size:.72rem;margin-top:8px;">Comparateur de statuts juridiques fait partie de Gesmine-Invest Limited, société immatriculée au Royaume-Uni sous le numéro 14120136, siège social Hardy House, 269 Poynders Gardens, Londres, Royaume-Uni, SW4 8PQ.</p>
 </div></footer>

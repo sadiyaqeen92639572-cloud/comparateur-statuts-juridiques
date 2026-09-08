@@ -64,32 +64,45 @@ const PAGES = [
     titre_seo: 'Simulateur entreprise individuelle (EI) 2026 : charges et revenu net',
     h1: 'Simulateur entreprise individuelle (EI) 2026',
     desc: "Calculez vos cotisations sociales, votre impôt sur le revenu et votre revenu net en entreprise individuelle au régime réel selon votre chiffre d'affaires et vos charges.",
-    note_titre: "Charges sociales et impôt sur le revenu en entreprise individuelle",
-    note_html: "En entreprise individuelle au régime réel, vos <strong>charges sociales</strong> (URSSAF) sont calculées sur votre bénéfice — chiffre d'affaires moins charges déductibles réelles — puis votre <strong>impôt sur le revenu</strong> s'applique sur ce même bénéfice net de charges, selon le barème progressif. Le simulateur ci-dessus calcule les deux automatiquement à partir de votre chiffre d'affaires et de vos charges.",
+    note_titre: "Comprendre le calcul du revenu net en entreprise individuelle",
+    note_html: `<p>En entreprise individuelle au régime réel, vos <strong>charges sociales</strong> (URSSAF) sont calculées sur votre bénéfice — chiffre d'affaires moins charges déductibles réelles — puis votre <strong>impôt sur le revenu</strong> s'applique sur ce même bénéfice net de charges, selon le barème progressif. Le simulateur ci-dessus calcule les deux automatiquement à partir de votre chiffre d'affaires et de vos charges.</p>
+  <h2 class="st">Simulateur de charges sociales en entreprise individuelle</h2>
+  <p>Ce <strong>simulateur de charges sociales</strong> en entreprise individuelle estime les cotisations URSSAF du travailleur non salarié à partir de votre bénéfice réel. Le calcul des charges couvre la maladie-maternité, la retraite de base et complémentaire, l'invalidité-décès, les allocations familiales et la CSG-CRDS. La base est le bénéfice (chiffre d'affaires encaissé moins charges professionnelles déductibles), pas le chiffre d'affaires brut. Renseignez votre CA et vos charges dans l'outil ci-dessus pour obtenir le montant estimé.</p>
+  <h2 class="st">Calcul de l'impôt sur le revenu et de la rémunération nette en EI</h2>
+  <p>Une fois les charges sociales déduites, le <strong>calcul de l'impôt sur le revenu</strong> en EI porte sur ce même bénéfice net, intégré à votre foyer fiscal selon le barème progressif et votre taux marginal. La rémunération nette correspond au bénéfice moins les cotisations sociales moins l'impôt : c'est le revenu réellement disponible que le simulateur d'impôt en entreprise individuelle affiche en résultat. Pour situer ce résultat par rapport au régime micro, voir aussi notre <a href="/comparateur/auto-entrepreneur-vs-entreprise-individuelle/">comparateur auto-entrepreneur ou entreprise individuelle</a>.</p>`,
     ca_defaut: 60000,
     faq: [
       ["Quelle différence entre auto-entrepreneur et entreprise individuelle ?", "L'EI au régime réel déduit les charges réelles (pas un abattement forfaitaire) et n'a pas de plafond de chiffre d'affaires — pertinent quand les charges réelles dépassent l'abattement forfaitaire du régime micro."],
-      ["Mon patrimoine personnel est-il protégé en EI ?", "Oui, même protection par défaut que l'auto-entrepreneur depuis le 15 mai 2022, avec les mêmes exceptions (fraude, manquement grave, renonciation à la demande d'un créancier)."]
+      ["Mon patrimoine personnel est-il protégé en EI ?", "Oui, même protection par défaut que l'auto-entrepreneur depuis le 15 mai 2022, avec les mêmes exceptions (fraude, manquement grave, renonciation à la demande d'un créancier)."],
+      ["Comment simuler ses charges sociales en entreprise individuelle ?", "Indiquez votre chiffre d'affaires encaissé et vos charges professionnelles déductibles dans le simulateur ci-dessus : il calcule le bénéfice, puis les cotisations sociales TNS (URSSAF) assises sur ce bénéfice, et enfin l'impôt sur le revenu correspondant. La simulation des charges sociales reste indicative — les taux varient selon l'activité (BIC ou BNC) et l'année d'installation."],
+      ["« Simulateur EI » ou « simulation entreprise individuelle » : c'est le même outil ?", "Oui. Qu'on cherche un « simulateur EI », une « simulation entreprise individuelle » ou un « calcul de charges et d'impôt en EI », le besoin est le même : estimer le revenu net après cotisations sociales et impôt sur le revenu à partir du chiffre d'affaires. L'outil de cette page couvre l'entreprise individuelle au régime réel."]
     ],
     avantages: ["Pas de plafond de chiffre d'affaires", "Déduction des charges réelles (matériel, local, sous-traitance...)", "Aucun capital social à constituer", "Patrimoine personnel protégé par défaut, comme l'auto-entrepreneur"],
     inconvenients: ["Comptabilité complète obligatoire (régime réel)", "Cotisations sociales TNS dues même en cas de faible bénéfice", "Pas de personnalité morale distincte (contrairement à l'EURL)"],
-    liens_internes: ['/simulateur/auto-entrepreneur', '/charges/entreprise-individuelle']
+    liens_internes: ['/simulateur/auto-entrepreneur', '/charges/entreprise-individuelle', '/comparateur/auto-entrepreneur-vs-entreprise-individuelle']
   },
   {
     type: 'simulateur',
     statut: 'eurl',
     slug: 'simulateur/eurl',
-    titre_seo: 'Simulateur EURL 2026 : IS, rémunération gérant, revenu net',
+    titre_seo: 'Simulateur EURL 2026 : salaire du gérant, charges TNS et IS',
     h1: 'Simulateur EURL 2026',
     desc: "Calculez l'impôt sur les sociétés, les cotisations TNS du gérant et le revenu net total en EURL selon votre chiffre d'affaires et votre rémunération.",
+    note_titre: "Simulation EURL : rémunération du gérant, charges TNS et IS",
+    note_html: `<p>La <strong>simulation EURL</strong> enchaîne l'impôt sur les sociétés payé sur le bénéfice de la société et les cotisations TNS du gérant sur sa rémunération, puis l'impôt sur le revenu. Le simulateur ci-dessus calcule l'ensemble à partir de votre chiffre d'affaires, de vos charges et de la rémunération que vous vous versez.</p>
+  <h2 class="st">Simulateur de salaire du gérant d'EURL</h2>
+  <p>Le <strong>simulateur de salaire</strong> du gérant d'EURL part du montant que vous vous versez et en déduit les cotisations sociales TNS, pour obtenir le revenu net imposable du gérant. Faites varier la rémunération pour voir son effet sur le revenu net total et sur l'impôt sur les sociétés dû sur le bénéfice non distribué.</p>
+  <h2 class="st">Calcul des charges TNS et de l'impôt en EURL</h2>
+  <p>Le <strong>calcul des charges</strong> en EURL à l'IS distingue les cotisations du gérant, assises sur sa seule rémunération et non sur le bénéfice de la société, et l'impôt sur les sociétés au taux réduit sur les premiers bénéfices puis au taux normal au-delà. L'outil applique ces règles automatiquement, ainsi que l'imposition des dividendes éventuels.</p>`,
     ca_defaut: 80000,
     faq: [
       ["EURL à l'IR ou à l'IS ?", "Par défaut à l'IR (comme une EI), mais l'option IS est possible et souvent plus avantageuse au-delà d'un certain niveau de bénéfice grâce au taux réduit à 15% jusqu'à 42 500 €."],
-      ["Quel régime social pour le gérant d'EURL ?", "Le gérant associé unique relève du régime TNS (travailleur non salarié), avec des cotisations sociales calculées sur sa rémunération."]
+      ["Quel régime social pour le gérant d'EURL ?", "Le gérant associé unique relève du régime TNS (travailleur non salarié), avec des cotisations sociales calculées sur sa rémunération."],
+      ["Comment simuler la rémunération nette du gérant d'une EURL ?", "Entrez le chiffre d'affaires, les charges d'exploitation et la rémunération annuelle du gérant : le simulateur déduit les cotisations TNS, calcule l'impôt sur les sociétés sur le bénéfice restant et l'impôt sur le revenu du gérant, puis affiche le revenu net total. Comparez plusieurs niveaux de rémunération pour optimiser le partage entre salaire et dividendes."]
     ],
     avantages: ["Cotisations sociales du gérant (régime TNS) généralement moins élevées qu'en SASU", "Responsabilité limitée aux apports", "Choix entre IR et IS", "Passage possible en SARL en accueillant un associé"],
     inconvenients: ["Couverture sociale du régime TNS moins protectrice (indemnités journalières, retraite) que le régime général", "Formalités de création et comptabilité complète obligatoires", "Statuts et annonce légale à rédiger, coût de création non nul"],
-    liens_internes: ['/simulateur/sasu', '/comparateur/eurl-vs-sasu', '/charges/eurl']
+    liens_internes: ['/simulateur/sasu', '/simulateur/sarl', '/comparateur/eurl-vs-sasu', '/charges/eurl']
   },
   {
     type: 'simulateur',
@@ -111,13 +124,20 @@ const PAGES = [
     type: 'simulateur',
     statut: 'sarl',
     slug: 'simulateur/sarl',
-    titre_seo: 'Simulateur SARL 2026 : gérant majoritaire ou minoritaire',
+    titre_seo: 'Simulateur SARL 2026 : charges et salaire du gérant',
     h1: 'Simulateur SARL 2026',
     desc: "Calculez l'impôt sur les sociétés et le revenu net du gérant en SARL selon qu'il est majoritaire (régime TNS) ou minoritaire (assimilé salarié).",
+    note_titre: "Simulation SARL : charges du gérant et impôt sur les sociétés",
+    note_html: `<p>La <strong>simulation SARL</strong> combine deux niveaux d'imposition : l'impôt sur les sociétés payé par la société sur son bénéfice, puis les charges sociales et l'impôt sur le revenu du gérant sur sa rémunération. Le simulateur ci-dessus enchaîne les deux à partir de votre chiffre d'affaires, de vos charges d'exploitation et de la rémunération que vous vous versez.</p>
+  <h2 class="st">Simulateur de charges du gérant de SARL</h2>
+  <p>Le <strong>calcul des charges</strong> du gérant de SARL dépend de son statut social. Le gérant <strong>majoritaire</strong> (plus de 50 % des parts avec son conjoint et ses enfants mineurs) relève du régime des travailleurs non salariés : cotisations URSSAF assises sur sa rémunération, taux global plus faible qu'un assimilé salarié. Le gérant <strong>minoritaire ou égalitaire</strong> relève du régime général, avec des charges proches de celles d'un président de SASU. Le simulateur applique le régime correspondant à votre situation.</p>
+  <h2 class="st">Simulateur de salaire du gérant majoritaire de SARL</h2>
+  <p>Pour un gérant majoritaire, le <strong>simulateur de salaire</strong> part de la rémunération que vous vous versez : l'outil en déduit les cotisations TNS, l'impôt sur les sociétés dû sur le bénéfice restant, puis l'impôt sur le revenu sur la rémunération. Le résultat est le revenu net total du foyer. Ajustez la rémunération et les charges d'exploitation pour trouver l'équilibre le plus efficace entre salaire et dividendes.</p>`,
     ca_defaut: 100000,
     faq: [
       ["Gérant majoritaire ou minoritaire, quelle différence ?", "Le gérant majoritaire (détient plus de 50% des parts, seul ou avec sa famille) relève du régime TNS. Le gérant minoritaire ou égalitaire relève du régime assimilé salarié, comme un président de SASU."],
-      ["Pourquoi choisir une SARL plutôt qu'une SASU ?", "La SARL impose un minimum de 2 associés et un cadre plus encadré par la loi (moins de liberté statutaire que la SASU), mais le régime TNS du gérant majoritaire coûte souvent moins cher en cotisations sociales que le régime assimilé salarié."]
+      ["Pourquoi choisir une SARL plutôt qu'une SASU ?", "La SARL impose un minimum de 2 associés et un cadre plus encadré par la loi (moins de liberté statutaire que la SASU), mais le régime TNS du gérant majoritaire coûte souvent moins cher en cotisations sociales que le régime assimilé salarié."],
+      ["Comment simuler le salaire du gérant majoritaire d'une SARL ?", "Saisissez la rémunération annuelle du gérant, le chiffre d'affaires et les charges d'exploitation dans le simulateur : il calcule les cotisations TNS sur la rémunération, l'IS sur le bénéfice de la société, puis l'impôt sur le revenu du gérant. Vous obtenez le revenu net après charges sociales et impôts, à comparer avec une autre répartition rémunération/dividendes."]
     ],
     avantages: ["Régime TNS du gérant majoritaire souvent moins coûteux en cotisations", "Cadre légal protecteur et éprouvé, statuts types disponibles", "Régime matrimonial des parts sociales protecteur en cas de succession"],
     inconvenients: ["Minimum 2 associés obligatoire", "Moins de liberté statutaire que la SAS (répartition du pouvoir encadrée par la loi)", "Cession de parts sociales plus formaliste (agrément des associés) qu'en SAS"],
@@ -165,7 +185,8 @@ const PAGES = [
     ca_defaut: 60000,
     params_defaut: { type_activite: 'prestations_services_bnc', charges_exploitation: 8000, remuneration_gerant: 25000, dividendes_verses: 15000, tmi: 0.30 },
     faq: [
-      ["Pourquoi passer d'auto-entrepreneur à EURL ?", "Principalement en cas de dépassement du plafond de CA, ou pour déduire des charges réelles importantes que l'abattement forfaitaire micro ne couvre pas."]
+      ["Pourquoi passer d'auto-entrepreneur à EURL ?", "Principalement en cas de dépassement du plafond de CA, ou pour déduire des charges réelles importantes que l'abattement forfaitaire micro ne couvre pas."],
+      ["EURL ou auto-entrepreneur : que choisir ?", "En dessous du plafond de CA et avec peu de charges réelles, l'auto-entrepreneur reste plus simple et souvent moins coûteux. L'EURL devient intéressante quand les charges déductibles sont élevées, quand on approche le plafond micro, ou pour l'option à l'IS. Le seuil de bascule calculé ci-dessus donne le point d'équilibre pour vos hypothèses de chiffre d'affaires et de rémunération."]
     ],
     liens_internes: ['/charges/auto-entrepreneur', '/charges/eurl']
   },
@@ -807,14 +828,15 @@ function formuleLinesFor(statut) {
 // Bloc avantages/inconvenients optionnel — cfg.avantages/cfg.inconvenients sont des
 // tableaux de strings définis par page dans PAGES[] (pas de retype dans statuts.json,
 // ce sont des jugements éditoriaux, pas des données réglementaires).
-// Bloc H2 optionnel, propre à une seule page (cfg.note_titre/cfg.note_html dans PAGES[]) —
+// Bloc contenu optionnel, propre à une page (cfg.note_titre + cfg.note_html dans PAGES[]) —
 // pas un bloc partagé comme avantagesInconvenientsBlock/formulesEtSourcesBlock, pour ne pas
 // impacter les autres pages simulateur.
+// note_titre = <h2> optionnel ; note_html = HTML brut (la config apporte ses propres balises,
+// ce qui autorise plusieurs <h2 class="st">…</h2><p>…</p> dans une même page).
 function extraNoteBlock(cfg) {
-  if (!cfg.note_titre) return '';
-  return `
-  <h2 class="st">${esc(cfg.note_titre)}</h2>
-  <p>${cfg.note_html}</p>`;
+  if (!cfg.note_html) return '';
+  const titre = cfg.note_titre ? `\n  <h2 class="st">${esc(cfg.note_titre)}</h2>` : '';
+  return `${titre}\n  ${cfg.note_html}`;
 }
 
 function avantagesInconvenientsBlock(cfg) {
@@ -1520,7 +1542,9 @@ function renderComparateur(cfg) {
 // (détail des lignes de charges plutôt que "combien il me reste").
 function renderCharges(cfg) {
   const statut = STATUTS_DATA.statuts[cfg.statut];
-  const canonical = `${SITE_URL}/${cfg.slug}/`;
+  // Les pages /charges/<statut>/ font tourner le même widget que /simulateur/<statut>/ avec un
+  // contenu quasi identique — canonical vers le simulateur pour éviter la cannibalisation.
+  const canonical = `${SITE_URL}/simulateur/${cfg.statut}/`;
   const jsonld = [webAppJsonLd(cfg.h1, canonical), faqJsonLd(cfg.faq)];
   const body = `
 <header><div class="container">
