@@ -11,6 +11,7 @@
     "is_taux": "https://bofip.impots.gouv.fr/bofip/2065-PGP.html/identifiant=BOI-IS-LIQ-20-20-20230621",
     "is_taux_reduit_conditions": "https://bofip.impots.gouv.fr/bofip/2062-PGP.html/identifiant=BOI-IS-LIQ-20-10-20230621",
     "flat_tax_dividendes": "https://www.impots.gouv.fr/international-particulier/mes-dividendes",
+    "acre_micro": "https://entreprendre.service-public.gouv.fr/vosdroits/F11677",
     "gerant_sarl": "https://entreprendre.service-public.gouv.fr/vosdroits/F36235",
     "president_sasu": "https://entreprendre.service-public.gouv.fr/vosdroits/F36240",
     "franchise_tva": "https://entreprendre.service-public.gouv.fr/vosdroits/F21746",
@@ -25,7 +26,14 @@
     "flat_tax_dividendes_note": "31,4% depuis le 1er janvier 2026 (hausse CSG 17,2%→18,6%). Le taux 30% (17,2%+12,8%) ne s'applique plus qu'à l'assurance-vie, au PEL/CEL, au PEP et aux plus-values immobilières — pas aux dividendes de société.",
     "is_taux_normal": 0.25,
     "is_taux_reduit": { "taux": 0.15, "seuil_benefice": 42500, "conditions": "CA < 10M€, capital entièrement libéré, détenu à 75% min par personnes physiques" },
-    "tmi_bareme_indicatif": [0, 0.11, 0.30, 0.41, 0.45]
+    "tmi_bareme_indicatif": [0, 0.11, 0.30, 0.41, 0.45],
+    "acre_micro": {
+      "reduction": 0.25,
+      "duree_texte": "jusqu'à la fin du 3e trimestre civil suivant la date de début d'activité",
+      "degressif": false,
+      "note": "ACRE micro-entrepreneur : réduction de 25 % des cotisations sociales (taux global appliqué à 75 %), sans barème dégressif, jusqu'à la fin du 3e trimestre civil suivant le début d'activité. Sous conditions d'éligibilité (demandeur d'emploi indemnisé ou inscrit 6 mois/18, RSA/ASS, 18-25 ans ou -30 ans sans droits chômage suffisants, création en QPV/ZRR, reprise après liquidation). Demande dans les 60 jours du début d'activité, pas d'ACRE dans les 3 ans précédents. Pas de variation 2025/2026.",
+      "source": "https://entreprendre.service-public.gouv.fr/vosdroits/F11677"
+    }
   },
   "statuts": {
     "auto-entrepreneur": {

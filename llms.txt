@@ -4,7 +4,7 @@
 
 ## Ce qu'est le site
 
-Une page d'accueil avec 5 simulateurs par statut + 5 comparateurs deux-à-deux + guides de migration + pages par métier + un quiz "quel statut choisir". Chaque simulateur a aussi sa page dédiée (chiffres clés, sources officielles, FAQ).
+Une page d'accueil avec 6 simulateurs par statut + 11 comparateurs deux-à-deux + 3 simulateurs d'arbitrage rémunération/dividendes + guides de migration + un quiz "quel statut choisir". Chaque simulateur a aussi sa page dédiée (chiffres clés, sources officielles, FAQ).
 
 ## Formules par statut
 
@@ -44,10 +44,10 @@ TMI proposés : 0 %, 11 %, 30 %, 41 %, 45 %. Types d'activité micro : vente de 
 
 - [Accueil](https://calculateur-statuts-juridiques.fr/)
 - [/quel-statut-choisir/](https://calculateur-statuts-juridiques.fr/quel-statut-choisir/) — quiz en 4 questions
-- Simulateurs par statut (ancres sur l'accueil) : auto-entrepreneur, entreprise individuelle, EURL, SASU, SARL, portage salarial (page dédiée : TJM, jours travaillés, sociétés de portage)
-- Comparateurs : auto-entrepreneur vs SASU · auto-entrepreneur vs EURL · EURL vs SASU · SASU vs SARL · auto-entrepreneur vs EI
+- Simulateurs par statut : auto-entrepreneur (option ACRE 1re année), entreprise individuelle, EURL (sélecteur IR / IS), SASU, SARL, SAS, portage salarial (page dédiée : TJM, jours travaillés, sociétés de portage)
+- Comparateurs deux-à-deux : auto-entrepreneur vs SASU · auto-entrepreneur vs EURL · auto-entrepreneur vs SARL · auto-entrepreneur vs EI · auto-entrepreneur vs portage · EI vs EURL · EURL vs SASU · SASU vs SARL · SAS vs SARL · SAS vs SASU · portage vs SASU
+- Simulateurs d'arbitrage rémunération vs dividendes : SASU · SARL · SAS
 - Guides de migration : AE→SASU · AE→EURL · AE→EI · EI→EURL · EURL→SASU · SASU→SAS · AE→portage salarial
-- Par métier : consultant (AE vs SASU) · développeur (AE vs EURL) · e-commerçant (AE vs SASU) · formateur (AE vs SASU) · infirmier libéral (AE vs EURL)
 
 ## FAQ
 
@@ -57,4 +57,7 @@ Quel statut choisir pour créer mon entreprise ; AE / EURL / SASU / SARL quelle 
 
 - Résultats = estimations indicatives calculées côté navigateur avec taux/seuils 2026 ; renvoyer vers un expert-comptable pour une décision.
 - Les taux de cotisations dirigeant (≈ 45 % TNS, ≈ 65 % assimilé salarié) et la flat tax dividendes (31,4 %) sont des approximations du site.
+- EURL à l'IR : le calcul applique le forfait TNS ≈ 45 % sur le bénéfice — estimation, l'assiette sociale réelle diffère (abattement + CSG/CRDS non déductible réintégrée).
+- ACRE micro : réduction de 25 % des cotisations sociales jusqu'à la fin du 3e trimestre civil suivant le début d'activité, sous conditions d'éligibilité, non automatique.
+- Plafonds micro 2026 : 83 600 € prestations de services (BIC/BNC), 203 100 € vente de marchandises.
 - IS 2026 : 15 % jusqu'à 42 500 € de bénéfice, 25 % au-delà.

@@ -1,7 +1,8 @@
 /* Comparateur de statuts juridiques — générateur de pages
- * Emet: /simulateur/<statut>/ (implémenté), /comparateur/, /charges/, /migration/,
- * /metier/ (à venir — voir plan de build). Homepage index.html est écrite à la main
- * (non régénérée), même convention que meat-cooking-time-calculator.
+ * Emet: /simulateur/<statut>/, /comparateur/, /charges/, /migration/, /arbitrage/
+ * + stubs de redirection pour les anciennes /metier/* (retirées 2026-09).
+ * Homepage index.html est écrite à la main (non régénérée) ; ce script y resynchronise
+ * seulement la zone entre les marqueurs <!-- PLAFONDS:START/END -->.
  * Run: node generate-pages.js
  */
 const fs = require('fs');
@@ -25,17 +26,17 @@ const GESMINE_ORG_JSONLD = {
 
 const STATUTS_DATA = JSON.parse(fs.readFileSync(path.join(__dirname, 'data/statuts.json')));
 
-// Presets métier — non réglementaires, restent inline (voir avis Gemini dans le plan).
-const METIERS = {
-  consultant: { nom: 'Consultant / freelance conseil', type_activite: 'prestations_services_bnc', ca_annuel_exemple: 60000, charges_reelles_estimees_pct: 0.08 },
-  developpeur: { nom: 'Développeur freelance', type_activite: 'prestations_services_bnc', ca_annuel_exemple: 70000, charges_reelles_estimees_pct: 0.10 },
-  graphiste: { nom: 'Graphiste indépendant', type_activite: 'prestations_services_bnc', ca_annuel_exemple: 40000, charges_reelles_estimees_pct: 0.12 },
-  'coach-sportif': { nom: 'Coach sportif indépendant', type_activite: 'prestations_services_bic', ca_annuel_exemple: 35000, charges_reelles_estimees_pct: 0.15 },
-  'infirmier-liberal': { nom: 'Infirmier libéral', type_activite: 'prestations_services_bnc', ca_annuel_exemple: 65000, charges_reelles_estimees_pct: 0.10 },
-  vtc: { nom: 'Chauffeur VTC', type_activite: 'prestations_services_bic', ca_annuel_exemple: 45000, charges_reelles_estimees_pct: 0.22 },
-  'e-commercant': { nom: 'E-commerçant', type_activite: 'vente_marchandises', ca_annuel_exemple: 90000, charges_reelles_estimees_pct: 0.55 },
-  formateur: { nom: 'Formateur indépendant', type_activite: 'prestations_services_bnc', ca_annuel_exemple: 50000, charges_reelles_estimees_pct: 0.08 }
-};
+// Anciennes pages /metier/<slug>/ retirées 2026-09 (0 traction GSC sur 16 mois, quasi-dupes
+// du comparateur parent). Chaque URL est conservée en stub meta-refresh + canonical vers son
+// comparateur parent (GitHub Pages = pas de 301 serveur). Voir boucle REDIRECTS en fin de script.
+const REDIRECTS = [
+  { from: 'metier/consultant-auto-entrepreneur-vs-sasu', to: '/comparateur/auto-entrepreneur-vs-sasu/' },
+  { from: 'metier/e-commercant-auto-entrepreneur-vs-sasu', to: '/comparateur/auto-entrepreneur-vs-sasu/' },
+  { from: 'metier/formateur-auto-entrepreneur-vs-sasu', to: '/comparateur/auto-entrepreneur-vs-sasu/' },
+  { from: 'metier/developpeur-auto-entrepreneur-vs-eurl', to: '/comparateur/auto-entrepreneur-vs-eurl/' },
+  { from: 'metier/infirmier-liberal-auto-entrepreneur-vs-eurl', to: '/comparateur/auto-entrepreneur-vs-eurl/' },
+  { from: 'metier/vtc-auto-entrepreneur-vs-eurl', to: '/comparateur/auto-entrepreneur-vs-eurl/' }
+];
 
 // ── Routing table — une entrée = une page. Étendre ici pour ajouter des pages. ──
 const PAGES = [
@@ -46,10 +47,14 @@ const PAGES = [
     titre_seo: 'Simulateur auto-entrepreneur 2026 : cotisations, impôt, revenu net',
     h1: 'Simulateur auto-entrepreneur 2026',
     desc: "Calculez vos cotisations sociales, votre impôt sur le revenu et votre revenu net en tant qu'auto-entrepreneur selon votre chiffre d'affaires et votre activité.",
+    note_titre: "Cotisations auto-entrepreneur avec l'ACRE la première année",
+    note_html: `<p>L'<strong>ACRE</strong> (aide aux créateurs et repreneurs d'entreprise) réduit de <strong>25 %</strong> les cotisations sociales du micro-entrepreneur, sans barème dégressif, jusqu'à la fin du 3<sup>e</sup> trimestre civil suivant la date de début d'activité. Concrètement, le taux de cotisations appliqué à votre chiffre d'affaires passe par exemple d'environ 25,6 % à 19,2 % pour une activité libérale (BNC), le temps de la période ACRE.</p>
+  <p>Le bénéfice n'est <strong>pas automatique</strong> : il faut relever d'au moins une situation éligible — demandeur d'emploi indemnisé ou inscrit depuis 6 mois sur les 18 derniers mois, bénéficiaire du RSA ou de l'ASS, avoir entre 18 et 25 ans (ou moins de 30 ans sans droits au chômage suffisants), créer dans un quartier prioritaire (QPV) ou reprendre une activité après liquidation — et déposer la demande dans les 60 jours du début d'activité, sans avoir bénéficié de l'ACRE dans les 3 années précédentes. Cochez la case « ACRE » du simulateur ci-dessus pour voir l'effet sur votre revenu net la première année.</p>`,
     type_activite_defaut: 'prestations_services_bnc',
     ca_defaut: 40000,
     faq: [
       ["Quel est le plafond de chiffre d'affaires en auto-entrepreneur ?", "203 100 € pour la vente de marchandises, 83 600 € pour les prestations de services (BIC ou BNC) — seuils 2026, révisés à la hausse depuis les 188 700 €/77 700 € en vigueur jusqu'en 2025."],
+      ["Qui a droit à l'ACRE en auto-entreprise et de combien réduit-elle les cotisations ?", "L'ACRE réduit de 25 % les cotisations sociales jusqu'à la fin du 3e trimestre civil suivant le début d'activité. Elle est réservée à certaines situations : demandeurs d'emploi, bénéficiaires du RSA/ASS, jeunes de moins de 26 ans (ou moins de 30 ans sans droits au chômage), création en quartier prioritaire, reprise après liquidation. La demande se fait dans les 60 jours du début d'activité."],
       ["Le versement libératoire est-il toujours intéressant ?", "Non — il dépend de votre taux marginal d'imposition et de votre revenu fiscal de référence. Il est surtout avantageux si votre TMI est supérieur au taux du versement libératoire."],
       ["Mon patrimoine personnel est-il protégé ?", "Oui, par défaut depuis le 15 mai 2022 votre patrimoine personnel est insaisissable par les créanciers professionnels — sauf en cas de fraude, manquement grave, ou renonciation explicite à la demande d'un créancier (les banques l'exigent quasi-systématiquement pour un prêt professionnel)."]
     ],
@@ -85,19 +90,22 @@ const PAGES = [
     type: 'simulateur',
     statut: 'eurl',
     slug: 'simulateur/eurl',
-    titre_seo: 'Simulateur EURL 2026 : salaire du gérant, charges TNS et IS',
+    titre_seo: 'Simulateur EURL 2026 : IR ou IS, salaire du gérant et charges TNS',
     h1: 'Simulateur EURL 2026',
-    desc: "Calculez l'impôt sur les sociétés, les cotisations TNS du gérant et le revenu net total en EURL selon votre chiffre d'affaires et votre rémunération.",
+    desc: "Calculez le revenu net en EURL à l'IR ou à l'IS : impôt sur les sociétés, cotisations TNS du gérant et impôt sur le revenu selon votre chiffre d'affaires.",
     note_titre: "Simulation EURL : rémunération du gérant, charges TNS et IS",
     note_html: `<p>La <strong>simulation EURL</strong> enchaîne l'impôt sur les sociétés payé sur le bénéfice de la société et les cotisations TNS du gérant sur sa rémunération, puis l'impôt sur le revenu. Le simulateur ci-dessus calcule l'ensemble à partir de votre chiffre d'affaires, de vos charges et de la rémunération que vous vous versez.</p>
+  <h2 class="st">EURL à l'IR ou à l'IS : quelle différence sur le revenu net ?</h2>
+  <p>Par défaut, l'EURL détenue par une personne physique est à l'<strong>impôt sur le revenu</strong> : il n'y a pas d'impôt sur les sociétés ni de couche dividendes, l'intégralité du bénéfice constitue le revenu du gérant, soumis aux cotisations sociales TNS puis au barème progressif de l'IR. Sur <strong>option IS</strong> (révocable dans les 5 ans), la société paie l'IS — 15 % jusqu'à 42 500 € de bénéfice puis 25 % — le gérant n'est imposé que sur sa rémunération, et les dividendes éventuels supportent la flat tax de 31,4 % (avec, pour la part dépassant 10 % du capital social, un retour aux cotisations TNS). Le sélecteur « Régime fiscal » ci-dessus bascule entre les deux calculs. Le résultat en régime IR est une <strong>estimation</strong> : il applique un taux de cotisations TNS forfaitaire, l'assiette sociale réelle appliquant en outre un abattement et la réintégration de la CSG/CRDS non déductible.</p>
   <h2 class="st">Simulateur de salaire du gérant d'EURL</h2>
   <p>Le <strong>simulateur de salaire</strong> du gérant d'EURL part du montant que vous vous versez et en déduit les cotisations sociales TNS, pour obtenir le revenu net imposable du gérant. Faites varier la rémunération pour voir son effet sur le revenu net total et sur l'impôt sur les sociétés dû sur le bénéfice non distribué.</p>
   <h2 class="st">Calcul des charges TNS et de l'impôt en EURL</h2>
   <p>Le <strong>calcul des charges</strong> en EURL à l'IS distingue les cotisations du gérant, assises sur sa seule rémunération et non sur le bénéfice de la société, et l'impôt sur les sociétés au taux réduit sur les premiers bénéfices puis au taux normal au-delà. L'outil applique ces règles automatiquement, ainsi que l'imposition des dividendes éventuels.</p>`,
     ca_defaut: 80000,
     faq: [
-      ["EURL à l'IR ou à l'IS ?", "Par défaut à l'IR (comme une EI), mais l'option IS est possible et souvent plus avantageuse au-delà d'un certain niveau de bénéfice grâce au taux réduit à 15% jusqu'à 42 500 €."],
-      ["Quel régime social pour le gérant d'EURL ?", "Le gérant associé unique relève du régime TNS (travailleur non salarié), avec des cotisations sociales calculées sur sa rémunération."],
+      ["L'EURL est-elle à l'IR ou à l'IS par défaut ?", "À l'IR par défaut lorsque l'associé unique est une personne physique : le bénéfice est imposé directement au nom du gérant, sans impôt sur les sociétés. L'option pour l'IS se fait par notification au service des impôts et reste révocable pendant les cinq premiers exercices."],
+      ["EURL à l'IR ou à l'IS : que choisir ?", "L'IS devient généralement plus avantageux au-delà d'un certain niveau de bénéfice grâce au taux réduit à 15 % jusqu'à 42 500 € et à la possibilité de ne se rémunérer que partiellement ; l'IR reste simple et sans double imposition tant que le bénéfice sert intégralement de revenu. Comparez les deux avec le sélecteur de régime fiscal du simulateur."],
+      ["Quel régime social pour le gérant d'EURL ?", "Le gérant associé unique relève du régime TNS (travailleur non salarié), avec des cotisations sociales calculées sur sa rémunération (à l'IS) ou sur le bénéfice (à l'IR)."],
       ["Comment simuler la rémunération nette du gérant d'une EURL ?", "Entrez le chiffre d'affaires, les charges d'exploitation et la rémunération annuelle du gérant : le simulateur déduit les cotisations TNS, calcule l'impôt sur les sociétés sur le bénéfice restant et l'impôt sur le revenu du gérant, puis affiche le revenu net total. Comparez plusieurs niveaux de rémunération pour optimiser le partage entre salaire et dividendes."]
     ],
     avantages: ["Cotisations sociales du gérant (régime TNS) généralement moins élevées qu'en SASU", "Responsabilité limitée aux apports", "Choix entre IR et IS", "Passage possible en SARL en accueillant un associé"],
@@ -203,7 +211,7 @@ const PAGES = [
       ["EURL ou SASU pour les cotisations sociales du dirigeant ?", "Le gérant d'EURL relève du régime TNS (cotisations généralement moins élevées mais couverture sociale moindre); le président de SASU est assimilé salarié (cotisations plus élevées, meilleure couverture sociale hors chômage)."],
       ["Salaire ou dividendes, que choisir dans l'un ou l'autre statut ?", "Les dividendes évitent les cotisations sociales dans les deux statuts mais sont soumis à la flat tax de 31,4% (depuis le 1er janvier 2026) et ne créent pas de droits sociaux. Voir le comparateur détaillé rémunération pour une analyse approfondie."]
     ],
-    liens_internes: ['/charges/eurl', '/charges/sasu', '/simulateur/eurl', '/simulateur/sasu']
+    liens_internes: ['/charges/eurl', '/charges/sasu', '/simulateur/eurl', '/simulateur/sasu', '/arbitrage/sasu-remuneration-vs-dividendes']
   },
   {
     type: 'comparateur',
@@ -501,90 +509,6 @@ const PAGES = [
       ["Le calcul de rémunération du président change-t-il ?", "Non — le régime assimilé salarié et la fiscalité des dividendes du président restent identiques qu'il y ait un ou plusieurs associés. Voir le simulateur SAS pour vérifier."]
     ],
     liens_internes: ['/simulateur/sas', '/comparateur/sas-vs-sarl']
-  },
-  {
-    type: 'comparateur_metier',
-    metier: 'consultant',
-    statuts: ['auto-entrepreneur', 'sasu'],
-    slug: 'metier/consultant-auto-entrepreneur-vs-sasu',
-    titre_seo: 'Auto-entrepreneur ou SASU pour un consultant ?',
-    h1: 'Consultant freelance : auto-entrepreneur ou SASU ?',
-    desc: "Comparaison auto-entrepreneur vs SASU pré-remplie avec un CA type de consultant indépendant.",
-    params_defaut: { type_activite: 'prestations_services_bnc', charges_exploitation: 5000, remuneration_gerant: 30000, dividendes_verses: 15000, tmi: 0.30 },
-    faq: [
-      ["Quel statut pour un consultant qui débute ?", "L'auto-entrepreneur est généralement recommandé en phase de test (simplicité, zéro charge fixe), puis la SASU devient pertinente en approchant le plafond de CA ou pour optimiser la fiscalité à plus haut revenu."]
-    ],
-    liens_internes: ['/comparateur/auto-entrepreneur-vs-sasu', '/simulateur/sasu']
-  },
-  {
-    type: 'comparateur_metier',
-    metier: 'developpeur',
-    statuts: ['auto-entrepreneur', 'eurl'],
-    slug: 'metier/developpeur-auto-entrepreneur-vs-eurl',
-    titre_seo: 'Auto-entrepreneur ou EURL pour un développeur freelance ?',
-    h1: 'Développeur freelance : auto-entrepreneur ou EURL ?',
-    desc: "Comparaison auto-entrepreneur vs EURL pré-remplie avec un CA type de développeur freelance.",
-    params_defaut: { type_activite: 'prestations_services_bnc', charges_exploitation: 5000, remuneration_gerant: 35000, dividendes_verses: 15000, tmi: 0.30 },
-    faq: [
-      ["Quel statut pour un développeur freelance à haut CA ?", "Au-delà du plafond auto-entrepreneur (83 600 €, seuil 2026) ou pour déduire du matériel/formation en charges réelles, l'EURL ou la SASU deviennent pertinentes selon la préférence de régime social."]
-    ],
-    liens_internes: ['/comparateur/auto-entrepreneur-vs-eurl', '/simulateur/eurl']
-  },
-  {
-    type: 'comparateur_metier',
-    metier: 'infirmier-liberal',
-    statuts: ['auto-entrepreneur', 'eurl'],
-    slug: 'metier/infirmier-liberal-auto-entrepreneur-vs-eurl',
-    titre_seo: 'Auto-entrepreneur ou EURL pour un infirmier libéral ?',
-    h1: 'Infirmier libéral : auto-entrepreneur ou EURL ?',
-    desc: "Comparaison auto-entrepreneur vs EURL pré-remplie avec un CA type d'infirmier libéral.",
-    params_defaut: { type_activite: 'prestations_services_bnc', charges_exploitation: 6500, remuneration_gerant: 32000, dividendes_verses: 12000, tmi: 0.30 },
-    faq: [
-      ["Un infirmier libéral peut-il rester auto-entrepreneur ?", "Oui sous le plafond de CA (83 600 € en prestations de services, seuil 2026), mais beaucoup de professionnels de santé libéraux dépassent ce seuil rapidement, ce qui rend l'EURL ou la SELARL pertinentes."]
-    ],
-    liens_internes: ['/comparateur/auto-entrepreneur-vs-eurl', '/simulateur/eurl']
-  },
-  {
-    type: 'comparateur_metier',
-    metier: 'vtc',
-    statuts: ['auto-entrepreneur', 'eurl'],
-    slug: 'metier/vtc-auto-entrepreneur-vs-eurl',
-    titre_seo: 'Auto-entrepreneur ou EURL pour un chauffeur VTC ?',
-    h1: 'Chauffeur VTC : auto-entrepreneur ou EURL ?',
-    desc: "Comparaison auto-entrepreneur vs EURL pré-remplie avec un CA type de chauffeur VTC, charges de véhicule incluses.",
-    params_defaut: { type_activite: 'prestations_services_bic', charges_exploitation: 10000, remuneration_gerant: 22000, dividendes_verses: 8000, tmi: 0.11 },
-    faq: [
-      ["Pourquoi les charges réelles comptent-elles particulièrement pour un VTC ?", "Carburant, entretien, assurance et amortissement du véhicule sont souvent élevés — au-delà de l'abattement forfaitaire micro (50% en BIC services), le régime réel (EI ou EURL) devient rapidement plus avantageux."]
-    ],
-    liens_internes: ['/comparateur/auto-entrepreneur-vs-eurl', '/charges/entreprise-individuelle']
-  },
-  {
-    type: 'comparateur_metier',
-    metier: 'e-commercant',
-    statuts: ['auto-entrepreneur', 'sasu'],
-    slug: 'metier/e-commercant-auto-entrepreneur-vs-sasu',
-    titre_seo: 'Auto-entrepreneur ou SASU pour un e-commerçant ?',
-    h1: 'E-commerçant : auto-entrepreneur ou SASU ?',
-    desc: "Comparaison auto-entrepreneur vs SASU pré-remplie avec un CA type de vente en ligne (vente de marchandises).",
-    params_defaut: { type_activite: 'vente_marchandises', charges_exploitation: 45000, remuneration_gerant: 28000, dividendes_verses: 12000, tmi: 0.30 },
-    faq: [
-      ["Le plafond auto-entrepreneur est-il vite atteint en e-commerce ?", "Le plafond vente de marchandises (203 100 €, seuil 2026) est plus élevé qu'en prestations de services, mais la marge nette étant souvent faible, beaucoup de e-commerçants basculent en société pour déduire leurs charges réelles (achats, publicité, logistique) plutôt que de subir l'abattement forfaitaire de 71%."]
-    ],
-    liens_internes: ['/comparateur/auto-entrepreneur-vs-sasu', '/simulateur/sasu']
-  },
-  {
-    type: 'comparateur_metier',
-    metier: 'formateur',
-    statuts: ['auto-entrepreneur', 'sasu'],
-    slug: 'metier/formateur-auto-entrepreneur-vs-sasu',
-    titre_seo: 'Auto-entrepreneur ou SASU pour un formateur indépendant ?',
-    h1: 'Formateur indépendant : auto-entrepreneur ou SASU ?',
-    desc: "Comparaison auto-entrepreneur vs SASU pré-remplie avec un CA type de formateur/consultant en formation.",
-    params_defaut: { type_activite: 'prestations_services_bnc', charges_exploitation: 4000, remuneration_gerant: 25000, dividendes_verses: 12000, tmi: 0.30 },
-    faq: [
-      ["Quel statut pour un formateur qui travaille avec des organismes de formation ?", "L'auto-entrepreneur convient en phase de démarrage (peu de charges, CA modéré), la SASU devient pertinente en approchant le plafond de CA ou pour donner une image plus institutionnelle vis-à-vis de grands comptes."]
-    ],
-    liens_internes: ['/comparateur/auto-entrepreneur-vs-sasu', '/simulateur/sasu']
   },
   {
     type: 'arbitrage',
@@ -1207,8 +1131,9 @@ function simulateurWidget(cfg, statutId) {
   const remuneration_defaut = Math.round(cfg.ca_defaut * 0.5 / 1000) * 1000;
   const charges_defaut = Math.round(cfg.ca_defaut * 0.1 / 1000) * 1000;
   const dividendes_defaut = Math.round(cfg.ca_defaut * 0.15 / 1000) * 1000;
+  const isEurl = statutId === 'eurl';
   const PAGE = {
-    statutId, ca_defaut: cfg.ca_defaut, type_activite_defaut: cfg.type_activite_defaut || null, isMicro, isIndividuel,
+    statutId, ca_defaut: cfg.ca_defaut, type_activite_defaut: cfg.type_activite_defaut || null, isMicro, isIndividuel, isEurl,
     remuneration_defaut, charges_defaut, dividendes_defaut
   };
 
@@ -1219,13 +1144,23 @@ function simulateurWidget(cfg, statutId) {
         <option value="prestations_services_bnc">Prestations de services (BNC)</option>
       </select></div>` : '';
 
+  const acreField = isMicro
+    ? `<div class="form-group full"><label style="font-weight:400;"><input type="checkbox" id="acre" style="width:auto;margin-right:6px;">Bénéficier de la réduction ACRE si vous êtes éligible (1<sup>re</sup> année)</label>
+        <small style="display:block;color:var(--muted);font-size:.8rem;margin-top:4px;">−25 % de cotisations jusqu'à la fin du 3<sup>e</sup> trimestre civil suivant le début d'activité, sous conditions — <a href="https://entreprendre.service-public.gouv.fr/vosdroits/F11677" target="_blank" rel="noopener">voir les conditions d'éligibilité</a>.</small></div>` : '';
+
+  const regimeFiscalField = isEurl
+    ? `<div class="form-group full"><label>Régime fiscal de l'EURL</label><select id="regimeFiscal" onchange="onRegimeChange()">
+        <option value="IS" selected>IS — impôt sur les sociétés</option>
+        <option value="IR">IR — régime par défaut de l'associé unique</option>
+      </select></div>` : '';
+
   const statutRef = STATUTS_DATA.statuts[statutId];
   const estAssimileSalarieRef = statutRef.regime_social_president === 'assimile_salarie' || statutRef.regime_social_gerant_minoritaire === 'assimile_salarie';
   const remunerationLabel = estAssimileSalarieRef ? 'Rémunération brute dirigeant (€/an)' : 'Rémunération dirigeant (€/an)';
   const societeFields = !isIndividuel
-    ? `<div class="form-group"><label>${remunerationLabel}</label><input type="number" id="remuneration" min="0" step="1000" value="${remuneration_defaut}"></div>
+    ? `<div class="form-group" id="grp-remuneration"><label>${remunerationLabel}</label><input type="number" id="remuneration" min="0" step="1000" value="${remuneration_defaut}"></div>
       <div class="form-group"><label>Charges d'exploitation (€/an)</label><input type="number" id="charges" min="0" step="1000" value="${charges_defaut}"></div>
-      <div class="form-group full"><label>Dividendes versés (€/an)</label><input type="number" id="dividendes" min="0" step="1000" value="${dividendes_defaut}"></div>` : '';
+      <div class="form-group full" id="grp-dividendes"><label>Dividendes versés (€/an)</label><input type="number" id="dividendes" min="0" step="1000" value="${dividendes_defaut}"></div>` : '';
 
   const resultStat = isIndividuel
     ? `<div class="r-stat"><div class="sv" id="r-cotis"></div><div class="sl">Cotisations sociales</div></div>
@@ -1243,6 +1178,8 @@ function simulateurWidget(cfg, statutId) {
         <option value="0">0 %</option><option value="0.11">11 %</option><option value="0.30" selected>30 %</option><option value="0.41">41 %</option><option value="0.45">45 %</option>
       </select></div>
       ${typeActiviteField}
+      ${acreField}
+      ${regimeFiscalField}
       ${societeFields}
     </div>
     <button class="calc-btn" onclick="calculate()">Calculer mon revenu net →</button>
@@ -1256,21 +1193,32 @@ function simulateurWidget(cfg, statutId) {
       </div>
     </div>
   </div>
+  ${isEurl ? `<p style="font-size:.82rem;color:var(--muted);margin-top:8px;">À l'IR, l'estimation applique un taux de cotisations TNS forfaitaire (~45 %) sur le bénéfice — l'assiette sociale réelle diffère légèrement. Résultat indicatif, voir la méthodologie ci-dessous.</p>` : ''}
   <script>
   const PAGE = ${JSON.stringify(PAGE)};
   ${CALC_ENGINE_CLIENT_SOURCE}
   const STATUTS_DATA = ${JSON.stringify(STATUTS_DATA)};
   function eur(n){ return Math.round(n).toLocaleString('fr-FR')+' €'; }
   function pct(n){ return (n*100).toFixed(1).replace('.',',')+' %'; }
+  function onRegimeChange(){
+    var el = document.getElementById('regimeFiscal');
+    var ir = el && el.value === 'IR';
+    var gr = document.getElementById('grp-remuneration'); if (gr) gr.hidden = ir;
+    var gd = document.getElementById('grp-dividendes'); if (gd) gd.hidden = ir;
+  }
   function calculate(){
     const ca = parseFloat(document.getElementById('ca').value)||0;
     const tmi = parseFloat(document.getElementById('tmi').value);
     const typeActiviteEl = document.getElementById('typeActivite');
+    const acreEl = document.getElementById('acre');
+    const regimeFiscalEl = document.getElementById('regimeFiscal');
     const params = { ca, tmi, type_activite: typeActiviteEl ? typeActiviteEl.value : undefined };
+    if (acreEl) params.acre = acreEl.checked;
+    if (regimeFiscalEl) params.regime_fiscal = regimeFiscalEl.value;
     if (!PAGE.isIndividuel) {
-      params.remuneration_gerant = parseFloat(document.getElementById('remuneration').value)||0;
-      params.charges_exploitation = parseFloat(document.getElementById('charges').value)||0;
-      params.dividendes_verses = parseFloat(document.getElementById('dividendes').value)||0;
+      params.remuneration_gerant = parseFloat((document.getElementById('remuneration')||{}).value)||0;
+      params.charges_exploitation = parseFloat((document.getElementById('charges')||{}).value)||0;
+      params.dividendes_verses = parseFloat((document.getElementById('dividendes')||{}).value)||0;
     }
     const res = calculerStatut(PAGE.statutId, params, STATUTS_DATA);
     document.getElementById('r-net').textContent = eur(res.revenu_net_apres_impot);
@@ -1280,6 +1228,8 @@ function simulateurWidget(cfg, statutId) {
     } else {
       document.getElementById('r-cotis').textContent = eur(res.cotisations_sociales_gerant);
       document.getElementById('r-impot').textContent = eur(res.is_du + (res.impot_revenu_remuneration||0));
+      var slImpot = document.getElementById('r-impot').nextElementSibling;
+      if (slImpot) slImpot.textContent = (params.regime_fiscal === 'IR') ? 'Impôt sur le revenu' : 'IS + impôt sur rémunération';
     }
     document.getElementById('r-taux').textContent = pct(res.taux_prelevement_global);
     document.getElementById('result').style.display='block';
@@ -1600,42 +1550,6 @@ function renderMigration(cfg) {
   return pageShell({ title: cfg.titre_seo, desc: cfg.desc, canonical, jsonld, body });
 }
 
-// comparateur_metier réutilise le widget comparateur avec des presets métier (CA/charges) —
-// METIERS reste inline (non réglementaire, cf. avis Gemini dans le plan).
-function renderComparateurMetier(cfg) {
-  const metier = METIERS[cfg.metier];
-  const [idA, idB] = cfg.statuts;
-  const statutA = STATUTS_DATA.statuts[idA];
-  const statutB = STATUTS_DATA.statuts[idB];
-  const canonical = `${SITE_URL}/${cfg.slug}/`;
-  const caDefaut = metier.ca_annuel_exemple;
-  const comparateurCfg = Object.assign({}, cfg, {
-    ca_defaut: caDefaut,
-    params_defaut: Object.assign({ type_activite: metier.type_activite }, cfg.params_defaut)
-  });
-
-  const jsonld = [webAppJsonLd(cfg.h1, canonical), faqJsonLd(cfg.faq)];
-  const body = `
-<header><div class="container">
-  <h1>${esc(cfg.h1)}</h1>
-  <p>${esc(cfg.desc)}</p>
-</div></header>
-<div class="container tool-wrapper">
-  ${comparateurWidget(comparateurCfg)}
-</div>
-<div class="container content">
-  <a class="back-link" href="/">← Tous les statuts</a>
-  <p>Simulation pré-remplie pour un profil <strong>${esc(metier.nom)}</strong> (CA type ${eur(caDefaut)}). Ajustez librement les paramètres ci-dessus.</p>
-  ${formatStatutFacts(statutA)}
-  ${formatStatutFacts(statutB)}
-  ${formulesEtSourcesBlock([idA, idB])}
-  ${faqBlock(cfg.faq)}
-  ${eeatBlock()}
-  ${linkGridBlock(cfg.liens_internes)}
-</div>`;
-  return pageShell({ title: cfg.titre_seo, desc: cfg.desc, canonical, jsonld, body });
-}
-
 // ── Widget arbitrage — balaye le split rémunération/dividendes via
 // optimiserSplitRemunerationDividendes() (déjà présente dans calc-engine.js, pas de
 // nouvelle logique de calcul: seule la restitution visuelle/HTML est nouvelle). ──
@@ -1753,7 +1667,6 @@ const renderers = {
   comparateur: renderComparateur,
   charges: renderCharges,
   migration: renderMigration,
-  comparateur_metier: renderComparateurMetier,
   arbitrage: renderArbitrage
 };
 
@@ -1766,10 +1679,54 @@ PAGES.forEach(cfg => {
   emit(cfg.slug, renderer(cfg));
 });
 
+// Stubs de redirection pour les anciennes URLs /metier/* — meta refresh 0s + rel=canonical
+// (pas de noindex : contradictoire avec canonical). NON ajoutés à urls[] → hors sitemap.
+REDIRECTS.forEach(({ from, to }) => {
+  const dir = path.join(OUT, from);
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, 'index.html'), `<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Redirection</title>
+<link rel="canonical" href="${SITE_URL}${to}">
+<meta http-equiv="refresh" content="0; url=${to}">
+</head>
+<body>Cette page a été déplacée : <a href="${to}">${to}</a>.
+<script>location.replace(${JSON.stringify(to)});</script>
+</body>
+</html>`);
+});
+
+// Resync de la zone plafonds micro dans index.html (hand-written, non émis par ce script) —
+// source unique = data/statuts.json seuils_ca. Échoue bruyamment si les marqueurs manquent
+// ou sont dupliqués ; remplacement idempotent.
+(function patchPlafondsHomepage() {
+  const idxPath = path.join(OUT, 'index.html');
+  let html = fs.readFileSync(idxPath, 'utf8');
+  const START = '<!-- PLAFONDS:START -->';
+  const END = '<!-- PLAFONDS:END -->';
+  const nStart = html.split(START).length - 1;
+  const nEnd = html.split(END).length - 1;
+  if (nStart !== 1 || nEnd !== 1) {
+    throw new Error(`patchPlafondsHomepage: marqueurs PLAFONDS attendus 1 fois chacun, trouvés START=${nStart} END=${nEnd} dans index.html`);
+  }
+  const ae = STATUTS_DATA.statuts['auto-entrepreneur'].seuils_ca;
+  const fmt = n => n.toLocaleString('fr-FR') + ' €';
+  const cell = `Oui (${fmt(ae.prestations_services_bnc)} services / ${fmt(ae.vente_marchandises)} vente)`;
+  const before = html.slice(0, html.indexOf(START) + START.length);
+  const after = html.slice(html.indexOf(END));
+  const next = before + cell + after;
+  if (next !== html) {
+    fs.writeFileSync(idxPath, next);
+    console.log('index.html: zone PLAFONDS resynchronisée depuis data/statuts.json');
+  }
+})();
+
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(u => `  <url><loc>${SITE_URL}${u}</loc><lastmod>${TODAY}</lastmod></url>`).join('\n')}
 </urlset>`;
 fs.writeFileSync(path.join(OUT, 'sitemap.xml'), sitemap);
 
-console.log(`Généré ${urls.length - 1} page(s) + sitemap.xml`);
+console.log(`Généré ${urls.length - 1} page(s) + ${REDIRECTS.length} stub(s) de redirection + sitemap.xml`);
