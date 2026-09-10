@@ -721,8 +721,9 @@ function formuleLinesFor(statut) {
   }
   if (statut.regime_fiscal === 'micro-fiscal') {
     lignes.push('cotisations_sociales = CA × taux_cotisations (selon activité)');
+    lignes.push('  → si ACRE (1re année, sous conditions d\'éligibilité) : taux_cotisations × (1 − 25%)');
     lignes.push('revenu_imposable = CA × (1 − abattement_forfaitaire)');
-    lignes.push('impôt = revenu_imposable × TMI  (ou CA × taux_versement_libératoire si option VLF)');
+    lignes.push('impôt = revenu_imposable × TMI  (ou CA × taux_versement_libératoire si option VLF ; VLF non réduit par l\'ACRE)');
     lignes.push('revenu_net = CA − cotisations_sociales − impôt');
   } else if (statut.categorie === 'individuel') {
     lignes.push('bénéfice = CA − charges_réelles');
@@ -738,6 +739,18 @@ function formuleLinesFor(statut) {
     lignes.push('IS = bénéfice×15% (jusqu\'à 42 500€) + (bénéfice−42 500€)×25% au-delà');
     lignes.push('rémunération_nette = rémunération_dirigeant − cotisations_salariales');
     lignes.push('dividendes_nets = dividendes_versés × (1 − 31,4%)  (flat tax / PFU)');
+    lignes.push('revenu_net_foyer = rémunération_nette − impôt(TMI) + dividendes_nets');
+  } else if (statut.regime_fiscal_defaut === 'IR') {
+    // EURL — seul statut à l'IR par défaut : deux régimes possibles, sélecteur dans le widget.
+    lignes.push('— EURL à l\'IR (régime par défaut de l\'associé unique personne physique) —');
+    lignes.push('bénéfice = CA − charges_exploitation');
+    lignes.push('cotisations_sociales = bénéfice × taux_TNS_estimé  (≈ 45 % — estimation ; assiette réelle : abattement + CSG/CRDS non déductible réintégrée)');
+    lignes.push('revenu_net = bénéfice − cotisations_sociales − impôt(TMI)   (pas d\'IS, pas de couche dividendes)');
+    lignes.push('— EURL à l\'IS (sur option, révocable 5 ans) —');
+    lignes.push('bénéfice_avant_IS = CA − charges_exploitation − rémunération_dirigeant − cotisations_sociales_dirigeant');
+    lignes.push('IS = bénéfice×15% (jusqu\'à 42 500€) + (bénéfice−42 500€)×25% au-delà');
+    lignes.push('rémunération_nette = rémunération_dirigeant − cotisations_sociales_dirigeant');
+    lignes.push('dividendes_nets = dividendes_versés × (1 − 31,4%)  (flat tax / PFU ; part > 10 % du capital → cotisations TNS)');
     lignes.push('revenu_net_foyer = rémunération_nette − impôt(TMI) + dividendes_nets');
   } else {
     lignes.push('bénéfice_avant_IS = CA − charges_exploitation − rémunération_dirigeant − cotisations_sociales_dirigeant');
@@ -784,7 +797,7 @@ function sourcesForStatuts(statutIds) {
   statutIds.forEach(id => {
     const s = STATUTS_DATA.statuts[id];
     if (s.regime_fiscal === 'micro-fiscal') {
-      ['urssaf_taux_micro', 'plafonds_ca_micro', 'abattement_forfaitaire', 'versement_liberatoire', 'franchise_tva'].forEach(k => cles.add(k));
+      ['urssaf_taux_micro', 'plafonds_ca_micro', 'abattement_forfaitaire', 'versement_liberatoire', 'franchise_tva', 'acre_micro'].forEach(k => cles.add(k));
     }
     if (s.categorie === 'individuel') {
       cles.add('loi_patrimoine_ei'); cles.add('loi_patrimoine_ei_explication');
@@ -808,6 +821,7 @@ function sourcesForStatuts(statutIds) {
     abattement_forfaitaire: 'Abattement forfaitaire micro-fiscal — service-public.fr',
     versement_liberatoire: 'Versement libératoire de l\'impôt sur le revenu — impots.gouv.fr',
     franchise_tva: 'Franchise en base de TVA — service-public.fr',
+    acre_micro: 'Aide aux créateurs et repreneurs d\'entreprise (ACRE) en micro-entreprise — service-public.fr',
     loi_patrimoine_ei: 'Loi n° 2022-172 du 14 février 2022 — Légifrance',
     loi_patrimoine_ei_explication: 'Protection du patrimoine personnel de l\'entrepreneur individuel — service-public.fr',
     is_taux: 'Taux de l\'impôt sur les sociétés — BOFiP',
